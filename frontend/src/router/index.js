@@ -24,6 +24,11 @@ export default new Router({
       path: '/monday',
       name: 'Monday',
       component: () => import('@/views/Monday')
+    },
+    {
+      path: '/basis',
+      name: 'Basis',
+      component: () => import('@/views/Basis')
     }
   ]
 })

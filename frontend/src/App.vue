@@ -19,6 +19,7 @@
         <el-menu-item index="/login" route="/login">登录</el-menu-item>
         <el-menu-item index="/mailpsw" route="/mailpsw">忘记密码</el-menu-item>
         <el-menu-item index="/register" route="/register">注册</el-menu-item>
+        <el-menu-item index="/basis" route="/basis">基本情况</el-menu-item>
     </el-menu>
     </el-header>
     <el-main>

@@ -9,7 +9,7 @@
           <div>
             <el-row type="flex" justify="center">
               <el-col :span="16">
-                <el-form labposition="right" status-icon label-width="150px" :model="regForm" :rules="rules" ref="regForm">
+                <el-form label-position="left" status-icon label-width="100px" :model="regForm" :rules="rules" ref="regForm">
                   <el-form-item label="学校" prop="schoolName">
                     <el-select
                     v-model="regForm.schoolName"
@@ -18,7 +18,7 @@
                     :loading="false"
                     @change="submitSchool"
                     clearable
-                    style="width:180px"
+                    style="width:200px"
                     >
                       <el-option
                       v-for="item in SchoolList"
@@ -29,17 +29,40 @@
                     </el-select>
                   </el-form-item>
                   <el-form-item label="学号" prop="idNumber">
-                    <el-input v-model="regForm.idNumber" placeholder="请输入学号" style="width:180px"></el-input>
+                    <el-input v-model="regForm.idNumber" placeholder="请输入学号" style="width:200px"></el-input>
                     <br/>
                   </el-form-item>
+                   <el-form-item label="姓名" prop="name">
+                    <el-input v-model="regForm.name" placeholder="请输入姓名" clearable style="width:200px"></el-input>
+                  </el-form-item>
+                  <el-form-item label="年级" prop="grade">
+                    <el-select v-model="regForm.grade" clearable placehold="--请选择--" style="width:200px">
+                      <el-option v-for="item in gradelist" :key="item.value" :label="item.label" :value="item.value">
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item label="性别" prop="sex">
+                    <el-radio v-model="regForm.sex" label="man">男</el-radio>
+                    <el-radio v-model="regForm.sex" label="female">女</el-radio>
+                  </el-form-item>
+                  <el-form-item label="出生日期" prop="birthday">
+                    <el-date-picker v-model="regForm.birthday" placeholder="选择出生日期"></el-date-picker>
+                  </el-form-item>
+                  <el-form-item label="民族" prop="nationality">
+                    <el-radio v-model="regForm.nationality" label="Han">汉族</el-radio>
+                    <el-radio v-model="regForm.nationality" label="Not">非汉族</el-radio>
+                  </el-form-item>
+                  <el-form-item label="专业类别" prop="major">
+                    <el-input v-model="regForm.major" placeholder="请输入专业" style="width:200px"></el-input>
+                  </el-form-item>
                   <el-form-item label="密码" prop="passWord">
-                    <el-input type="password" v-model="regForm.passWord" auto-complete="off" placeholder="请设置8-20位密码" style="width:180px" maxlength="20"></el-input>
+                    <el-input type="password" v-model="regForm.passWord" auto-complete="off" placeholder="请设置8-20位密码" style="width:200px" maxlength="20"></el-input>
                   </el-form-item>
                   <el-form-item label="确认密码" prop="checkPassword">
-                    <el-input type="password" v-model="regForm.checkPassword" auto-complete="off" style="width:180px"></el-input>
+                    <el-input type="password" v-model="regForm.checkPassword" auto-complete="off" style="width:200px"></el-input>
                   </el-form-item>
                   <el-form-item label="邮箱" prop="email">
-                    <el-input v-model="regForm.email" placeholder="请输入邮箱" style="width:180px"></el-input>
+                    <el-input v-model="regForm.email" placeholder="请输入邮箱" style="width:200px"></el-input>
                     <br/>
                   </el-form-item>
                 <el-form-item>
@@ -114,9 +137,31 @@ export default {
         {value: '3', label: '对外经贸大学'},
         {value: '4', label: '上海健康医学院'}
       ],
+      gradelist: [{
+        value: '1',
+        label: '大一'
+      }, {
+        value: '2',
+        label: '大二'
+      }, {
+        value: '3',
+        label: '大三'
+      }, {
+        value: '4',
+        label: '大四'
+      }, {
+        value: '5',
+        label: '研究生及以上'
+      }],
       regForm: {
         schoolName: '',
         idNumber: '',
+        name: '',
+        grade: '',
+        sex: '1',
+        birthday: '',
+        nationality: '',
+        major: '',
         passWord: '',
         checkPassword: '',
         email: ''
@@ -127,6 +172,24 @@ export default {
         ],
         idNumber: [
           { required: true, validator: idNumberCheck, trigger: 'blur' }
+        ],
+        name: [
+          { required: true, message: '请输入用户名', trigger: 'blur' }
+        ],
+        grade: [
+          { required: true, message: '请选择年级', trigger: 'blur' }
+        ],
+        sex: [
+          { required: true, message: '请选择性别', trigger: 'blur' }
+        ],
+        birthday: [
+          { required: true, message: '请选择出生日期', trigger: 'blur' }
+        ],
+        nationality: [
+          { required: true, message: '请选择民族', trigger: 'blur' }
+        ],
+        major: [
+          { required: true, message: '请输入专业', trigger: 'blur' }
         ],
         passWord: [
           { required: true, validator: passCheck, trigger: 'blur' }
@@ -215,12 +278,6 @@ export default {
   cursor:pointer;
 }
 
-.seal_tip{
-  color:red;
-  font-size:17px;
-  font-weight:bold;
-}
-
 .p_strong{
   color:red;
   font-size:25px;
@@ -229,19 +286,4 @@ export default {
   margin-left:240px;
 }
 
-.nav{
-  float:right;
-  background-color:#CCFFFF;
-  border:2px solid blue;
-  border-radius:30px;
-  width:80px;
-  height:30px;
-  text-align:center;
-  padding-top:8px;
-}
-
-a{
-  text-decoration:none;
-  color:blue;
-}
 </style>

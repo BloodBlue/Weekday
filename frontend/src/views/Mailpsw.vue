@@ -9,7 +9,7 @@
           <div>
             <el-row type="flex" justify="center">
               <el-col :span="20">
-                <el-form label-position="right" label-width="80px" :model="loginForm" :rules="rules" ref="loginForm">
+                <el-form label-position="left" label-width="80px" :model="loginForm" :rules="rules" ref="loginForm">
                   <el-form-item label="邮箱" prop="mailname">
                     <el-input placeholder="请输入邮箱" v-model="loginForm.mailname" ></el-input>
                   </el-form-item>

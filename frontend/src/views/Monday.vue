@@ -9,96 +9,78 @@
           <div>
             <el-row type="flex" justify="center">
               <el-col :span="20">
-                <el-form :model="monForm" :rules="rules" ref="monForm" label-width="300px">
-                    <el-form-item label="使用电子设备用于娱乐(看手机/视频／打游戏)">
-                      <el-form-item prop="play">
-                        <el-input-number v-model="monForm.play_hour" :min="0" :max="12" style="width:130px">
-                        </el-input-number>
-                        <el-span>小时-</el-span>
-                        <el-input-number v-model="monForm.play_minute" :min="0" :max="59" style="width:130px">
-                        </el-input-number>
-                        <el-span>分钟</el-span>
-                      </el-form-item>
+                <el-form  label-position="left" :model="monForm" ref="monForm" label-width="320px">
+                    <el-form-item label="使用电子设备用于娱乐(看手机/视频／打游戏)" prop="play">
+                      <el-input-number v-model="monForm.play_hour" :min="0" :max="12" style="width:130px">
+                      </el-input-number>
+                      <span>小时-</span>
+                      <el-input-number v-model="monForm.play_minute" :min="0" :max="59" style="width:130px">
+                      </el-input-number>
+                      <span>分钟</span>
                     </el-form-item>
-                    <el-form-item label="用电脑做作业">
-                      <el-form-item prop="workWithComputer">
-                        <el-input-number v-model="monForm.workWithComputer_hour" :min="0" :max="12" style="width:130px">
-                        </el-input-number>
-                        <el-span>小时-</el-span>
-                        <el-input-number v-model="monForm.workWithComputer_minute" :min="0" :max="59" style="width:130px">
-                        </el-input-number>
-                        <el-span>分钟</el-span>
-                      </el-form-item>
+                    <el-form-item label="用电脑做作业" prop="workWithComputer">
+                      <el-input-number v-model="monForm.workWithComputer_hour" :min="0" :max="12" style="width:130px">
+                      </el-input-number>
+                      <span>小时-</span>
+                      <el-input-number v-model="monForm.workWithComputer_minute" :min="0" :max="59" style="width:130px">
+                      </el-input-number>
+                      <span>分钟</span>
                     </el-form-item>
-                    <el-form-item label="做作业(不包含用电脑的时间)">
-                      <el-form-item prop="work">
-                        <el-input-number v-model="monForm.work_hour" :min="0" :max="12" style="width:130px">
-                        </el-input-number>
-                        <el-span>小时-</el-span>
-                        <el-input-number v-model="monForm.work_minute" :min="0" :max="59" style="width:130px">
-                        </el-input-number>
-                        <el-span>分钟</el-span>
-                      </el-form-item>
+                    <el-form-item label="做作业(不包含用电脑的时间)" prop="work">
+                      <el-input-number v-model="monForm.work_hour" :min="0" :max="12" style="width:130px">
+                      </el-input-number>
+                      <span>小时-</span>
+                      <el-input-number v-model="monForm.work_minute" :min="0" :max="59" style="width:130px">
+                      </el-input-number>
+                      <span>分钟</span>
                     </el-form-item>
-                    <el-form-item label="看闲书">
-                      <el-form-item prop="read">
-                        <el-input-number v-model="monForm.read_hour" :min="0" :max="12" style="width:130px">
-                        </el-input-number>
-                        <el-span>小时-</el-span>
-                        <el-input-number v-model="monForm.read_minute" :min="0" :max="59" style="width:130px">
-                        </el-input-number>
-                        <el-span>分钟</el-span>
-                      </el-form-item>
+                    <el-form-item label="看闲书" prop="read">
+                      <el-input-number v-model="monForm.read_hour" :min="0" :max="12" style="width:130px">
+                      </el-input-number>
+                      <span>小时-</span>
+                      <el-input-number v-model="monForm.read_minute" :min="0" :max="59" style="width:130px">
+                      </el-input-number>
+                      <span>分钟</span>
                     </el-form-item>
-                    <el-form-item label="上课">
-                      <el-form-item prop="class">
-                        <el-input-number v-model="monForm.class_hour" :min="0" :max="12" style="width:130px">
-                        </el-input-number>
-                        <el-span>小时-</el-span>
-                        <el-input-number v-model="monForm.class_minute" :min="0" :max="59" style="width:130px">
-                        </el-input-number>
-                        <el-span>分钟</el-span>
-                      </el-form-item>
+                    <el-form-item label="上课" prop="class">
+                      <el-input-number v-model="monForm.class_hour" :min="0" :max="12" style="width:130px">
+                      </el-input-number>
+                      <span>小时-</span>
+                      <el-input-number v-model="monForm.class_minute" :min="0" :max="59" style="width:130px">
+                      </el-input-number>
+                      <span>分钟</span>
                     </el-form-item>
-                    <el-form-item label="(坐着)出行(私家车/公交车/地铁/火车)">
-                      <el-form-item prop="out">
-                        <el-input-number v-model="monForm.out_hour" :min="0" :max="12" style="width:130px">
-                        </el-input-number>
-                        <el-span>小时-</el-span>
-                        <el-input-number v-model="monForm.out_minute" :min="0" :max="59" style="width:130px">
-                        </el-input-number>
-                        <el-span>分钟</el-span>
-                      </el-form-item>
+                    <el-form-item label="(坐着)出行(私家车/公交车/地铁/火车)" prop="out">
+                      <el-input-number v-model="monForm.out_hour" :min="0" :max="12" style="width:130px">
+                      </el-input-number>
+                      <span>小时-</span>
+                      <el-input-number v-model="monForm.out_minute" :min="0" :max="59" style="width:130px">
+                      </el-input-number>
+                      <span>分钟</span>
                     </el-form-item>
-                    <el-form-item label="做手工或练习乐器">
-                      <el-form-item prop="music">
-                        <el-input-number v-model="monForm.music_hour" :min="0" :max="12" style="width:130px">
-                        </el-input-number>
-                        <el-span>小时-</el-span>
-                        <el-input-number v-model="monForm.music_minute" :min="0" :max="59" style="width:130px">
-                        </el-input-number>
-                        <el-span>分钟</el-span>
-                      </el-form-item>
+                    <el-form-item label="做手工或练习乐器" prop="music">
+                      <el-input-number v-model="monForm.music_hour" :min="0" :max="12" style="width:130px">
+                      </el-input-number>
+                      <span>小时-</span>
+                      <el-input-number v-model="monForm.music_minute" :min="0" :max="59" style="width:130px">
+                      </el-input-number>
+                      <span>分钟</span>
                     </el-form-item>
-                    <el-form-item label="跟朋友聊天或打电话">
-                      <el-form-item prop="chat">
-                        <el-input-number v-model="monForm.chat_hour" :min="0" :max="12" style="width:130px">
-                        </el-input-number>
-                        <el-span>小时-</el-span>
-                        <el-input-number v-model="monForm.chat_minute" :min="0" :max="59" style="width:130px">
-                        </el-input-number>
-                        <el-span>分钟</el-span>
-                      </el-form-item>
+                    <el-form-item label="跟朋友聊天或打电话" prop="chat">
+                      <el-input-number v-model="monForm.chat_hour" :min="0" :max="12" style="width:130px">
+                      </el-input-number>
+                      <span>小时-</span>
+                      <el-input-number v-model="monForm.chat_minute" :min="0" :max="59" style="width:130px">
+                      </el-input-number>
+                      <span>分钟</span>
                     </el-form-item>
-                    <el-form-item label="其他久坐行为">
-                      <el-form-item prop="other">
-                        <el-input-number v-model="monForm.other_hour" :min="0" :max="12" style="width:130px">
-                        </el-input-number>
-                        <el-span>小时-</el-span>
-                        <el-input-number v-model="monForm.other_minute" :min="0" :max="59" style="width:130px">
-                        </el-input-number>
-                        <el-span>分钟</el-span>
-                      </el-form-item>
+                    <el-form-item label="其他久坐行为" prop="other">
+                      <el-input-number v-model="monForm.other_hour" :min="0" :max="12" style="width:130px">
+                      </el-input-number>
+                      <span>小时-</span>
+                      <el-input-number v-model="monForm.other_minute" :min="0" :max="59" style="width:130px">
+                      </el-input-number>
+                      <span>分钟</span>
                     </el-form-item>
                   <el-form-item>
                   <el-button type="primary" @click="submitform" >提交</el-button>
