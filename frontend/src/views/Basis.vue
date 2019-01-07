@@ -9,7 +9,8 @@
           <div>
             <el-row type="flex" justify="center">
               <el-col :span="16">
-                <el-form label-position="left" label-width="120px" :model="basisForm" :rules="rules" ref="basisForm">
+                <p class="pclass">请填写你最近一次体质测试的成绩</p>
+                <el-form label-position="left" label-width="150px" :model="basisForm" :rules="rules" ref="basisForm">
                   <el-form-item label="身高" prop="height">
                     <el-input v-model="basisForm.height" placeholder="请输入身高" style="width:200px"></el-input>
                     <span>(公斤/kg)</span>
@@ -18,7 +19,6 @@
                     <el-input v-model="basisForm.weight" placeholder="请输入体重" style="width:200px"></el-input>
                     <span>(厘米/cm)</span>
                   </el-form-item>
-                  <p class="pclass">请填写你最近一次体质测试的成绩</p>
                   <el-form-item label="肺活量" prop="pulmonary">
                     <el-input v-model="basisForm.pulmonary" placeholder="请输入肺活量" style="width:200px"></el-input>
                     <span>(毫升/ml)</span>
@@ -37,23 +37,34 @@
                     <br>
                     <span>如果记不起来准确时间，请勾选成绩的范围区间 (单位分/秒) </span>
                     <br>
-                    <span>男生: </span>
-                    <el-radio-group v-model="basisForm.enduranceRun">
+                    <div v-if="isShow">
+                      <span>男生: </span>
+                    <el-radio-group v-model="basisForm.enduranceRun" v-if="isShow">
                       <el-radio :label="b1">小于3.17</el-radio>
                       <el-radio :label="b2">3.18-3.57</el-radio>
                       <el-radio :label="b3">3.58-4.52</el-radio>
                       <el-radio :label="b4">4.53-6.12</el-radio>
                       <el-radio :label="b5">大于6.12</el-radio>
                     </el-radio-group>
-                    <br>
-                    <span>女生: </span>
-                    <el-radio-group v-model="basisForm.enduranceRun">
-                      <el-radio :label="g1">小于3.18</el-radio>
-                      <el-radio :label="g2">3.19-3.57</el-radio>
-                      <el-radio :label="g3">3.58-4.44</el-radio>
-                      <el-radio :label="g4">4.45-5.24</el-radio>
-                      <el-radio :label="g5">大于5.24</el-radio>
-                    </el-radio-group>
+                    </div>
+                    <div v-else>
+                      <span>女生: </span>
+                      <el-radio-group v-model="basisForm.enduranceRun">
+                        <el-radio :label="g1">小于3.18</el-radio>
+                        <el-radio :label="g2">3.19-3.57</el-radio>
+                        <el-radio :label="g3">3.58-4.44</el-radio>
+                        <el-radio :label="g4">4.45-5.24</el-radio>
+                        <el-radio :label="g5">大于5.24</el-radio>
+                      </el-radio-group>
+                    </div>
+                  </el-form-item>
+                  <el-form-item label="引体向上次数" prop="upNumber" v-if="isShow" >
+                    <el-input v-model="basisForm.upNumber" placeholder="请输入引体向上次数" style="width:200px"></el-input>
+                    <span>(个)</span>
+                  </el-form-item>
+                  <el-form-item label="一分钟仰卧起坐数" prop="upNumber" v-else>
+                    <el-input v-model="basisForm.upNumber" placeholder="请输入仰卧起坐数" style="width:200px"></el-input>
+                    <span>(个)</span>
                   </el-form-item>
                 </el-form>
               </el-col>
@@ -80,13 +91,15 @@ export default {
       g3: '4-4.44',
       g4: '4.45-5.24',
       g5: '>5.24',
+      isShow: true,
       basisForm: {
         height: '',
         weight: '',
         pulmonary: '',
         sitReach: '',
         fifty: '',
-        enduranceRun: ''
+        enduranceRun: '',
+        upNumber: ''
       },
       rules: {
         height: [
@@ -106,13 +119,22 @@ export default {
         ],
         enduranceRun: [
           { required: true, message: '请输入800米/1000米成绩', trigger: 'blur' }
+        ],
+        upNumber: [
+          { required: true, message: '请输入仰卧起坐或引体向上次数', trigger: 'blur' }
         ]
       }
     }
   },
+  created () {
+    this.getSex()
+  },
   methods: {
     button () {
       console.log(this.basisForm.enduranceRun)
+    },
+    // 判断性别
+    getSex () {
     }
   }
 }

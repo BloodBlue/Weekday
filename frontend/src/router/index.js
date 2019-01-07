@@ -29,6 +29,11 @@ export default new Router({
       path: '/basis',
       name: 'Basis',
       component: () => import('@/views/Basis')
+    },
+    {
+      path: '/health',
+      name: 'Health',
+      component: () => import('@/views/Health')
     }
   ]
 })

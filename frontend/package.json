@@ -1,8 +1,8 @@
 {
-  "name": "wushu-competition-system",
+  "name": "seven-day-test",
   "version": "1.0.0",
   "description": "A Vue.js project",
-  "author": "kastnerorz <kastnerorz@gmail.com>",
+  "author": "BloodBlue <704829754@qq.com>",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",

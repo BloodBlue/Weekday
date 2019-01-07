@@ -8,6 +8,7 @@ import router from './router'
 import axios from 'axios'
 import md5 from 'js-md5'
 import Vuex from 'vuex'
+import 'lib-flexible/flexible.js'
 
 Vue.use(Vuex)
 Vue.use(ElementUI)
