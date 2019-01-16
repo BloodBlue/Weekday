@@ -87,9 +87,9 @@
             <el-row type="flex" justify="center">
               <el-col :span="20">
                 <el-form label-position="left" :model="healthForm" :rules="rules" ref="healthForm">
-                  <el-form-item :label="item.label" :prop="item.name" v-for="item in healthForm.questionlist" :key="item.name">
-                    <el-radio-group v-model="item.value">
-                      <el-radio v-for="answer in answerlist" :key="answer.name" :label="answer.label">{{ answer.name }}</el-radio>
+                  <el-form-item :label="item.label" :prop="item.name" v-for="item in healthForm.questionlist" :key="item.name"  class="radio-group">
+                    <el-radio-group v-model="item.value" class="radio-group">
+                      <el-radio v-for="answer in answerlist" :key="answer.name" :label="answer.label" class="radio-item">{{ answer.name }}</el-radio>
                     </el-radio-group>
                   </el-form-item>
                   <el-form-item>
@@ -115,9 +115,9 @@
             <el-row type="flex" justify="center">
               <el-col :span="20">
                 <el-form label-position="left" :model="emotionForm" :rules="rules" ref="emotionForm">
-                  <el-form-item :label="item.label" :prop="item.name" v-for="item in emotionForm.questionlist" :key="item.name">
-                    <el-radio-group v-model="item.value">
-                      <el-radio v-for="answer in answerlist" :key="answer.name" :label="answer.label">{{ answer.name }}</el-radio>
+                  <el-form-item :label="item.label" :prop="item.name" v-for="item in emotionForm.questionlist" :key="item.name" class="radio-group">
+                    <el-radio-group v-model="item.value" class="radio-group">
+                      <el-radio v-for="answer in answerlist" :key="answer.name" :label="answer.label" class="radio-item">{{ answer.name }}</el-radio>
                     </el-radio-group>
                   </el-form-item>
                   <el-form-item>
@@ -143,9 +143,9 @@
             <el-row type="flex" justify="center">
               <el-col :span="20">
                 <el-form label-position="left" :model="otherForm" :rules="rules" ref="otherForm">
-                  <el-form-item :label="item.label" :prop="item.name" v-for="item in otherForm.questionlist" :key="item.name">
-                    <el-radio-group v-model="item.value">
-                      <el-radio v-for="answer in answerlist" :key="answer.name" :label="answer.label">{{ answer.name }}</el-radio>
+                  <el-form-item :label="item.label" :prop="item.name" v-for="item in otherForm.questionlist" :key="item.name" class="radio-group">
+                    <el-radio-group v-model="item.value" class="radio-group">
+                      <el-radio v-for="answer in answerlist" :key="answer.name" :label="answer.label" class="radio-item">{{ answer.name }}</el-radio>
                     </el-radio-group>
                   </el-form-item>
                   <el-form-item>
@@ -171,9 +171,9 @@
             <el-row type="flex" justify="center">
               <el-col :span="20">
                 <el-form label-position="left" :model="schoolForm" :rules="rules" ref="schoolForm">
-                  <el-form-item :label="item.label" :prop="item.name" v-for="item in schoolForm.questionlist" :key="item.name">
-                    <el-radio-group v-model="item.value">
-                      <el-radio v-for="answer in answerlist" :key="answer.name" :label="answer.label">{{ answer.name }}</el-radio>
+                  <el-form-item :label="item.label" :prop="item.name" v-for="item in schoolForm.questionlist" :key="item.name" class="radio-group">
+                    <el-radio-group v-model="item.value" class="radio-group">
+                      <el-radio v-for="answer in answerlist" :key="answer.name" :label="answer.label" class="radio-item">{{ answer.name }}</el-radio>
                     </el-radio-group>
                   </el-form-item>
                   <el-form-item>
@@ -471,5 +471,5 @@ export default {
     flex-direction column
 
   .radio-item
-    margin 0 !important
+    margin 0!important
 </style>
