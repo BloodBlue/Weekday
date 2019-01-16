@@ -26,14 +26,9 @@ export default new Router({
       component: () => import('@/views/Monday')
     },
     {
-      path: '/basis',
-      name: 'Basis',
-      component: () => import('@/views/Basis')
-    },
-    {
-      path: '/health',
-      name: 'Health',
-      component: () => import('@/views/Health')
+      path: '/question',
+      name: 'Question',
+      component: () => import('@/views/Question')
     }
   ]
 })

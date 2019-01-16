@@ -1,5 +1,21 @@
 <template>
-  <div id="app">
+  <div id="app" v-if="isShow">
+    <el-container>
+      <el-header>
+      <el-breadcrumb separator="/" replace="true">
+        <el-breadcrumb-item :to="{ path: '/login' }">登录</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{path: '/register'}">活动管理</el-breadcrumb-item>
+      </el-breadcrumb>
+    </el-header>
+    <el-main>
+      <router-view/>
+    </el-main>
+    <el-footer>
+      <p style="text-align: center;"> 问卷系统 2019</p>
+    </el-footer>
+    </el-container>
+  </div>
+  <div id="app" v-else>
     <el-container>
       <el-header>
       <el-menu :default-active="$route.path" mode="horizontal" router>
@@ -16,10 +32,7 @@
               <el-menu-item index="2-4-3">选项3</el-menu-item>
           </el-submenu>
         </el-submenu>
-        <el-menu-item index="/login" route="/login">登录</el-menu-item>
-        <el-menu-item index="/register" route="/register">注册</el-menu-item>
-        <el-menu-item index="/basis" route="/basis">基本情况</el-menu-item>
-        <el-menu-item index="/health" route="/health">健康相关</el-menu-item>
+        <el-menu-item index="/question" route="/question">特权</el-menu-item>
     </el-menu>
     </el-header>
     <el-main>
@@ -37,6 +50,7 @@ export default {
   name: 'App',
   data () {
     return {
+      isShow: false
     }
   },
   methods: {
