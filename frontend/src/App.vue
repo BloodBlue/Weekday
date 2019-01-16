@@ -5,12 +5,13 @@
       <el-breadcrumb separator="/" replace="true">
         <el-breadcrumb-item :to="{ path: '/login' }">登录</el-breadcrumb-item>
         <el-breadcrumb-item :to="{path: '/register'}">活动管理</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{path: '/li'}">1</el-breadcrumb-item>
       </el-breadcrumb>
     </el-header>
     <el-main>
       <router-view/>
     </el-main>
-    <el-footer>
+    <el-footer class="footer">
       <p style="text-align: center;"> 问卷系统 2019</p>
     </el-footer>
     </el-container>
@@ -32,7 +33,7 @@
               <el-menu-item index="2-4-3">选项3</el-menu-item>
           </el-submenu>
         </el-submenu>
-        <el-menu-item index="/question" route="/question">特权</el-menu-item>
+        <el-menu-item index="/question" route="/question">调查问卷</el-menu-item>
     </el-menu>
     </el-header>
     <el-main>
@@ -46,6 +47,7 @@
 </template>
 
 <script>
+import './assets/iconfont/iconfont.css'
 export default {
   name: 'App',
   data () {

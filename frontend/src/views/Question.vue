@@ -10,61 +10,84 @@
             <div>
               <el-row type="flex" justify="center">
                 <el-col :span="16">
-                  <p class="pclass">请填写你最近一次体质测试的成绩</p>
-                  <el-form label-position="left" label-width="150px" :model="basisForm" :rules="rules" ref="basisForm">
+                  <el-form label-position="left" :model="basisForm" :rules="rules" ref="basisForm">
+                    <p class="pclass">人口统计学的基本情况 </p>
+                    <el-form-item label="姓名" prop="name">
+                      <el-input v-model="basisForm.name" placeholder="请输入姓名"></el-input>
+                    </el-form-item>
+                    <el-form-item label="学号" prop="idnumber">
+                      <el-input v-model="basisForm.idnumber" placeholder="请输入学号"></el-input>
+                    </el-form-item>
+                    <el-form-item label="年级" prop="grade">
+                      <el-input v-model="basisForm.grade" placeholder="请输入年级"></el-input>
+                    </el-form-item>
+                    <el-form-item label="性别" prop="sex" class="radio-group">
+                    <el-radio v-model="basisForm.sex" label="man">男</el-radio>
+                    <el-radio v-model="basisForm.sex" label="female">女</el-radio>
+                  </el-form-item>
+                  <el-form-item label="出生日期" prop="birthday">
+                    <el-date-picker v-model="basisForm.birthday" placeholder="选择出生日期"></el-date-picker>
+                  </el-form-item>
+                  <el-form-item label="民族" prop="nationality">
+                    <el-input v-model="basisForm.nationality" placeholder="请输入民族"></el-input>
+                  </el-form-item>
+                  <el-form-item label="专业类别" prop="major">
+                    <el-input v-model="basisForm.major" placeholder="请输入专业"></el-input>
+                  </el-form-item>
+                    <p class="pclass">请填写你最近一次体质测试的成绩</p>
                     <el-form-item label="身高" prop="height">
-                      <el-input v-model="basisForm.height" placeholder="请输入身高" style="width:200px"></el-input>
+                      <el-input v-model="basisForm.height" placeholder="请输入身高"></el-input>
                       <span>(公斤/kg)</span>
                     </el-form-item>
                     <el-form-item label="体重" prop="weight">
-                      <el-input v-model="basisForm.weight" placeholder="请输入体重" style="width:200px"></el-input>
+                      <el-input v-model="basisForm.weight" placeholder="请输入体重"></el-input>
                       <span>(厘米/cm)</span>
                     </el-form-item>
                     <el-form-item label="肺活量" prop="pulmonary">
-                      <el-input v-model="basisForm.pulmonary" placeholder="请输入肺活量" style="width:200px"></el-input>
+                      <el-input v-model="basisForm.pulmonary" placeholder="请输入肺活量"></el-input>
                       <span>(毫升/ml)</span>
                     </el-form-item>
                     <el-form-item label="坐位体前屈" prop="sitReach">
-                      <el-input v-model="basisForm.sitReach" placeholder="请输入坐位体前屈值" style="width:200px"></el-input>
+                      <el-input v-model="basisForm.sitReach" placeholder="请输入坐位体前屈值"></el-input>
                       <span>(厘米/cm)</span>
                     </el-form-item>
                     <el-form-item label="50米" prop="fifty">
-                      <el-input v-model="basisForm.fifty" placeholder="请输入50米成绩" style="width:200px"></el-input>
+                      <el-input v-model="basisForm.fifty" placeholder="请输入50米成绩"></el-input>
                       <span>(秒)</span>
                     </el-form-item>
                     <el-form-item label="800米/1000米" prop="enduranceRun">
-                      <el-input v-model="basisForm.enduranceRun" placeholder="请输入800米/1000米成绩" style="width:200px"></el-input>
+                      <el-input v-model="basisForm.enduranceRun" placeholder="请输入800米/1000米成绩"></el-input>
                       <span>(秒)</span>
                       <br>
                       <span>如果记不起来准确时间，请勾选成绩的范围区间 (单位分/秒) </span>
                       <br>
                       <div v-if="isBoy">
                         <span>男生: </span>
-                      <el-radio-group v-model="basisForm.enduranceRun">
-                        <el-radio :label="b1">小于3.17</el-radio>
-                        <el-radio :label="b2">3.18-3.57</el-radio>
-                        <el-radio :label="b3">3.58-4.52</el-radio>
-                        <el-radio :label="b4">4.53-6.12</el-radio>
-                        <el-radio :label="b5">大于6.12</el-radio>
+                      <el-radio-group v-model="basisForm.enduranceRun" class="radio-group">
+                        <el-radio :label="b1" class="radio-item">小于3.17</el-radio>
+                        <el-radio :label="b2" class="radio-item">3.18-3.57</el-radio>
+                        <el-radio :label="b3" class="radio-item">3.58-4.52</el-radio>
+                        <el-radio :label="b4" class="radio-item">4.53-6.12</el-radio>
+                        <el-radio :label="b5" class="radio-item">大于6.12</el-radio>
                       </el-radio-group>
                       </div>
                       <div v-else>
                         <span>女生: </span>
-                        <el-radio-group v-model="basisForm.enduranceRun">
-                          <el-radio :label="g1">小于3.18</el-radio>
-                          <el-radio :label="g2">3.19-3.57</el-radio>
-                          <el-radio :label="g3">3.58-4.44</el-radio>
-                          <el-radio :label="g4">4.45-5.24</el-radio>
-                          <el-radio :label="g5">大于5.24</el-radio>
+                        <el-radio-group v-model="basisForm.enduranceRun" class="radio-group">
+                          <el-radio :label="g1" class="radio-item">小于3.18</el-radio>
+                          <el-radio :label="g2" class="radio-item">3.19-3.57</el-radio>
+                          <el-radio :label="g3" class="radio-item">3.58-4.44</el-radio>
+                          <el-radio :label="g4" class="radio-item">4.45-5.24</el-radio>
+                          <el-radio :label="g5" class="radio-item">大于5.24</el-radio>
                         </el-radio-group>
                       </div>
                     </el-form-item>
                     <el-form-item label="引体向上次数" prop="upNumber" v-if="isBoy" >
-                      <el-input v-model="basisForm.upNumber" placeholder="请输入引体向上次数" style="width:200px"></el-input>
+                      <el-input v-model="basisForm.upNumber" placeholder="请输入引体向上次数"></el-input>
                       <span>(个)</span>
                     </el-form-item>
                     <el-form-item label="一分钟仰卧起坐数" prop="upNumber" v-else>
-                      <el-input v-model="basisForm.upNumber" placeholder="请输入仰卧起坐数" style="width:200px"></el-input>
+                      <el-input v-model="basisForm.upNumber" placeholder="请输入仰卧起坐数"></el-input>
                       <span>(个)</span>
                     </el-form-item>
                   </el-form>
@@ -214,6 +237,13 @@ export default {
       g4: '4.45-5.24',
       g5: '>5.24',
       basisForm: {
+        name: '',
+        idnumber: '',
+        grade: '',
+        sex: '1',
+        birthday: '',
+        nationality: '',
+        major: '',
         height: '',
         weight: '',
         pulmonary: '',
