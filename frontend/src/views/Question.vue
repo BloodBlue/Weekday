@@ -3,27 +3,28 @@
     <div v-if="isBasis">
       <el-row type="flex" justify="center">
         <el-col :span="18">
-          <el-card id="basis-card">
+          <el-card>
             <div slot="header" class="clearfix">
               <span>基本情况</span>
             </div>
             <div>
               <el-row type="flex" justify="center">
                 <el-col :span="16">
-                  <el-form label-position="left" :model="basisForm" :rules="rules" ref="basisForm">
+                  <el-form label-position="left" :model="basisForm" :rules="rules" ref="basisForm"  class="label">
                     <p class="pclass">人口统计学的基本情况 </p>
-                    <el-form-item label="姓名" prop="name">
-                      <el-input v-model="basisForm.name" placeholder="请输入姓名"></el-input>
-                    </el-form-item>
-                    <el-form-item label="学号" prop="idnumber">
-                      <el-input v-model="basisForm.idnumber" placeholder="请输入学号"></el-input>
+                    <el-form-item label="学校" prop="school">
+                      <el-select v-model="basisForm.school" clearable placehold="--请选择--">
+                        <el-option v-for="item in schoollist" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                      </el-select>
                     </el-form-item>
                     <el-form-item label="年级" prop="grade">
-                      <el-input v-model="basisForm.grade" placeholder="请输入年级"></el-input>
+                      <el-select v-model="basisForm.grade" clearable placehold="--请选择--">
+                        <el-option v-for="item in gradelist" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                      </el-select>
                     </el-form-item>
                     <el-form-item label="性别" prop="sex" class="radio-group">
-                    <el-radio v-model="basisForm.sex" label="man">男</el-radio>
-                    <el-radio v-model="basisForm.sex" label="female">女</el-radio>
+                    <el-radio v-model="basisForm.sex" label="男">男</el-radio>
+                    <el-radio v-model="basisForm.sex" label="女">女</el-radio>
                   </el-form-item>
                   <el-form-item label="出生日期" prop="birthday">
                     <el-date-picker v-model="basisForm.birthday" placeholder="选择出生日期"></el-date-picker>
@@ -35,31 +36,25 @@
                     <el-input v-model="basisForm.major" placeholder="请输入专业"></el-input>
                   </el-form-item>
                     <p class="pclass">请填写你最近一次体质测试的成绩</p>
-                    <el-form-item label="身高" prop="height">
+                    <el-form-item label="身高(厘米/cm)" prop="height">
                       <el-input v-model="basisForm.height" placeholder="请输入身高"></el-input>
-                      <span>(公斤/kg)</span>
                     </el-form-item>
-                    <el-form-item label="体重" prop="weight">
+                    <el-form-item label="体重(公斤/kg)" prop="weight">
                       <el-input v-model="basisForm.weight" placeholder="请输入体重"></el-input>
-                      <span>(厘米/cm)</span>
                     </el-form-item>
-                    <el-form-item label="肺活量" prop="pulmonary">
+                    <el-form-item label="肺活量(毫升/ml)" prop="pulmonary">
                       <el-input v-model="basisForm.pulmonary" placeholder="请输入肺活量"></el-input>
-                      <span>(毫升/ml)</span>
                     </el-form-item>
-                    <el-form-item label="坐位体前屈" prop="sitReach">
+                    <el-form-item label="坐位体前屈(厘米/cm)" prop="sitReach">
                       <el-input v-model="basisForm.sitReach" placeholder="请输入坐位体前屈值"></el-input>
-                      <span>(厘米/cm)</span>
                     </el-form-item>
-                    <el-form-item label="50米" prop="fifty">
+                    <el-form-item label="50米(秒)" prop="fifty">
                       <el-input v-model="basisForm.fifty" placeholder="请输入50米成绩"></el-input>
-                      <span>(秒)</span>
                     </el-form-item>
-                    <el-form-item label="800米/1000米" prop="enduranceRun">
+                    <el-form-item label="800米/1000米(分钟.秒)" prop="enduranceRun">
                       <el-input v-model="basisForm.enduranceRun" placeholder="请输入800米/1000米成绩"></el-input>
-                      <span>(秒)</span>
                       <br>
-                      <span>如果记不起来准确时间，请勾选成绩的范围区间 (单位分/秒) </span>
+                      <span class="tip">如果记不起来准确时间，请勾选成绩的范围区间 (单位分/秒) </span>
                       <br>
                       <div v-if="isBoy">
                         <span>男生: </span>
@@ -82,13 +77,11 @@
                         </el-radio-group>
                       </div>
                     </el-form-item>
-                    <el-form-item label="引体向上次数" prop="upNumber" v-if="isBoy" >
+                    <el-form-item label="引体向上次数(个)" prop="upNumber" v-if="isBoy" >
                       <el-input v-model="basisForm.upNumber" placeholder="请输入引体向上次数"></el-input>
-                      <span>(个)</span>
                     </el-form-item>
-                    <el-form-item label="一分钟仰卧起坐数" prop="upNumber" v-else>
+                    <el-form-item label="一分钟仰卧起坐数(个)" prop="upNumber" v-else>
                       <el-input v-model="basisForm.upNumber" placeholder="请输入仰卧起坐数"></el-input>
-                      <span>(个)</span>
                     </el-form-item>
                   </el-form>
                   <el-button @click="next()">下一页</el-button>
@@ -200,8 +193,8 @@
                     </el-radio-group>
                   </el-form-item>
                   <el-form-item>
-                    <el-button @click="OthersBack()">上一页</el-button>
-                    <el-button @click="OthersNext()">下一页</el-button>
+                    <el-button @click="SchoolBack()">上一页</el-button>
+                    <el-button @click="submit()">提交</el-button>
                   </el-form-item>
                 </el-form>
               </el-col>
@@ -211,7 +204,6 @@
       </el-col>
     </el-row>
   </div>
-  <el-button @click="show()">显示</el-button>
   </div>
 </template>
 
@@ -223,9 +215,9 @@ export default {
       isBasis: true,
       isHealth: false,
       isEmotion: false,
-      isBoy: false,
       isOthers: false,
       isSchool: false,
+      isBoy: true,
       b1: '<3.17',
       b2: '3.18-3.57',
       b3: '3.58-4.52',
@@ -237,10 +229,9 @@ export default {
       g4: '4.45-5.24',
       g5: '>5.24',
       basisForm: {
-        name: '',
-        idnumber: '',
+        school: '',
         grade: '',
-        sex: '1',
+        sex: '男',
         birthday: '',
         nationality: '',
         major: '',
@@ -252,127 +243,84 @@ export default {
         enduranceRun: '',
         upNumber: ''
       },
-      answerlist: [{
-        label: '从没有',
-        name: '从没有'
-      }, {
-        label: '几乎没有',
-        name: '几乎没有'
-      }, {
-        label: '有时有',
-        name: '有时有'
-      }, {
-        label: '经常有',
-        name: '经常有'
-      }, {
-        label: '几乎一直有',
-        name: '几乎一直有'
-      }],
+      schoollist: [
+        {value: '上海大学', label: '上海大学'},
+        {value: '同济大学', label: '同济大学'},
+        {value: '对外经贸大学', label: '对外经贸大学'},
+        {value: '上海健康医学院', label: '上海健康医学院'}
+      ],
+      gradelist: [
+        {value: '大一', label: '大一'},
+        {value: '大二', label: '大二'},
+        {value: '大三', label: '大三'},
+        {value: '大四', label: '大四'},
+        {value: '研究生及以上', label: '研究生及以上'}
+      ],
+      answerlist: [
+        {label: '0', name: '从没有'},
+        {label: '1', name: '几乎没有'},
+        {label: '2', name: '有时有'},
+        {label: '3', name: '经常有'},
+        {label: '4', name: '几乎一直有'}
+      ],
       healthForm: {
-        questionlist: [{
-          label: '对我来说,多走一步都困难',
-          name: 'walk',
-          value: ''
-        }, {
-          label: '对我来说,跑步很困难',
-          name: 'run',
-          value: ''
-        }, {
-          label: '对我来说,参加体育活动或竞赛很困难',
-          name: 'race',
-          value: ''
-        }, {
-          label: '对我来说,提重物很困难',
-          name: 'rise',
-          value: ''
-        }, {
-          label: '对我来说,自己洗澡和淋浴很困难',
-          name: 'bathe',
-          value: ''
-        }, {
-          label: '对我来说,做家务很困难',
-          name: 'housework',
-          value: ''
-        }, {
-          label: '我受伤或者是有疼痛',
-          name: 'hurt',
-          value: ''
-        }, {
-          label: '我精神萎靡不振',
-          name: 'spirit',
-          value: ''
-        }]
+        questionlist: [
+          {label: '对我来说,多走一步都困难', name: 'walk', value: ''},
+          {label: '对我来说,跑步很困难', name: 'run', value: ''},
+          {label: '对我来说,参加体育活动或竞赛很困难', name: 'race', value: ''},
+          {label: '对我来说,提重物很困难', name: 'rise', value: ''},
+          {label: '对我来说,自己洗澡和淋浴很困难', name: 'bathe', value: ''},
+          {label: '对我来说,做家务很困难', name: 'housework', value: ''},
+          {label: '我受伤或者是有疼痛', name: 'hurt', value: ''},
+          {label: '我精神萎靡不振', name: 'spirit', value: ''}
+        ]
       },
       emotionForm: {
-        questionlist: [{
-          label: '我感觉到害怕和恐惧',
-          name: 'fear',
-          value: ''
-        }, {
-          label: '我感觉到悲伤和忧郁',
-          name: 'sad',
-          value: ''
-        }, {
-          label: '我感觉到愤怒',
-          name: 'anger',
-          value: ''
-        }, {
-          label: '我睡眠有问题',
-          name: 'sleep',
-          value: ''
-        }, {
-          label: '我担心将会有什么事发生在我身上',
-          name: 'worry',
-          value: ''
-        }]
+        questionlist: [
+          {label: '我感觉到害怕和恐惧', name: 'fear', value: ''},
+          {label: '我感觉到悲伤和忧郁', name: 'sad', value: ''},
+          {label: '我感觉到愤怒', name: 'anger', value: ''},
+          {label: '我睡眠有问题', name: 'sleep', value: ''},
+          {label: '我担心将会有什么事发生在我身上', name: 'worry', value: ''}
+        ]
       },
       otherForm: {
-        questionlist: [{
-          label: '我同其他小朋友相处有困难',
-          name: 'getAlong',
-          value: ''
-        }, {
-          label: '其他小朋友不想和我交朋友',
-          name: 'makeFriend',
-          value: ''
-        }, {
-          label: '其他小朋友取笑(戏弄)我',
-          name: 'jest',
-          value: ''
-        }, {
-          label: '我不能完成同龄小朋友完成的事情',
-          name: 'failToFinish',
-          value: ''
-        }, {
-          label: '和其他小朋友一起玩耍(运动)时,我感到很困难',
-          name: 'hardToPlay',
-          value: ''
-        }]
+        questionlist: [
+          {label: '我同其他小朋友相处有困难', name: 'getAlong', value: ''},
+          {label: '其他小朋友不想和我交朋友', name: 'makeFriend', value: ''},
+          {label: '其他小朋友取笑(戏弄)我', name: 'jest', value: ''},
+          {label: '我不能完成同龄小朋友完成的事情', name: 'failToFinish', value: ''},
+          {label: '和其他小朋友一起玩耍(运动)时,我感到很困难', name: 'hardToPlay', value: ''}
+        ]
       },
       schoolForm: {
-        questionlist: [{
-          label: '在课堂上,我的注意力很难集中',
-          name: 'concentration',
-          value: ''
-        }, {
-          label: '我容易忘记事情(健忘)',
-          name: 'forgettery',
-          value: ''
-        }, {
-          label: '我很难跟上学校的功课',
-          name: 'keepPace',
-          value: ''
-        }, {
-          label: '我因为身体不舒服缺课',
-          name: 'absentee',
-          value: ''
-        }, {
-          label: '我缺课去(医院)看医生',
-          name: 'doctor',
-          value: ''
-        }]
+        questionlist: [
+          {label: '在课堂上,我的注意力很难集中', name: 'concentration', value: ''},
+          {label: '我容易忘记事情(健忘)', name: 'forgettery', value: ''},
+          {label: '我很难跟上学校的功课', name: 'keepPace', value: ''},
+          {label: '我因为身体不舒服缺课', name: 'absentee', value: ''},
+          {label: '我缺课去(医院)看医生', name: 'doctor', value: ''}
+        ]
       },
       rules: {
+        school: [
+          { required: true, message: '请选择学校', trigger: 'blur' }
+        ],
+        grade: [
+          { required: true, message: '请选择年级', trigger: 'blur' }
+        ],
+        sex: [
+          { required: true, message: '请选择性别', trigger: 'blur' }
+        ],
+        birthday: [
+          { required: true, message: '请选择出生日期', trigger: 'blur' }
+        ],
+        nationality: [
+          { required: true, message: '请输入民族', trigger: 'blur' }
+        ],
+        major: [
+          { required: true, message: '请输入专业类别', trigger: 'blur' }
+        ],
         height: [
           { required: true, message: '请输入身高', trigger: 'blur' }
         ],
@@ -432,21 +380,76 @@ export default {
         ],
         worry: [
           { required: true, message: '请选择情况', trigger: 'blur' }
+        ],
+        getAlong: [
+          { required: true, message: '请选择情况', trigger: 'blur' }
+        ],
+        makeFriend: [
+          { required: true, message: '请选择情况', trigger: 'blur' }
+        ],
+        jest: [
+          { required: true, message: '请选择情况', trigger: 'blur' }
+        ],
+        failToFinish: [
+          { required: true, message: '请选择情况', trigger: 'blur' }
+        ],
+        hardToPlay: [
+          { required: true, message: '请选择情况', trigger: 'blur' }
+        ],
+        concentration: [
+          { required: true, message: '请选择情况', trigger: 'blur' }
+        ],
+        forgettery: [
+          { required: true, message: '请选择情况', trigger: 'blur' }
+        ],
+        keepPace: [
+          { required: true, message: '请选择情况', trigger: 'blur' }
+        ],
+        absentee: [
+          { required: true, message: '请选择情况', trigger: 'blur' }
+        ],
+        doctor: [
+          { required: true, message: '请选择情况', trigger: 'blur' }
         ]
       }
     }
   },
-  created () {
-    this.getSex()
+  watch: {
+    // 如果sex发生改变，这个函数就会运行
+    'basisForm.sex': function (value) {
+      if (value === '男') {
+        this.isBoy = true
+      } else {
+        this.isBoy = false
+      }
+    }
   },
   methods: {
     next () {
-      this.isBasis = false
-      this.isHealth = true
+      var flag = true
+      Object.keys(this.basisForm).forEach(el => {
+        if (this.basisForm[el] === '') {
+          this.$message('请填写所有信息！')
+          flag = false
+        }
+      })
+      if (flag) {
+        this.isBasis = false
+        this.isHealth = true
+      }
     },
     HealthNext () {
-      this.isHealth = false
-      this.isEmotion = true
+      var flag = true
+      this.healthForm.questionlist.forEach(element => {
+        if (element.value === '') {
+          this.$message('请填写所有信息！')
+          flag = false
+        }
+      })
+      if (flag) {
+        this.isHealth = false
+        this.isEmotion = true
+      }
     },
     HealthBack () {
       this.isHealth = false
@@ -457,43 +460,138 @@ export default {
       this.isHealth = true
     },
     EmotionNext () {
-      this.isEmotion = false
-      this.isOthers = true
+      var flag = true
+      this.emotionForm.questionlist.forEach(element => {
+        if (element.value === '') {
+          this.$message('请填写所有信息！')
+          flag = false
+        }
+      })
+      if (flag) {
+        this.isEmotion = false
+        this.isOthers = true
+      }
     },
     OthersBack () {
       this.isOthers = false
       this.isEmotion = true
     },
     OthersNext () {
-      this.isOthers = false
-      this.isSchool = true
+      var flag = true
+      this.otherForm.questionlist.forEach(element => {
+        if (element.value === '') {
+          this.$message('请填写所有信息！')
+          flag = false
+        }
+      })
+      if (flag) {
+        this.isOthers = false
+        this.isSchool = true
+      }
     },
     SchoolBack () {
       this.isSchool = false
       this.isOthers = true
     },
-    // 判断性别
-    getSex () {
-    },
-    show () {
-      console.log(this.healthForm.questionlist)
-      console.log(this.emotionForm.questionlist)
-      console.log(this.otherForm.questionlist)
+    // 提交表单信息(index+value)
+    // submit () {
+    //   var data = []
+    //   Object.keys(this.basisForm).forEach((el, index) => {
+    //     data.push({
+    //       index: index + 1,
+    //       value: this.basisForm[el]
+    //     })
+    //   })
+    //   this.healthForm.questionlist.forEach((element, index) => {
+    //     data.push({
+    //       index: element.name,
+    //       value: element.value
+    //     })
+    //   })
+    //   this.emotionForm.questionlist.forEach((element, index) => {
+    //     data.push({
+    //       index: element.name,
+    //       value: element.value
+    //     })
+    //   })
+    //   this.otherForm.questionlist.forEach((element, index) => {
+    //     data.push({
+    //       index: element.name,
+    //       value: element.value
+    //     })
+    //   })
+    //   this.schoolForm.questionlist.forEach((element, index) => {
+    //     data.push({
+    //       index: element.name,
+    //       value: element.value
+    //     })
+    //   })
+    //   console.log(data)
+    // },
+    // 提交表单(value)
+    submit () {
+      var flag = true
+      this.schoolForm.questionlist.forEach(element => {
+        if (element.value === '') {
+          this.$message('请填写所有信息！')
+          flag = false
+        }
+      })
+      if (flag) {
+        var answer = []
+        Object.keys(this.basisForm).forEach(el => {
+          answer.push(
+            this.basisForm[el]
+          )
+        })
+        this.healthForm.questionlist.forEach(element => {
+          answer.push(
+            element.value
+          )
+        })
+        this.emotionForm.questionlist.forEach(element => {
+          answer.push(
+            element.value
+          )
+        })
+        this.otherForm.questionlist.forEach(element => {
+          answer.push(
+            element.value
+          )
+        })
+        this.schoolForm.questionlist.forEach(element => {
+          answer.push(
+            element.value
+          )
+        })
+        console.log(answer)
+        var formdata = new FormData()
+        formdata.append('qnId', '1')
+        formdata.append('answer', answer)
+        this.$ajax({
+          method: 'POST',
+          url: '/questionnaires/submit',
+          data: formdata,
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json'
+          }
+        })
+        console.log('提交')
+      }
     }
   }
 }
 </script>
 
 <style lang="stylus">
-#basis-card {
-  margin-top: 50px
-}
+.pclass
+  color blue
+  font-size 20px
+  font-weight blod
 
-.pclass{
-  color:blue;
-  font-size:20px;
-  font-weight:blod;
-}
+.tip
+  color red
 
 @media (max-width 768px)
   .radio-group
