@@ -200,8 +200,7 @@
                     </el-radio-group>
                   </el-form-item>
                   <el-form-item>
-                    <el-button @click="OthersBack()">上一页</el-button>
-                    <el-button @click="OthersNext()">下一页</el-button>
+                    <el-button @click="SchoolBack()">上一页</el-button>
                   </el-form-item>
                 </el-form>
               </el-col>
