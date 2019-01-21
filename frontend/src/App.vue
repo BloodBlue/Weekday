@@ -17,31 +17,46 @@
     </el-container>
   </div>
   <div id="app" v-else>
-    <el-container>
-      <el-header>
-      <el-menu :default-active="$route.path" mode="horizontal" router>
-        <el-menu-item index="/" route="/">首页</el-menu-item>
-        <el-submenu index="2">
-          <template slot="title">我的7天活动表</template>
+    <el-container style="border: 1px solid #eee">
+      <el-header style="font-size: 15px; font-family: 微软雅黑;" height="0.8rem">
+        <i class="el-icon-menu" @click="collapse"><span> 我的菜单</span></i>
+        <span style="float: right"> 欢迎你！</span>
+      </el-header>
+      <el-container>
+      <el-aside width="auto" style="background-color: rgb(238, 241, 246)">
+        <el-menu :default-active="$route.path" mode="vertical" id="lastclass" :collapse="isCollapse" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" router>
+          <el-menu-item index="/" route="/">
+          <i class="el-icon-view"></i>
+          <span slot="title">首页</span>
+          </el-menu-item>
+          <el-submenu index="2"><template slot="title">
+            <i class="el-icon-tickets"></i>
+            <span slot="title">我的7天活动表</span>
+            </template>
           <el-menu-item index="2-1" route="/monday">周一</el-menu-item>
-          <el-menu-item index="2-2">选项2</el-menu-item>
-          <el-menu-item index="2-3">选项3</el-menu-item>
-          <el-submenu index="2-4">
-              <template slot="title">选项4</template>
-              <el-menu-item index="2-4-1">选项1</el-menu-item>
-              <el-menu-item index="2-4-2">选项2</el-menu-item>
-              <el-menu-item index="2-4-3">选项3</el-menu-item>
+          <el-menu-item index="2-2" route="/tuesday">周二</el-menu-item>
+          <el-menu-item index="2-3" route="/wednesday">周三</el-menu-item>
+          <el-menu-item index="2-4" route="/thursday">周四</el-menu-item>
+          <el-menu-item index="2-5" route="/friday">周五</el-menu-item>
+          <el-menu-item index="2-6" route="/saturday">周六</el-menu-item>
+          <el-menu-item index="2-7" route="/sunday">周日</el-menu-item>
           </el-submenu>
-        </el-submenu>
-        <el-menu-item index="/question" route="/question">调查问卷</el-menu-item>
-    </el-menu>
-    </el-header>
-    <el-main>
-      <router-view/>
-    </el-main>
-    <el-footer>
-      <p style="text-align: center;"> 问卷系统 2019</p>
-    </el-footer>
+          <el-menu-item index="/question" route="/question">
+          <i class="el-icon-star-off"></i>
+          <span slot="title">调查问卷</span>
+          </el-menu-item>
+          <el-menu-item index="/frequency" route="/frequency">
+          <i class="el-icon-news"></i>
+          <span slot="title">活动频率</span></el-menu-item>
+          </el-menu>
+        </el-aside>
+      <el-main>
+        <router-view/>
+      </el-main>
+      </el-container>
+      <el-footer>
+        <p style="text-align: center;"> 问卷系统 2019</p>
+      </el-footer>
     </el-container>
   </div>
 </template>
@@ -52,17 +67,43 @@ export default {
   name: 'App',
   data () {
     return {
-      isShow: false
+      isShow: false,
+      isCollapse: false,
+      collapseBtnClick: false
     }
   },
   methods: {
     handleSelect (key, keyPath) {
       console.log(key)
       console.log(keyPath)
+    },
+    handleOpen (key, keyPath) {
+      console.log(key, keyPath)
+    },
+    handleClose (key, keyPath) {
+      console.log(key, keyPath)
+    },
+    collapse: function () {
+      this.isCollapse = !this.isCollapse
+      var uiwidth = document.getElementById('lastclass')
+      if (uiwidth.offsetWidth === 0) {
+        uiwidth.style.width = '2.8rem'
+      }
     }
   }
 }
 </script>
 
 <style>
+.el-header {
+    background-color: #B3C0D1;
+    color: #333;
+    line-height: 0.8rem;
+}
+.el-aside {
+    color: #333;
+}
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: 2.8rem;
+  }
 </style>

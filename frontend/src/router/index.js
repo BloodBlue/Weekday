@@ -34,6 +34,11 @@ export default new Router({
       path: '/question',
       name: 'Question',
       component: () => import('@/views/Question')
+    },
+    {
+      path: '/frequency',
+      name: 'frequency',
+      component: () => import('@/views/frequency')
     }
   ]
 })
