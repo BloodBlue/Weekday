@@ -2,94 +2,87 @@
   <div>
     <div v-if="isBasis">
       <el-row type="flex" justify="center">
-        <el-col :span="18">
-          <el-card>
-            <div slot="header" class="clearfix">
-              <span>基本情况</span>
-            </div>
-            <div>
-              <el-row type="flex" justify="center">
-                <el-col :span="16">
-                  <el-form label-position="left" :model="basisForm" :rules="rules" ref="basisForm"  class="label">
-                    <p class="pclass">人口统计学的基本情况 </p>
-                    <el-form-item label="学校" prop="school">
-                      <el-select v-model="basisForm.school" clearable placehold="--请选择--">
-                        <el-option v-for="item in schoollist" :key="item.value" :label="item.label" :value="item.value"></el-option>
-                      </el-select>
-                    </el-form-item>
-                    <el-form-item label="年级" prop="grade">
-                      <el-select v-model="basisForm.grade" clearable placehold="--请选择--">
-                        <el-option v-for="item in gradelist" :key="item.value" :label="item.label" :value="item.value"></el-option>
-                      </el-select>
-                    </el-form-item>
-                    <el-form-item label="性别" prop="sex" class="radio-group">
-                    <el-radio v-model="basisForm.sex" label="男">男</el-radio>
-                    <el-radio v-model="basisForm.sex" label="女">女</el-radio>
-                  </el-form-item>
-                  <el-form-item label="出生日期" prop="birthday">
-                    <el-date-picker v-model="basisForm.birthday" placeholder="选择出生日期"></el-date-picker>
-                  </el-form-item>
-                  <el-form-item label="民族" prop="nationality">
-                    <el-input v-model="basisForm.nationality" placeholder="请输入民族"></el-input>
-                  </el-form-item>
-                  <el-form-item label="专业类别" prop="major">
-                    <el-input v-model="basisForm.major" placeholder="请输入专业"></el-input>
-                  </el-form-item>
-                    <p class="pclass">请填写你最近一次体质测试的成绩</p>
-                    <el-form-item label="身高(厘米/cm)" prop="height">
-                      <el-input v-model="basisForm.height" placeholder="请输入身高"></el-input>
-                    </el-form-item>
-                    <el-form-item label="体重(公斤/kg)" prop="weight">
-                      <el-input v-model="basisForm.weight" placeholder="请输入体重"></el-input>
-                    </el-form-item>
-                    <el-form-item label="肺活量(毫升/ml)" prop="pulmonary">
-                      <el-input v-model="basisForm.pulmonary" placeholder="请输入肺活量"></el-input>
-                    </el-form-item>
-                    <el-form-item label="坐位体前屈(厘米/cm)" prop="sitReach">
-                      <el-input v-model="basisForm.sitReach" placeholder="请输入坐位体前屈值"></el-input>
-                    </el-form-item>
-                    <el-form-item label="50米(秒)" prop="fifty">
-                      <el-input v-model="basisForm.fifty" placeholder="请输入50米成绩"></el-input>
-                    </el-form-item>
-                    <el-form-item label="800米/1000米(分钟.秒)" prop="enduranceRun">
-                      <el-input v-model="basisForm.enduranceRun" placeholder="请输入800米/1000米成绩"></el-input>
-                      <br>
-                      <span class="tip">如果记不起来准确时间，请勾选成绩的范围区间 (单位分/秒) </span>
-                      <br>
-                      <div v-if="isBoy">
-                        <span>男生: </span>
-                      <el-radio-group v-model="basisForm.enduranceRun" class="radio-group">
-                        <el-radio :label="b1" class="radio-item">小于3.17</el-radio>
-                        <el-radio :label="b2" class="radio-item">3.18-3.57</el-radio>
-                        <el-radio :label="b3" class="radio-item">3.58-4.52</el-radio>
-                        <el-radio :label="b4" class="radio-item">4.53-6.12</el-radio>
-                        <el-radio :label="b5" class="radio-item">大于6.12</el-radio>
-                      </el-radio-group>
-                      </div>
-                      <div v-else>
-                        <span>女生: </span>
-                        <el-radio-group v-model="basisForm.enduranceRun" class="radio-group">
-                          <el-radio :label="g1" class="radio-item">小于3.18</el-radio>
-                          <el-radio :label="g2" class="radio-item">3.19-3.57</el-radio>
-                          <el-radio :label="g3" class="radio-item">3.58-4.44</el-radio>
-                          <el-radio :label="g4" class="radio-item">4.45-5.24</el-radio>
-                          <el-radio :label="g5" class="radio-item">大于5.24</el-radio>
-                        </el-radio-group>
-                      </div>
-                    </el-form-item>
-                    <el-form-item label="引体向上次数(个)" prop="upNumber" v-if="isBoy" >
-                      <el-input v-model="basisForm.upNumber" placeholder="请输入引体向上次数"></el-input>
-                    </el-form-item>
-                    <el-form-item label="一分钟仰卧起坐数(个)" prop="upNumber" v-else>
-                      <el-input v-model="basisForm.upNumber" placeholder="请输入仰卧起坐数"></el-input>
-                    </el-form-item>
-                  </el-form>
-                  <el-button @click="next()">下一页</el-button>
-                </el-col>
-              </el-row>
-            </div>
-          </el-card>
-        </el-col>
+        <div>
+          <el-row type="flex" justify="center">
+            <el-col :span="16">
+              <p class="pclass">人口统计学的基本情况 </p>
+              <el-form label-position="left" :model="basisForm" :rules="rules" ref="basisForm"  class="label">
+                <el-form-item label="学校" prop="school">
+                  <el-select v-model="basisForm.school" clearable placehold="--请选择--">
+                    <el-option v-for="item in schoollist" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="年级" prop="grade">
+                  <el-select v-model="basisForm.grade" clearable placehold="--请选择--">
+                    <el-option v-for="item in gradelist" :key="item.value" :label="item.label" :value="item.value"></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="性别" prop="sex" class="radio-group">
+                <el-radio v-model="basisForm.sex" label="男">男</el-radio>
+                <el-radio v-model="basisForm.sex" label="女">女</el-radio>
+              </el-form-item>
+              <el-form-item label="出生日期" prop="birthday">
+                <el-date-picker v-model="basisForm.birthday" placeholder="选择出生日期"></el-date-picker>
+              </el-form-item>
+              <el-form-item label="民族" prop="nationality">
+                <el-input v-model="basisForm.nationality" placeholder="请输入民族"></el-input>
+              </el-form-item>
+              <el-form-item label="专业类别" prop="major">
+                <el-input v-model="basisForm.major" placeholder="请输入专业"></el-input>
+              </el-form-item>
+                <p class="pclass">请填写你最近一次体质测试的成绩</p>
+                <el-form-item label="身高(厘米/cm)" prop="height">
+                  <el-input v-model="basisForm.height" placeholder="请输入身高"></el-input>
+                </el-form-item>
+                <el-form-item label="体重(公斤/kg)" prop="weight">
+                  <el-input v-model="basisForm.weight" placeholder="请输入体重"></el-input>
+                </el-form-item>
+                <el-form-item label="肺活量(毫升/ml)" prop="pulmonary">
+                  <el-input v-model="basisForm.pulmonary" placeholder="请输入肺活量"></el-input>
+                </el-form-item>
+                <el-form-item label="坐位体前屈(厘米/cm)" prop="sitReach">
+                  <el-input v-model="basisForm.sitReach" placeholder="请输入坐位体前屈值"></el-input>
+                </el-form-item>
+                <el-form-item label="50米(秒)" prop="fifty">
+                  <el-input v-model="basisForm.fifty" placeholder="请输入50米成绩"></el-input>
+                </el-form-item>
+                <el-form-item label="800米/1000米(分钟.秒)" prop="enduranceRun">
+                  <el-input v-model="basisForm.enduranceRun" placeholder="请输入800米/1000米成绩"></el-input>
+                  <br>
+                  <p><span style="color:red"><i class="el-icon-info"></i>友情提示：</span>如果记不起来准确时间，请勾选成绩的范围区间 (单位分/秒)</p>
+                  <br>
+                  <div v-if="isBoy">
+                    <span>男生: </span>
+                  <el-radio-group v-model="basisForm.enduranceRun" class="radio-group">
+                    <el-radio :label="b1" class="radio-item">小于3.17</el-radio>
+                    <el-radio :label="b2" class="radio-item">3.18-3.57</el-radio>
+                    <el-radio :label="b3" class="radio-item">3.58-4.52</el-radio>
+                    <el-radio :label="b4" class="radio-item">4.53-6.12</el-radio>
+                    <el-radio :label="b5" class="radio-item">大于6.12</el-radio>
+                  </el-radio-group>
+                  </div>
+                  <div v-else>
+                    <span>女生: </span>
+                    <el-radio-group v-model="basisForm.enduranceRun" class="radio-group">
+                      <el-radio :label="g1" class="radio-item">小于3.18</el-radio>
+                      <el-radio :label="g2" class="radio-item">3.19-3.57</el-radio>
+                      <el-radio :label="g3" class="radio-item">3.58-4.44</el-radio>
+                      <el-radio :label="g4" class="radio-item">4.45-5.24</el-radio>
+                      <el-radio :label="g5" class="radio-item">大于5.24</el-radio>
+                    </el-radio-group>
+                  </div>
+                </el-form-item>
+                <el-form-item label="引体向上次数(个)" prop="upNumber" v-if="isBoy" >
+                  <el-input v-model="basisForm.upNumber" placeholder="请输入引体向上次数"></el-input>
+                </el-form-item>
+                <el-form-item label="一分钟仰卧起坐数(个)" prop="upNumber" v-else>
+                  <el-input v-model="basisForm.upNumber" placeholder="请输入仰卧起坐数"></el-input>
+                </el-form-item>
+              </el-form>
+              <el-button @click="next()">下一页</el-button>
+            </el-col>
+          </el-row>
+        </div>
       </el-row>
     </div>
     <div v-if="isHealth">
@@ -586,9 +579,10 @@ export default {
 
 <style lang="stylus">
 .pclass
-  color blue
+  color orange
   font-size 20px
   font-weight blod
+  font-family "宋体"
 
 .tip
   color red
