@@ -10,7 +10,7 @@
             <el-row type="flex" justify="center">
               <el-col :span="16">
                 <el-form label-position="left" status-icon label-width="100px" :model="regForm" :rules="rules" ref="regForm">
-                  <el-form-item label="学校" prop="schoolName">
+                  <el-form-item label="学校" prop="school_name">
                     <el-select
                     v-model="regForm.schoolName"
                     filterable
@@ -28,7 +28,7 @@
                       </el-option>
                     </el-select>
                   </el-form-item>
-                  <el-form-item label="学号" prop="idNumber">
+                  <el-form-item label="学号" prop="id_number">
                     <el-input v-model="regForm.idNumber" placeholder="请输入学号" style="width:200px"></el-input>
                     <br/>
                   </el-form-item>
@@ -41,12 +41,12 @@
                       </el-option>
                     </el-select>
                   </el-form-item>
-                  <el-form-item label="性别" prop="sex">
-                    <el-radio v-model="regForm.sex" label="man">男</el-radio>
+                  <el-form-item label="性别" prop="gender">
+                    <el-radio v-model="regForm.sex" label="male">男</el-radio>
                     <el-radio v-model="regForm.sex" label="female">女</el-radio>
                   </el-form-item>
                   <el-form-item label="出生日期" prop="birthday">
-                    <el-date-picker v-model="regForm.birthday" placeholder="选择出生日期"></el-date-picker>
+                    <el-date-picker v-model="regForm.birthday" type="date" value-format="yyyy-MM-dd" placeholder="选择出生日期"></el-date-picker>
                   </el-form-item>
                   <el-form-item label="民族" prop="nationality">
                     <el-radio v-model="regForm.nationality" label="Han">汉族</el-radio>
@@ -54,6 +54,9 @@
                   </el-form-item>
                   <el-form-item label="专业类别" prop="major">
                     <el-input v-model="regForm.major" placeholder="请输入专业" style="width:200px"></el-input>
+                  </el-form-item>
+                  <el-form-item label="手机号" prop="mobile_phone">
+                    <el-input v-model="regForm.mobilephone" placeholder="请输入手机号" style="width:200px"></el-input>
                   </el-form-item>
                   <el-form-item label="密码" prop="passWord">
                     <el-input type="password" v-model="regForm.passWord" auto-complete="off" placeholder="请设置8-20位密码" style="width:200px" maxlength="20"></el-input>
@@ -67,6 +70,7 @@
                   </el-form-item>
                 <el-form-item>
                   <el-button type="primary" @click="submitform" >注册</el-button>
+                  <el-button type="password" @click="to('/login')" >登陆</el-button>
                   <el-button @click="reset('regForm')">重置</el-button>
                 </el-form-item>
               </el-form>
@@ -164,7 +168,8 @@ export default {
         major: '',
         passWord: '',
         checkPassword: '',
-        email: ''
+        email: '',
+        mobilephone: ''
       },
       rules: {
         schoolName: [
@@ -210,15 +215,24 @@ export default {
   },
   methods: {
     // 提交表单数据
+    to (url) {
+      this.$router.push(url)
+    },
     submitform () {
       console.log('提交')
       console.log(this.$md5(this.regForm.passWord))
       var formdata = new FormData()
-      formdata.append('school', this.regForm.schoolName)
-      formdata.append('idNumber', this.regForm.idNumber)
+      formdata.append('school_name', this.regForm.schoolName)
+      formdata.append('id_number', this.regForm.idNumber)
       formdata.append('password', this.$md5(this.regForm.passWord))
-      formdata.append('mobile_phone', this.regForm.mobile_phone)
       formdata.append('email', this.regForm.email)
+      formdata.append('gender', this.regForm.sex)
+      formdata.append('name', this.regForm.name)
+      formdata.append('grade', this.regForm.grade)
+      formdata.append('mobile_phone', this.regForm.mobilephone)
+      formdata.append('birthday', this.regForm.birthday)
+      formdata.append('major', this.regForm.major)
+      formdata.append('nationality', this.regForm.nationality)
       this.$ajax({
         method: 'POST',
         url: '/users/register',
@@ -228,6 +242,7 @@ export default {
           'Accept': 'application/json'
         }
       })
+      console.log(formdata)
       // this.$message('注册成功') 还有判断
     },
     // 清空注册信息

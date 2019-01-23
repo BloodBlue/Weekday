@@ -28,17 +28,32 @@ export default new Router({
     {
       path: '/monday',
       name: 'Monday',
-      component: () => import('@/views/Monday')
+      component: () => import('@/views/Monday'),
+      meta: { requireAuth: true }
     },
     {
       path: '/question',
       name: 'Question',
-      component: () => import('@/views/Question')
+      component: () => import('@/views/Question'),
+      meta: { requireAuth: true }
     },
     {
       path: '/frequency',
       name: 'frequency',
-      component: () => import('@/views/frequency')
+      component: () => import('@/views/frequency'),
+      meta: { requireAuth: true }
+    },
+    {
+      path: '/',
+      name: 'App',
+      component: () => import('@/App'),
+      meta: { requireAuth: true }
+    },
+    {
+      path: '/home',
+      name: 'Home',
+      // component: () => import('@/App'),
+      meta: { requireAuth: true }
     }
   ]
 })

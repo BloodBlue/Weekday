@@ -78,8 +78,8 @@
                     </el-form-item>
                     <el-form-item>
                       <div style="text-align:center">
-                      <el-button style="text-align:center" type="primary" @click="submitForm('freForm')" size="medium">提交</el-button>
-                      <el-button style="text-align:center" @click="resetForm('freForm')" size="medium">重置</el-button>
+                      <el-button type="primary" @click="submitForm('freForm')" size="medium">提交</el-button>
+                      <el-button @click="resetForm('freForm')" size="medium" native-type="reset">重置</el-button>
                       </div>
                     </el-form-item>
                   </el-form>

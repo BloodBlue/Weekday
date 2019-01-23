@@ -18,14 +18,17 @@
   </div>
   <div id="app" v-else>
     <el-container style="border: 1px solid #eee">
-      <el-header style="font-size: 15px; font-family: 微软雅黑;" height="0.8rem">
-        <i class="el-icon-menu" @click="collapse"><span> 我的菜单</span></i>
-        <span style="float: right"> 欢迎你！</span>
+      <el-header style="font-size: 15px; font-family: 微软雅黑;" height="0.8rem" v-if="show">
+        <div>
+          <i class="el-icon-menu" @click="collapse"><span> 我的菜单</span></i>
+          <i class="el-icon-menu" @click="exit" style="float: right text-align: right"><span> 退出</span></i>
+          <span style="float: right"> 欢迎你!</span>
+        </div>
       </el-header>
       <el-container>
-      <el-aside width="auto" style="background-color: rgb(238, 241, 246)">
-        <el-menu :default-active="$route.path" mode="vertical" id="lastclass" :collapse="isCollapse" class="el-menu-vertical-demo" @open="handleopen" @close="handleclose" router>
-          <el-menu-item index="/" route="/">
+      <el-aside width="auto" style="background-color: rgb(238, 241, 246)" v-if="show">
+        <el-menu :default-active="$route.path" mode="vertical" id="lastclass" :collapse="isCollapse" class="el-menu-vertical-demo"  router>
+          <el-menu-item index="1" route="/home">
           <i class="el-icon-view"></i>
           <span slot="title">首页</span>
           </el-menu-item>
@@ -54,7 +57,7 @@
         <router-view/>
       </el-main>
       </el-container>
-      <el-footer>
+      <el-footer v-if="show">
         <p style="text-align: center;"> 问卷系统 2019</p>
       </el-footer>
     </el-container>
@@ -69,7 +72,16 @@ export default {
     return {
       isShow: false,
       isCollapse: false,
+      show: true,
       collapseBtnClick: false
+    }
+  },
+  watch: {
+    '$route' () {
+      console.log(this.$route.name)
+      // 不等于登录页面的时候为true
+      if (this.$route.name === 'Login' || this.$route.name === 'Register') { this.show = false }
+      if (this.$route.name === 'frequency' || this.$route.name === 'Question' || this.$route.name === 'Monday' || this.$route.name === 'Home') { this.show = true }
     }
   },
   methods: {
@@ -77,18 +89,16 @@ export default {
       console.log(key)
       console.log(keyPath)
     },
-    handleOpen (key, keyPath) {
-      console.log(key, keyPath)
-    },
-    handleClose (key, keyPath) {
-      console.log(key, keyPath)
-    },
     collapse: function () {
       this.isCollapse = !this.isCollapse
       var uiwidth = document.getElementById('lastclass')
       if (uiwidth.offsetWidth === 0) {
         uiwidth.style.width = '2.8rem'
       }
+    },
+    exit: function () {
+      localStorage.removeItem('token')
+      this.$router.push('/login')
     }
   }
 }

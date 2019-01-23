@@ -65,39 +65,37 @@ export default {
         return this.$message.error('密码不能为空！请输入完整信息！')
       }
       var params = new URLSearchParams()
-      params.append('username', this.loginForm.username)
+      params.append('email', this.loginForm.username)
       params.append('password', this.$md5(this.loginForm.password))
-      this.$ajax({
-        method: 'post',
-        url: 'http://106.14.140.30:5000/login',
-        data: params,
-        dataType: 'jsonp',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Accept': 'application/json'
+      this.$ajax.post('/users/login', params, {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'}}
+      ).then((response) => {
+        console.log(response)
+        console.log(response.data)
+        console.log(response.data.data)
+        console.log(response.data.msg)
+        if (response.status === 200) { // 登录成功的页面
+          this.$store.commit('setToken', response.data.data)
+          console.log('token is set to:', this.$store.state.token)
+          localStorage.setItem('userName', this.loginForm.username)
+          localStorage.token = response.data.data.token
+          this.$emit('usersignin', this.loginForm.username)
+          this.$message({
+            title: '提示信息',
+            message: '恭喜你，登录成功',
+            type: 'success'
+          })
+          // this.$emit('isShow', false);
+          this.$router.push('/home')
+          // this.methods.to('/')// 需要商量一下跳转到那一个页面
+        } else {
+          this.$message({
+            message: '用户名或密码错误，请重新输入！',
+            type: 'warning'
+          })
+          this.loginForm.password = ''
         }
       })
-        .then(function (response) {
-          console.log(response)
-          console.log(response.data)
-          console.log(response.data.data)
-          console.log(response.data.msg)
-          if (this.response.data.status === 1) { // 登录成功的页面
-            this.$message({
-              message: '恭喜你，登录成功',
-              type: 'success'
-            })
-            this.methods.to('/')// 需要商量一下跳转到那一个页面
-          }
-          if (this.status_login === 2) { // 账户和密码输入错误的页面
-            this.$message({
-              message: '用户名或密码错误，请重新输入！',
-              type: 'warning'
-            })
-            this.loginForm.username = ''
-            this.loginForm.password = ''
-          }
-        })
         .catch(function (error) {
           console.log(error)
         })
