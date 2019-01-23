@@ -563,11 +563,10 @@ export default {
         formdata.append('answer', answer)
         this.$ajax({
           method: 'POST',
-          url: '/questionnaires/submit',
+          url: '/questionnaires/submit_phase1',
           data: formdata,
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/json'
+            'Authorization': localStorage.token
           }
         })
         console.log('提交')
