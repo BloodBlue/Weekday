@@ -140,6 +140,7 @@ export default {
         withCredentials: true
       })
         .then(val => {
+          console.log(val)
           this.day = val.data.data.sevendays
         })
       console.log(Object.keys(this.day))
