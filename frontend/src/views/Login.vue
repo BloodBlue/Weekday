@@ -74,7 +74,7 @@ export default {
         console.log(response.data)
         console.log(response.data.data)
         console.log(response.data.msg)
-        if (response.status === 200) { // 登录成功的页面
+        if (response.data.status === 200) { // 登录成功的页面
           this.$store.commit('setToken', response.data.data)
           console.log('token is set to:', this.$store.state.token)
           localStorage.setItem('userName', this.loginForm.username)

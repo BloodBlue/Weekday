@@ -46,13 +46,12 @@ export default new Router({
     {
       path: '/',
       name: 'App',
-      component: () => import('@/App'),
+      redirect: '/login',
       meta: { requireAuth: true }
     },
     {
       path: '/home',
       name: 'Home',
-      // component: () => import('@/App'),
       meta: { requireAuth: true }
     }
   ]
