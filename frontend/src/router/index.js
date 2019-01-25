@@ -47,10 +47,7 @@ export default new Router({
     {
       path: '/home',
       name: 'Home',
-<<<<<<< HEAD
       component: () => import('@/views/Home'),
-=======
->>>>>>> ba41add092d3af4cd0766cc345524ccc4a5d1f1c
       meta: { requireAuth: true }
     }
   ]
