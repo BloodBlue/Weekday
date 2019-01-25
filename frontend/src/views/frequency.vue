@@ -225,8 +225,22 @@ export default {
         ], */
         heavy: [
           {required: true, message: '请选择次数', trigger: 'change'}
+        ],
+        medheavy: [
+          {required: true, message: '请选择次数', trigger: 'change'}
+        ],
+        walk: [
+          {required: true, message: '请选择次数', trigger: 'change'}
+        ],
+        fittime: [
+          {required: true, message: '请选择次数', trigger: 'change'}
         ]
       }
+    }
+  },
+  computed: {
+    comoxytime: function () {
+      return Number(this.freForm.oxytimemin) + 60 * Number(this.freForm.oxytimehour)
     }
   },
   methods: {
@@ -239,12 +253,16 @@ export default {
           var answer = []
           answer.push(this.freForm.sport.join(' '))
           answer.push(this.freForm.heavy)
-          answer.push(this.freForm.heavytime)
+          var heavytime = Number(this.freForm.heavytimemin) + 60 * Number(this.freForm.heavytimehour)
+          answer.push(heavytime)
           answer.push(this.freForm.medheavy)
-          answer.push(this.freForm.medheavytime)
+          var medheavytime = Number(this.freForm.medheavytimemin) + 60 * Number(this.freForm.medheavytimehour)
+          answer.push(medheavytime)
           answer.push(this.freForm.walk)
-          answer.push(this.freForm.walktime)
-          answer.push(this.freForm.oxytime)
+          var walktime = Number(this.freForm.walktimemin) + 60 * Number(this.freForm.walktimehour)
+          answer.push(walktime)
+          var oxytime = Number(this.freForm.oxytimemin) + 60 * Number(this.freForm.oxytimehour)
+          answer.push(oxytime)
           answer.push(this.freForm.fittime)
           var freformdata = new FormData()
           freformdata.append('answer', answer)
