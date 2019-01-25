@@ -40,7 +40,7 @@
         <router-view/>
       </el-main>
       </el-container>
-      <el-footer v-if="show">
+      <el-footer>
         <p style="text-align: center;"> 问卷系统 2019</p>
       </el-footer>
     </el-container>

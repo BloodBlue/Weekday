@@ -5,11 +5,10 @@
         <div>
           <el-row type="flex" justify="space-around">
               <el-col :span="22">
-                <div class="grid-content">
-                  <el-form  label-position="left" :model="freForm" ref="freForm">
+                  <el-form :model="freForm" :rules="rules" label-position="left" ref="freForm">
                     <p id="frepclass01">以下题目考察您体力活动内容、强度及频率</p>
                     <hr color=grey size=2>
-                    <el-form-item :label="freForm.f1" prop="freForm.sport" class="sport">
+                    <el-form-item :label="freForm.f1" prop="sport" class="sport">
                       <br/>
                       <el-checkbox-group v-model="freForm.sport" :min=0 :max=5>
                         <el-checkbox v-for="sport in freForm.sportlist" :key="sport.name" :label="sport.label" :name="freForm.sport">{{sport.name}}</el-checkbox>
@@ -20,13 +19,13 @@
                      </el-form-item>
                      <p id="frepclass">请您根据过去七天的实际情况， 完成以下问题</p>
                      <hr color=grey size=2>
-                    <el-form-item :label="freForm.f2" prop="freForm.heavy" class="heavy">
+                    <el-form-item :label="freForm.f2" prop="heavy" class="heavy">
                       <br/>
                       <p><span style="color:red"><i class="el-icon-info"></i>友情提示：</span>所谓剧烈的体力活动是指每次至少10分钟、需要大力气完成、感到呼吸急促或较安静状态明显增强、以及心跳明显加快的活动。</p>
-                      <el-input-number size="small" v-model="freForm.heavy" @change="handleChange" :min="0"></el-input-number>
+                      <el-input-number size="small" v-model="freForm.heavy" :min="0" :step="1"></el-input-number>
                       <span>次/周</span>
                      </el-form-item>
-                    <el-form-item :label="freForm.f3" prop="freForm.heavytime" class="heavy">
+                    <el-form-item :label="freForm.f3" prop="heavytime" class="heavy">
                       <br/>
                       <el-input-number size="small" v-model="freForm.heavytimehour" @change="handleChange" :min="0" max="12"></el-input-number>
                       <span>小时</span>
@@ -34,13 +33,13 @@
                       <span>分钟/次</span>
                      </el-form-item>
                     <hr color=grey size=2>
-                    <el-form-item :label="freForm.f4" prop="freForm.medheavy" class="heavy">
+                    <el-form-item :label="freForm.f4" prop="medheavy" class="heavy">
                       <br/>
                       <p><span style="color:red"><i class="el-icon-info"></i>友情提示：</span>所谓中等强度的体力活动是指每次至少 10 分钟、需要中等力气完成、呼吸较安静时稍微增强，以及心跳 稍微加快的活动；某项活动，比如打篮球有可能是中等强度，也有可能是大强度；比如太极拳推手和对抗 练习，也可能是中等强度运动或大强度运动，请根据你的主观感受填写。</p>
-                      <el-input-number size="small" v-model="freForm.heavy" @change="handleChange" :min="0"></el-input-number>
+                      <el-input-number size="small" v-model="freForm.medheavy" @change="handleChange" :min="0"></el-input-number>
                       <span>次/周</span>
                      </el-form-item>
-                    <el-form-item :label="freForm.f5" prop="freForm.medheavytime" class="heavy">
+                    <el-form-item :label="freForm.f5" prop="medheavytime" class="heavy">
                       <br/>
                       <el-input-number size="small" v-model="freForm.medheavytimehour" @change="handleChange" :min="0" max="12"></el-input-number>
                       <span>小时</span>
@@ -48,13 +47,13 @@
                       <span>分钟/次</span>
                      </el-form-item>
                     <hr color=grey size=2>
-                    <el-form-item :label="freForm.f6" prop="freForm.walk" class="heavy">
+                    <el-form-item :label="freForm.f6" prop="walk" class="heavy">
                       <br/>
                       <p><span style="color:red"><i class="el-icon-info"></i>提示：</span>包括在家或工作场所、外出步行以及闲暇时间的散步、娱乐、锻炼等等各种生活状态下的步行活动。</p>
                       <el-input-number size="small" v-model="freForm.walk" @change="handleChange" :min="0"></el-input-number>
                       <span>次/天</span>
                      </el-form-item>
-                    <el-form-item :label="freForm.f7" prop="freForm.walktime" class="heavy">
+                    <el-form-item :label="freForm.f7" prop="walktime" class="heavy">
                       <br/>
                       <el-input-number size="small" v-model="freForm.walktimehour" @change="handleChange" :min="0" max="12"></el-input-number>
                       <span>小时</span>
@@ -62,16 +61,16 @@
                       <span>分钟/次</span>
                      </el-form-item>
                     <hr color=grey size=2>
-                    <el-form-item :label="freForm.f8" prop="freForm.walktime" class="heavy">
+                    <el-form-item :label="freForm.f8" prop="oxytime" class="heavy">
                       <br/>
                       <p><span style="color:red"><i class="el-icon-info"></i>友情提示：</span>有氧运动指需要中等力气完成、呼吸较安静时稍微增强，以及心跳稍微加快的活动…….. </p>
-                      <el-input-number size="small" v-model="freForm.walktimehour" @change="handleChange" :min="0" max="12"></el-input-number>
+                      <el-input-number size="small" v-model="freForm.oxytimehour" @change="handleChange" :min="0" max="12"></el-input-number>
                       <span>小时</span>
-                      <el-input-number size="small" v-model="freForm.walktimemin" @change="handleChange" :min="0" max="59"></el-input-number>
+                      <el-input-number size="small" v-model="freForm.oxytimemin" @change="handleChange" :min="0" max="59"></el-input-number>
                       <span>分钟</span>
                      </el-form-item>
                     <hr color=grey size=2>
-                    <el-form-item :label="freForm.f9" prop="freForm.fittime">
+                    <el-form-item :label="freForm.f9" prop="fittime">
                       <el-radio-group v-model="freForm.fittime">
                         <el-radio v-for="time in freForm.fittimelist" :key="time.name" :label="time.label" :name="freForm.fittime">{{time.name}}</el-radio>
                       </el-radio-group>
@@ -83,7 +82,6 @@
                       </div>
                     </el-form-item>
                   </el-form>
-                </div>
               </el-col>
           </el-row>
         </div>
@@ -121,6 +119,9 @@ export default {
         walktime: '',
         walktimehour: '',
         walktimemin: '',
+        oxytime: '',
+        oxytimehour: '',
+        oxytimemin: '',
         fittime: '',
         fittimelist: [{
           label: '0',
@@ -217,6 +218,14 @@ export default {
           label: '24',
           name: '高尔夫'
         }]
+      },
+      rules: {
+        /* sport: [
+          {sport: 'array', required: true, message: '请选择运动', trigger: 'blur'}
+        ], */
+        heavy: [
+          {required: true, message: '请选择次数', trigger: 'change'}
+        ]
       }
     }
   },
@@ -225,11 +234,34 @@ export default {
       console.log(value)
     },
     submitForm (freForm) {
-      this.$refs[freForm].validate((valid) => {
+      this.$refs['freForm'].validate((valid) => {
         if (valid) {
+          var answer = []
+          answer.push(this.freForm.sport.join(' '))
+          answer.push(this.freForm.heavy)
+          answer.push(this.freForm.heavytime)
+          answer.push(this.freForm.medheavy)
+          answer.push(this.freForm.medheavytime)
+          answer.push(this.freForm.walk)
+          answer.push(this.freForm.walktime)
+          answer.push(this.freForm.oxytime)
+          answer.push(this.freForm.fittime)
+          var freformdata = new FormData()
+          freformdata.append('answer', answer)
+          this.$ajax({
+            method: 'POST',
+            url: '/questionnaires/submit_phase2',
+            data: freformdata,
+            headers: {
+              'Authorization': localStorage.token,
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Accept': 'application/json'
+            }
+          })
+          console.log(answer)
           alert('submit!')
         } else {
-          console.log('error submit!!')
+          console.log('error submit!')
           return false
         }
       })

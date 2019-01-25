@@ -71,8 +71,8 @@ export default {
       // })
     },
     // 获取题目对应title
-    get_title () {
-      console()
+    get_title (num) {
+      return this.dict[num]
     },
     // 获取状态
     getStatus () {

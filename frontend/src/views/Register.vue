@@ -66,7 +66,7 @@
                   </el-form-item>
                 <el-form-item>
                   <el-button type="primary" @click="submitform" >注册</el-button>
-                  <el-button type="password" @click="to('/login')" >登陆</el-button>
+                  <el-button type="password" @click="to('/login')" >返回</el-button>
                   <el-button @click="reset('regForm')">重置</el-button>
                 </el-form-item>
               </el-form>
