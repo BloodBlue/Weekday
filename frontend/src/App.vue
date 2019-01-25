@@ -1,21 +1,5 @@
 <template>
-  <div id="app" v-if="isShow">
-    <el-container>
-      <el-header>
-      <el-breadcrumb separator="/" replace="true">
-        <el-breadcrumb-item :to="{ path: '/login' }">登录</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{path: '/register'}">活动管理</el-breadcrumb-item>
-      </el-breadcrumb>
-    </el-header>
-    <el-main>
-      <router-view/>
-    </el-main>
-    <el-footer class="footer">
-      <p style="text-align: center;"> 问卷系统 2019</p>
-    </el-footer>
-    </el-container>
-  </div>
-  <div id="app" v-else>
+  <div id="app">
     <el-container style="border: 1px solid #eee">
       <el-header style="font-size: 15px; font-family: 微软雅黑;" height="0.8rem" v-if="show">
         <div>
@@ -69,7 +53,6 @@ export default {
   name: 'App',
   data () {
     return {
-      isShow: false,
       isCollapse: false,
       show: true,
       collapseBtnClick: false

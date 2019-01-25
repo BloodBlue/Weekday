@@ -130,7 +130,6 @@ export default {
     }
   },
   methods: {
-    // 提交表单数据
     con () {
       this.$ajax({
         url: '/questionnaires/7d',
@@ -141,6 +140,7 @@ export default {
         withCredentials: true
       })
         .then(val => {
+          console.log(val)
           this.day = val.data.data.sevendays
         })
       console.log(Object.keys(this.day))
@@ -148,8 +148,12 @@ export default {
         if (element === '0') {
           console.log('1')
         }
+        if (element === '5') {
+          console.log('2')
+        }
       })
     },
+    // 提交表单数据
     submitform () {
       console.log('提交')
       var answer = []
