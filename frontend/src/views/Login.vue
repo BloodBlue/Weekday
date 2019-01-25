@@ -1,17 +1,17 @@
 <template>
   <div>
     <el-row type="flex" justify="center">
-      <el-col :span="12">
+      <el-col :span="18">
         <el-card id="login-card">
           <div slot="header" class="clearfix">
             <span>登录</span>
           </div>
           <div>
             <el-row type="flex" justify="center">
-              <el-col :span="16">
-                <el-form label-position="left" label-width="80px" :model="loginForm" :rules="rules" ref="loginForm">
+              <el-col :span="18">
+                <el-form label-position="left" :model="loginForm" :rules="rules" ref="loginForm">
                   <el-form-item label="用户名" prop="username">
-                    <el-input placeholder="请输入电话号码或者邮箱" v-model="loginForm.username" ></el-input>
+                    <el-input placeholder="请输入邮箱" v-model="loginForm.username" ></el-input>
                   </el-form-item>
                   <el-form-item label="密码" prop="password" >
                     <el-input type="password" v-model="loginForm.password" ></el-input>
@@ -35,6 +35,17 @@
 export default {
   name: 'Login',
   data () {
+    let passCheck = (rule, value, callback) => {
+      if (value === '') {
+        return callback(new Error('请输入密码'))
+      } else if (value.toString().length < 8) {
+        return callback(new Error('密码不得少于8位'))
+      } else if (value.toString().length > 20) {
+        return callback(new Error('密码不得多于20位'))
+      } else {
+        callback()
+      }
+    }
     return {
       loginForm: {
         username: '',
@@ -45,7 +56,7 @@ export default {
           { required: true, message: '请输入用户名' }
         ],
         password: [
-          { required: true, message: '请输入密码' }
+          { required: true, validator: passCheck }
         ]
       }
     }
@@ -79,6 +90,7 @@ export default {
           console.log('token is set to:', this.$store.state.token)
           localStorage.setItem('userName', this.loginForm.username)
           localStorage.token = response.data.data.token
+          console.log(localStorage.token)
           this.$emit('usersignin', this.loginForm.username)
           this.$message({
             title: '提示信息',

@@ -5,7 +5,6 @@
       <el-breadcrumb separator="/" replace="true">
         <el-breadcrumb-item :to="{ path: '/login' }">登录</el-breadcrumb-item>
         <el-breadcrumb-item :to="{path: '/register'}">活动管理</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{path: '/li'}">1</el-breadcrumb-item>
       </el-breadcrumb>
     </el-header>
     <el-main>

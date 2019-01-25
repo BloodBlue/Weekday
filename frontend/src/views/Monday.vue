@@ -4,6 +4,7 @@
       <el-col :span="22">
         <p id="monp">周一活动日记</p>
         <div style="text-align:center;">
+          <el-button @click="con()">con</el-button>
                   <el-form :model="monForm" ref="monForm">
                     <el-form-item :label="monForm.m1" prop="play" class="f">
                       <br/>
@@ -104,6 +105,7 @@ export default {
   name: 'Monday',
   data () {
     return {
+      day: '',
       monForm: {
         m1: '使用电子设备用于娱乐(看手机/视频／打游戏)',
         play_hour: '',
@@ -129,21 +131,57 @@ export default {
   },
   methods: {
     // 提交表单数据
-    submitform () {
-      console.log('提交')
-      var formdata = new FormData()
-      formdata.append('play_hour', this.monForm.play_hour)
-      formdata.append('play_minute', this.monForm.play_minute)
+    con () {
       this.$ajax({
-        method: 'POST',
-        url: '/users/monday',
-        data: formdata,
+        url: '/questionnaires/7d',
+        method: 'GET',
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Accept': 'application/json'
+          'Authorization': localStorage.token
+        },
+        withCredentials: true
+      })
+        .then(val => {
+          this.day = val.data.data.sevendays
+        })
+      console.log(Object.keys(this.day))
+      Object.keys(this.day).forEach(element => {
+        if (element === '0') {
+          console.log('1')
         }
       })
-      // this.$message('注册成功') 还有判断
+    },
+    submitform () {
+      console.log('提交')
+      var answer = []
+      var formdata = new FormData()
+      var play = Number(this.monForm.play_minute) + 60 * Number(this.monForm.play_hour)
+      answer.push(play)
+      var workWithComputer = Number(this.monForm.workWithComputer_minute) + 60 * Number(this.monForm.workWithComputer_hour)
+      answer.push(workWithComputer)
+      var work = Number(this.monForm.work_minute) + 60 * Number(this.monForm.work_hour)
+      answer.push(work)
+      var read = Number(this.monForm.read_minute) + 60 * Number(this.monForm.read_hour)
+      answer.push(read)
+      var classroom = Number(this.monForm.class_minute) + 60 * Number(this.monForm.class_hour)
+      answer.push(classroom)
+      var out = Number(this.monForm.out_minute) + 60 * Number(this.monForm.out_hour)
+      answer.push(out)
+      var music = Number(this.monForm.music_minute) + 60 * Number(this.monForm.music_hour)
+      answer.push(music)
+      var chat = Number(this.monForm.chat_minute) + 60 * Number(this.monForm.chat_hour)
+      answer.push(chat)
+      var other = Number(this.monForm.other_minute) + 60 * Number(this.monForm.other_hour)
+      answer.push(other)
+      console.log(answer)
+      formdata.append('answer', answer)
+      this.$ajax({
+        method: 'POST',
+        url: '/questionnaires/7d',
+        data: formdata,
+        headers: {
+          'Authorization': localStorage.token
+        }
+      })
     },
     // 清空周一信息
     reset (formName) {

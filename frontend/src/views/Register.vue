@@ -48,10 +48,6 @@
                   <el-form-item label="出生日期" prop="birthday">
                     <el-date-picker v-model="regForm.birthday" type="date" value-format="yyyy-MM-dd" placeholder="选择出生日期"></el-date-picker>
                   </el-form-item>
-                  <el-form-item label="民族" prop="nationality">
-                    <el-radio v-model="regForm.nationality" label="Han">汉族</el-radio>
-                    <el-radio v-model="regForm.nationality" label="Not">非汉族</el-radio>
-                  </el-form-item>
                   <el-form-item label="专业类别" prop="major">
                     <el-input v-model="regForm.major" placeholder="请输入专业" style="width:200px"></el-input>
                   </el-form-item>
@@ -136,25 +132,25 @@ export default {
       }
     }
     return {
-      SchoolList: [{value: '1', label: '上海大学'},
-        {value: '2', label: '同济大学'},
-        {value: '3', label: '对外经贸大学'},
-        {value: '4', label: '上海健康医学院'}
+      SchoolList: [{value: '上海大学', label: '上海大学'},
+        {value: '同济大学', label: '同济大学'},
+        {value: '对外经贸大学', label: '对外经贸大学'},
+        {value: '上海健康医学院', label: '上海健康医学院'}
       ],
       gradelist: [{
-        value: '1',
+        value: '大一',
         label: '大一'
       }, {
-        value: '2',
+        value: '大二',
         label: '大二'
       }, {
-        value: '3',
+        value: '大三',
         label: '大三'
       }, {
-        value: '4',
+        value: '大四',
         label: '大四'
       }, {
-        value: '5',
+        value: '研究生及以上',
         label: '研究生及以上'
       }],
       regForm: {
@@ -164,7 +160,6 @@ export default {
         grade: '',
         sex: '1',
         birthday: '',
-        nationality: '',
         major: '',
         passWord: '',
         checkPassword: '',
@@ -190,9 +185,6 @@ export default {
         birthday: [
           { required: true, message: '请选择出生日期', trigger: 'blur' }
         ],
-        nationality: [
-          { required: true, message: '请选择民族', trigger: 'blur' }
-        ],
         major: [
           { required: true, message: '请输入专业', trigger: 'blur' }
         ],
@@ -207,9 +199,6 @@ export default {
         ]
       }
     }
-  },
-  created () {
-    this.getSchoolList()
   },
   watch: {
   },
@@ -253,24 +242,6 @@ export default {
     },
     submitSchool () {
       console.log(this.regForm.schoolName)
-    },
-    getSchoolList () {
-      this.$ajax({
-        url: '/schools',
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json;charset=utf-8'
-        },
-        withCredentials: true
-      })
-        .then(val => {
-          for (let key in val.data) {
-            this.SchoolList.push({
-              'value': key,
-              'label': val.data[key]
-            })
-          }
-        })
     }
   }
 
