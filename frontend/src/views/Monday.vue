@@ -130,7 +130,6 @@ export default {
     }
   },
   methods: {
-    // 提交表单数据
     con () {
       this.$ajax({
         url: '/questionnaires/7d',
@@ -148,8 +147,12 @@ export default {
         if (element === '0') {
           console.log('1')
         }
+        if (element === '5') {
+          console.log('2')
+        }
       })
     },
+    // 提交表单数据
     submitform () {
       console.log('提交')
       var answer = []
