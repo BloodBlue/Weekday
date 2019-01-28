@@ -561,12 +561,26 @@ export default {
         var formdata = new FormData()
         formdata.append('qnId', '1')
         formdata.append('answer', answer)
-        this.$ajax({
-          method: 'POST',
-          url: '/questionnaires/submit_phase1',
-          data: formdata,
-          headers: {
-            'Authorization': localStorage.token
+        this.$ajax.post('/questionnaires/submit_phase1', formdata, {
+          headers: {'Authorization': localStorage.token}}
+        ).then((response) => {
+          console.log(response.data.status)
+          if (response.data.status === 200) {
+            this.$message({
+              title: '提示信息',
+              message: '提交成功',
+              type: 'success'
+            })
+            this.$router.push('/home')
+          }
+          if (response.data.status === 400) {
+            let that = response.data.msg
+            console.log(response.data.status)
+            this.$message({
+              title: '提示信息',
+              message: '提交失败 ' + that,
+              type: 'error'
+            })
           }
         })
           .then(res => {

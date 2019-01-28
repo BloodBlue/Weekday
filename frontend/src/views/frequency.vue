@@ -2,7 +2,7 @@
 <div>
   <el-row type="flex" justify="space-around">
     <el-col :span="22">
-        <div>
+        <div v-if="freForm.isshow">
           <el-row type="flex" justify="space-around">
               <el-col :span="22">
                   <el-form :model="freForm" :rules="rules" label-position="left" ref="freForm">
@@ -10,9 +10,9 @@
                     <hr color=grey size=2>
                     <el-form-item :label="freForm.f1" prop="sport" class="sport">
                       <br/>
-                      <el-checkbox-group v-model="freForm.sport" :min=0 :max=5>
-                        <el-checkbox v-for="sport in freForm.sportlist" :key="sport.name" :label="sport.label" :name="freForm.sport">{{sport.name}}</el-checkbox>
-                        <el-checkbox :label="freForm.othersport" :name="freForm.sport">其他：
+                      <el-checkbox-group v-model="freForm.sport" :min="0" :max="5">
+                        <el-checkbox v-for="sport in freForm.sportlist" :key="sport.name" :label="sport.label" name="sport">{{sport.name}}</el-checkbox>
+                        <el-checkbox :label="freForm.othersport" name="sport">其他：
                         <el-input size="mini" v-model="freForm.othersport" placeholder="请输入内容" clearable></el-input>
                         </el-checkbox>
                       </el-checkbox-group>
@@ -22,14 +22,14 @@
                     <el-form-item :label="freForm.f2" prop="heavy" class="heavy">
                       <br/>
                       <p><span style="color:red"><i class="el-icon-info"></i>友情提示：</span>所谓剧烈的体力活动是指每次至少10分钟、需要大力气完成、感到呼吸急促或较安静状态明显增强、以及心跳明显加快的活动。</p>
-                      <el-input-number size="small" v-model="freForm.heavy" :min="0" :step="1"></el-input-number>
+                      <el-input-number size="small" v-model="freForm.heavy" :min="0"></el-input-number>
                       <span>次/周</span>
                      </el-form-item>
                     <el-form-item :label="freForm.f3" prop="heavytime" class="heavy">
                       <br/>
-                      <el-input-number size="small" v-model="freForm.heavytimehour" @change="handleChange" :min="0" max="12"></el-input-number>
+                      <el-input-number size="small" v-model="freForm.heavytimehour" @change="handleChange" :min="0" :max="12"></el-input-number>
                       <span>小时</span>
-                      <el-input-number size="small" v-model="freForm.heavytimemin" @change="handleChange" :min="0" max="59"></el-input-number>
+                      <el-input-number size="small" v-model="freForm.heavytimemin" @change="handleChange" :min="0" :max="59"></el-input-number>
                       <span>分钟/次</span>
                      </el-form-item>
                     <hr color=grey size=2>
@@ -41,9 +41,9 @@
                      </el-form-item>
                     <el-form-item :label="freForm.f5" prop="medheavytime" class="heavy">
                       <br/>
-                      <el-input-number size="small" v-model="freForm.medheavytimehour" @change="handleChange" :min="0" max="12"></el-input-number>
+                      <el-input-number size="small" v-model="freForm.medheavytimehour" @change="handleChange" :min="0" :max="12"></el-input-number>
                       <span>小时</span>
-                      <el-input-number size="small" v-model="freForm.medheavytimemin" @change="handleChange" :min="0" max="59"></el-input-number>
+                      <el-input-number size="small" v-model="freForm.medheavytimemin" @change="handleChange" :min="0" :max="59"></el-input-number>
                       <span>分钟/次</span>
                      </el-form-item>
                     <hr color=grey size=2>
@@ -55,24 +55,24 @@
                      </el-form-item>
                     <el-form-item :label="freForm.f7" prop="walktime" class="heavy">
                       <br/>
-                      <el-input-number size="small" v-model="freForm.walktimehour" @change="handleChange" :min="0" max="12"></el-input-number>
+                      <el-input-number size="small" v-model="freForm.walktimehour" @change="handleChange" :min="0" :max="12"></el-input-number>
                       <span>小时</span>
-                      <el-input-number size="small" v-model="freForm.walktimemin" @change="handleChange" :min="0" max="59"></el-input-number>
+                      <el-input-number size="small" v-model="freForm.walktimemin" @change="handleChange" :min="0" :max="59"></el-input-number>
                       <span>分钟/次</span>
                      </el-form-item>
                     <hr color=grey size=2>
                     <el-form-item :label="freForm.f8" prop="oxytime" class="heavy">
                       <br/>
                       <p><span style="color:red"><i class="el-icon-info"></i>友情提示：</span>有氧运动指需要中等力气完成、呼吸较安静时稍微增强，以及心跳稍微加快的活动…….. </p>
-                      <el-input-number size="small" v-model="freForm.oxytimehour" @change="handleChange" :min="0" max="12"></el-input-number>
+                      <el-input-number size="small" v-model="freForm.oxytimehour" @change="handleChange" :min="0" :max="12"></el-input-number>
                       <span>小时</span>
-                      <el-input-number size="small" v-model="freForm.oxytimemin" @change="handleChange" :min="0" max="59"></el-input-number>
+                      <el-input-number size="small" v-model="freForm.oxytimemin" @change="handleChange" :min="0" :max="59"></el-input-number>
                       <span>分钟</span>
                      </el-form-item>
                     <hr color=grey size=2>
                     <el-form-item :label="freForm.f9" prop="fittime">
                       <el-radio-group v-model="freForm.fittime">
-                        <el-radio v-for="time in freForm.fittimelist" :key="time.name" :label="time.label" :name="freForm.fittime">{{time.name}}</el-radio>
+                        <el-radio v-for="time in freForm.fittimelist" :key="time.name" :label="time.label" name="fittime">{{time.name}}</el-radio>
                       </el-radio-group>
                     </el-form-item>
                     <el-form-item>
@@ -85,6 +85,9 @@
               </el-col>
           </el-row>
         </div>
+        <div v-if="freForm.show">
+          <p>本页面需完成7天体力日记再填写</p>
+        </div>
     </el-col>
   </el-row>
 </div>
@@ -96,6 +99,9 @@ export default {
   data () {
     return {
       freForm: {
+        isshow: false,
+        show: true,
+        status: '',
         f1: '您经常参加(平均每周3次、每次10分钟以上)的体力活动项目是（可多选/最多选5项)',
         f2: '在过去 7 天内,你有几次进行了剧烈的体力活动,例如:搬（举）重物、快速骑自行车、剧烈的体育锻炼（如篮球、 足球、网球、武术）等等？',
         f3: '每次进行上述剧烈的体力活动通常需要大概多长时间',
@@ -238,6 +244,21 @@ export default {
       }
     }
   },
+  mounted: function () {
+    this.$ajax.get('/questionnaires/submit_phase2', {headers: {'Authorization': localStorage.token}})
+      .then((response) => {
+        console.log(response.data)
+        this.freForm.status = response.data.status
+        console.log(this.freForm.status)
+        if (this.freForm.status === 400) {
+          this.freForm.isshow = false
+          this.freForm.show = true
+        } else {
+          this.freForm.isshow = true
+          this.freForm.show = false
+        }
+      })
+  },
   computed: {
     comoxytime: function () {
       return Number(this.freForm.oxytimemin) + 60 * Number(this.freForm.oxytimehour)
@@ -266,18 +287,30 @@ export default {
           answer.push(this.freForm.fittime)
           var freformdata = new FormData()
           freformdata.append('answer', answer)
-          this.$ajax({
-            method: 'POST',
-            url: '/questionnaires/submit_phase2',
-            data: freformdata,
-            headers: {
-              'Authorization': localStorage.token,
-              'Content-Type': 'application/x-www-form-urlencoded',
-              'Accept': 'application/json'
+          this.$ajax.post('/questionnaires/submit_phase2', freformdata, {
+            headers: {'Authorization': localStorage.token, 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'}}
+          ).then((response) => {
+            console.log(response.data)
+            if (response.data.status === 200) {
+              this.$message({
+                title: '提示信息',
+                message: '提交成功',
+                type: 'success'
+              })
+              this.$router.push('/home')
+            }
+            if (response.data.status === 400) {
+              let that = response.data.msg
+              console.log(response.data.status)
+              this.$message({
+                title: '提示信息',
+                message: '提交失败 ' + that,
+                type: 'error'
+              })
             }
           })
           console.log(answer)
-          alert('submit!')
+          // alert('submit!')
         } else {
           console.log('error submit!')
           return false

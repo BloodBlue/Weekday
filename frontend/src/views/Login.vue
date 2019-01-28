@@ -100,7 +100,8 @@ export default {
           // this.$emit('isShow', false);
           this.$router.push('/home')
           // this.methods.to('/')// 需要商量一下跳转到那一个页面
-        } else {
+        }
+        if (response.data.status === 400) {
           this.$message({
             message: '用户名或密码错误，请重新输入！',
             type: 'warning'
