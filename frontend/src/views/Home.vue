@@ -20,7 +20,7 @@
     </div>
   </div>
   <div v-else>
-    <el-button type="danger" icon="el-icon-close" circle @click="Back()" class="close"></el-button>
+    <el-button type="danger" icon="el-icon-back" circle @click="Back()" class="close"></el-button>
     <p id="monp">{{title}}</p>
       <div style="text-align:center;">
         <el-form ref="monForm" v-for="item in monForm" :key="item.index">
@@ -44,7 +44,7 @@ export default {
   name: 'Home',
   data () {
     return {
-      isWap: false,
+      isWap: true,
       title: '',
       id: -1,
       day: '',
@@ -85,7 +85,6 @@ export default {
     }
   },
   mounted () {
-    this.getProcess()
     this.getStatus()
   },
   methods: {
@@ -250,6 +249,4 @@ f > :first-child{
   color: orange
 }
 
-.close
-  margin-right 10px
 </style>
