@@ -10,7 +10,7 @@
             <el-row type="flex" justify="center">
               <el-col :span="16">
                 <el-form label-position="left" status-icon label-width="100px" :model="regForm" :rules="rules" ref="regForm">
-                  <el-form-item label="学校" prop="school_name">
+                  <el-form-item label="学校" prop="schoolName">
                     <el-select
                     v-model="regForm.schoolName"
                     filterable
@@ -28,7 +28,7 @@
                       </el-option>
                     </el-select>
                   </el-form-item>
-                  <el-form-item label="学号" prop="id_number">
+                  <el-form-item label="学号" prop="idNumber">
                     <el-input v-model="regForm.idNumber" placeholder="请输入学号" style="width:200px"></el-input>
                     <br/>
                   </el-form-item>
@@ -41,7 +41,7 @@
                       </el-option>
                     </el-select>
                   </el-form-item>
-                  <el-form-item label="性别" prop="gender">
+                  <el-form-item label="性别" prop="sex">
                     <el-radio v-model="regForm.sex" label="male">男</el-radio>
                     <el-radio v-model="regForm.sex" label="female">女</el-radio>
                   </el-form-item>
@@ -51,7 +51,7 @@
                   <el-form-item label="专业类别" prop="major">
                     <el-input v-model="regForm.major" placeholder="请输入专业" style="width:200px"></el-input>
                   </el-form-item>
-                  <el-form-item label="手机号" prop="mobile_phone">
+                  <el-form-item label="手机号" prop="mobilephone">
                     <el-input v-model="regForm.mobilephone" placeholder="请输入手机号" style="width:200px"></el-input>
                   </el-form-item>
                   <el-form-item label="密码" prop="passWord">
@@ -131,6 +131,15 @@ export default {
         callback()
       }
     }
+    let phoneCheck = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入手机号'))
+      } else if (value.toString().length !== 11) {
+        return callback(new Error('手机号不合法'))
+      } else {
+        callback()
+      }
+    }
     return {
       SchoolList: [{value: '上海大学', label: '上海大学'},
         {value: '同济大学', label: '同济大学'},
@@ -196,6 +205,9 @@ export default {
         ],
         email: [
           { required: true, validator: emailCheck, trigger: 'change' }
+        ],
+        mobilephone: [
+          { required: true, validator: phoneCheck, trigger: 'change' }
         ]
       }
     }
@@ -231,8 +243,22 @@ export default {
           'Accept': 'application/json'
         }
       })
+        .then((response) => {
+          if (response.data.status === 200) { // 登录成功的页面
+            this.$message({
+              title: '提示信息',
+              message: '恭喜你，注册成功',
+              type: 'success'
+            })
+            this.$router.push('/login')
+          } else {
+            this.$message({
+              message: '注册有误，请重试！',
+              type: 'warning'
+            })
+          }
+        })
       console.log(formdata)
-      // this.$message('注册成功') 还有判断
     },
     // 清空注册信息
     reset (formName) {
