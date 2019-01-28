@@ -85,8 +85,9 @@
               </el-col>
           </el-row>
         </div>
-        <div v-if="freForm.show">
-          <p>本页面需完成7天体力日记再填写</p>
+        <div v-if="freForm.show" class="shut">
+          <i class="el-icon-info" id="info"></i>
+          <p>本页面需完成7天活动日记再填写</p>
         </div>
     </el-col>
   </el-row>
@@ -335,5 +336,17 @@ export default {
 #frepclass{
   font-size:15px
   color:blue
+}
+#info{
+  font-size: 30px
+  color: purple
+}
+.shut{
+  position: relative
+  text-align: center
+  vertical-align: middle
+  font-size: 20px
+  color: purple
+
 }
 </style>

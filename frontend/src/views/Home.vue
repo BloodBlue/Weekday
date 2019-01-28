@@ -44,7 +44,7 @@ export default {
   name: 'Home',
   data () {
     return {
-      isWap: false,
+      isWap: true,
       title: '',
       id: -1,
       day: '',
