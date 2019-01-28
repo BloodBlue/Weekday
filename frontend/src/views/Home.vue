@@ -28,8 +28,7 @@ export default {
       ]
     }
   },
-  beforeCreate () {
-    this.getProcess()
+  watch: {
   },
   methods: {
     getProcess () {
