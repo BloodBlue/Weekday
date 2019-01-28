@@ -571,6 +571,7 @@ export default {
               message: '提交成功',
               type: 'success'
             })
+            this.$router.push('/home')
           }
           if (response.data.status === 400) {
             let that = response.data.msg
