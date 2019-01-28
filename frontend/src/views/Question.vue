@@ -569,6 +569,20 @@ export default {
             'Authorization': localStorage.token
           }
         })
+          .then(res => {
+            if (res.data.status === 200) {
+              this.$message({
+                title: '提示信息',
+                message: '恭喜你，提交成功',
+                type: 'success'
+              })
+            } else {
+              this.$message({
+                message: '已提交，请勿重复提交！',
+                type: 'warning'
+              })
+            }
+          })
         console.log('提交')
       }
     }

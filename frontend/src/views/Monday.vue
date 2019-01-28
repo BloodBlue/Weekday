@@ -2,9 +2,9 @@
     <div>
       <el-row type="flex" justify="center">
       <el-col :span="22">
-        <p id="monp">周一活动日记</p>
+        <p id="monp">体力活动日记</p>
         <div style="text-align:center;">
-          <el-form :model="monForm" ref="monForm" v-for="item in monForm" :key="item.index">
+          <el-form ref="monForm" v-for="item in monForm" :key="item.index">
             <el-form-item :label="item.label" prop="item.name" class="f">
               <br/>
               <el-input-number size="small" v-model="item.hour" :min="0" :max="12"></el-input-number>
@@ -35,9 +35,10 @@ export default {
         {index: 2, label: '做作业(不包含用电脑的时间)', name: 'homework', hour: '0', minute: '0'},
         {index: 3, label: '看闲书', name: 'read', hour: '0', minute: '0'},
         {index: 4, label: '上课', name: 'classroom', hour: '0', minute: '0'},
-        {index: 5, label: '(坐着)出行(私家车/公交车/地铁/火车)', name: 'workWithComputer', hour: '0', minute: '0'},
-        {index: 6, label: '用电脑做作业', name: 'workWithComputer', hour: '0', minute: '0'},
-        {index: 7, label: '用电脑做作业', name: 'workWithComputer', hour: '0', minute: '0'}
+        {index: 5, label: '(坐着)出行(私家车/公交车/地铁/火车)', name: 'out', hour: '0', minute: '0'},
+        {index: 6, label: '做手工或练习乐器', name: 'music', hour: '0', minute: '0'},
+        {index: 7, label: '跟朋友聊天或打电话 ', name: 'chat', hour: '0', minute: '0'},
+        {index: 8, label: '其他', name: 'other', hour: '0', minute: '0'}
       ]
     }
   },
@@ -47,26 +48,14 @@ export default {
       console.log('提交')
       var answer = []
       var formdata = new FormData()
-      var play = Number(this.monForm.play_minute) + 60 * Number(this.monForm.play_hour)
-      answer.push(play)
-      var workWithComputer = Number(this.monForm.workWithComputer_minute) + 60 * Number(this.monForm.workWithComputer_hour)
-      answer.push(workWithComputer)
-      var work = Number(this.monForm.work_minute) + 60 * Number(this.monForm.work_hour)
-      answer.push(work)
-      var read = Number(this.monForm.read_minute) + 60 * Number(this.monForm.read_hour)
-      answer.push(read)
-      var classroom = Number(this.monForm.class_minute) + 60 * Number(this.monForm.class_hour)
-      answer.push(classroom)
-      var out = Number(this.monForm.out_minute) + 60 * Number(this.monForm.out_hour)
-      answer.push(out)
-      var music = Number(this.monForm.music_minute) + 60 * Number(this.monForm.music_hour)
-      answer.push(music)
-      var chat = Number(this.monForm.chat_minute) + 60 * Number(this.monForm.chat_hour)
-      answer.push(chat)
-      var other = Number(this.monForm.other_minute) + 60 * Number(this.monForm.other_hour)
-      answer.push(other)
+      for (var key in this.monForm) {
+        var data = 0
+        data = Number(this.monForm[key].minute) + 60 * Number(this.monForm[key].hour)
+        answer.push(data)
+      }
       console.log(answer)
       formdata.append('answer', answer)
+      console.log(formdata)
       this.$ajax({
         method: 'POST',
         url: '/questionnaires/7d',
@@ -75,6 +64,21 @@ export default {
           'Authorization': localStorage.token
         }
       })
+        .then(response => {
+          console.log(response.data)
+          if (response.data.status === 200) { // 提交成功的页面
+            this.$message({
+              title: '提示信息',
+              message: '恭喜你，提交成功',
+              type: 'success'
+            })
+          } else {
+            this.$message({
+              message: '今天已提交，请勿重复提交！',
+              type: 'warning'
+            })
+          }
+        })
     },
     // 清空周一信息
     reset (formName) {
