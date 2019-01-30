@@ -50,6 +50,9 @@ export default {
       day: '',
       dict: {0: '周一体力活动记录', 1: '周二体力活动记录', 2: '周三体力活动记录', 3: '周四体力活动记录', 4: '周五体力活动记录', 5: '周六体力活动记录', 6: '周日体力活动记录'},
       date: '',
+      num: '',
+      question: '',
+      frequency: '',
       monForm: [
         {index: 0, label: '使用电子设备用于娱乐(看手机/视频／打游戏)', name: 'play', hour: '0', minute: '0'},
         {index: 1, label: '用电脑做作业', name: 'workWithComputer', hour: '0', minute: '0'},
@@ -80,7 +83,8 @@ export default {
         {index: -5, title: '', date: '', percentage: 0, color: '#9966CC', isGet: false, isShow: false, isOk: true, isOver: false},
         {index: -6, title: '', date: '', percentage: 0, color: '#9966CC', isGet: false, isShow: false, isOk: true, isOver: false},
         {index: -7, title: '', date: '', percentage: 0, color: '#9966CC', isGet: false, isShow: false, isOk: true, isOver: false},
-        {index: -8, title: '调查问卷', date: '', percentage: 0, color: '#9966CC', isGet: true, isShow: false, isOk: true, isOver: false}
+        {index: -8, title: '', date: '', percentage: 0, color: '#9966CC', isGet: false, isShow: false, isOk: true, isOver: false},
+        {index: -9, title: '隐藏任务！', date: '', percentage: 0, color: '#9966CC', isGet: false, isShow: false, isOk: true, isOver: false}
       ]
     }
   },
@@ -104,22 +108,34 @@ export default {
           if (val.data.status === 200) { // 有数据
             this.day = val.data.data.sevendays
             this.date = val.data.data.date
-            console.log('sevendays', this.day)
-            console.log('date:', this.date)
             for (var num in this.statuslist) {
-              this.statuslist[num].isGet = true
+              var data = this.statuslist[num]
+              data.isGet = true
+              this.statuslist.splice(num, 1, data)
             }
-            this.$message({
-              title: '提示信息',
-              message: '请查看你的进度，加油！',
-              type: 'success'
-            })
-          } else {
-            this.$message({
-              title: '提示信息',
-              message: '你还没做任何东西呢！',
-              type: 'warning'
-            })
+          }
+        })
+      // 获取普通问卷和活动频率的信息
+      this.$ajax({
+        url: '/questionnaires/status',
+        method: 'GET',
+        headers: {
+          'Authorization': localStorage.token
+        },
+        withCredentials: true
+      })
+        .then(val => {
+          var questionSet = val.data.data
+          var index1 = 0
+          for (var key4 in questionSet) {
+            if (index1 === 0) {
+              this.num = questionSet[key4]
+            } else if (index1 === 1) {
+              this.question = questionSet[key4]
+            } else {
+              this.frequency = questionSet[key4]
+            }
+            index1 = index1 + 1
           }
         })
     },
@@ -130,23 +146,42 @@ export default {
     // 获取状态
     getStatus () {
       this.getProcess()
+      console.log('day:', this.day)
+      console.log('date:', this.date)
+      console.log('question:', this.question)
       var index = 0
       for (var key in this.date) {
-        this.statuslist[index].date = key // 获取xx年xx月xx日
-        this.statuslist[index].title = this.get_title(this.date[key]) // 获取标题
-        this.statuslist[index].index = this.date[key] // index为0-6对应礼拜一-礼拜天
+        var data = this.statuslist[index]
+        data.date = key
+        data.title = this.get_title(this.date[key])
+        data.index = this.date[key]
+        this.statuslist.splice(index, 1, data)
         index = index + 1
       }
       this.checkTime()
-      index = 0
       for (var key1 in this.day) {
         for (var key2 in this.statuslist) {
           if (this.statuslist[key2].title === this.get_title(key1)) {
-            this.statuslist[key2].percentage = 100 // 进度条变为100%
-            this.statuslist[key2].isShow = true // 有数据可以展示
-            this.statuslist[key2].isOk = false // 需要补填
+            var dataList = this.statuslist[key2]
+            dataList.percentage = 100 // 进度条变为100%
+            dataList.isShow = true // 有数据可以展示
+            dataList.isOk = false // 需要补填
+            this.statuslist.splice(key2, 1, dataList)
           }
         }
+      }
+      if (this.question === true) {
+        var questionSet = this.statuslist[7]
+        questionSet.title = '调查问卷'
+        questionSet.percentage = 100
+        questionSet.index = 7
+        this.statuslist.splice(7, 1, questionSet)
+      }
+      if (this.frequency === true) {
+        var freSet = this.statuslist[8]
+        freSet.title = '活动频率'
+        freSet.percentage = 100
+        this.statuslist.splice(8, 1, freSet)
       }
     },
     // 根据所点击的事件显示相应用户所填数据
