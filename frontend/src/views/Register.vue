@@ -1,7 +1,7 @@
 <template>
 <div>
   <el-row type="flex" justify="center">
-    <el-col :span="12">
+    <el-col :span="20">
       <el-card id="login-card">
         <div slot="header" class="clearfix">
           <span>新用户注册</span>

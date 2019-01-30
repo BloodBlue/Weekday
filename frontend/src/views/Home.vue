@@ -252,6 +252,7 @@ f > :first-child{
 }
 .bodyhome{
 }
+
 .close{
   margin-right 10px
 }

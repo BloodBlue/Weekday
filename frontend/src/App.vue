@@ -69,7 +69,7 @@ export default {
     '$route' () {
       console.log(this.$route.name)
       // 不等于登录页面的时候为true
-      if (this.$route.name === 'Login' || this.$route.name === 'Register') { this.show = false }
+      if (this.$route.name === 'Login' || this.$route.name === 'Register' || this.$route.name === 'Mailpsw') { this.show = false }
       if (this.$route.name === 'frequency' || this.$route.name === 'Question' || this.$route.name === 'Monday' || this.$route.name === 'Home') { this.show = true }
     }
   },
