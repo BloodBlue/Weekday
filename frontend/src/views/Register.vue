@@ -1,7 +1,7 @@
 <template>
 <div>
   <el-row type="flex" justify="center">
-    <el-col :span="12">
+    <el-col :span="20">
       <el-card id="login-card">
         <div slot="header" class="clearfix">
           <span>新用户注册</span>
@@ -9,7 +9,7 @@
           <div>
             <el-row type="flex" justify="center">
               <el-col :span="16">
-                <el-form label-position="left" status-icon label-width="100px" :model="regForm" :rules="rules" ref="regForm">
+                <el-form label-position="left" status-icon :model="regForm" :rules="rules" ref="regForm">
                   <el-form-item label="学校" prop="schoolName">
                     <el-select
                     v-model="regForm.schoolName"
@@ -18,7 +18,6 @@
                     :loading="false"
                     @change="submitSchool"
                     clearable
-                    style="width:200px"
                     >
                       <el-option
                       v-for="item in SchoolList"
@@ -29,14 +28,14 @@
                     </el-select>
                   </el-form-item>
                   <el-form-item label="学号" prop="idNumber">
-                    <el-input v-model="regForm.idNumber" placeholder="请输入学号" style="width:200px"></el-input>
+                    <el-input v-model="regForm.idNumber" placeholder="请输入学号"></el-input>
                     <br/>
                   </el-form-item>
                    <el-form-item label="姓名" prop="name">
-                    <el-input v-model="regForm.name" placeholder="请输入姓名" clearable style="width:200px"></el-input>
+                    <el-input v-model="regForm.name" placeholder="请输入姓名" clearable></el-input>
                   </el-form-item>
                   <el-form-item label="年级" prop="grade">
-                    <el-select v-model="regForm.grade" clearable placehold="--请选择--" style="width:200px">
+                    <el-select v-model="regForm.grade" clearable placehold="--请选择--">
                       <el-option v-for="item in gradelist" :key="item.value" :label="item.label" :value="item.value">
                       </el-option>
                     </el-select>
@@ -49,19 +48,19 @@
                     <el-date-picker v-model="regForm.birthday" type="date" value-format="yyyy-MM-dd" placeholder="选择出生日期"></el-date-picker>
                   </el-form-item>
                   <el-form-item label="专业类别" prop="major">
-                    <el-input v-model="regForm.major" placeholder="请输入专业" style="width:200px"></el-input>
+                    <el-input v-model="regForm.major" placeholder="请输入专业"></el-input>
                   </el-form-item>
                   <el-form-item label="手机号" prop="mobilephone">
-                    <el-input v-model="regForm.mobilephone" placeholder="请输入手机号" style="width:200px"></el-input>
+                    <el-input v-model="regForm.mobilephone" placeholder="请输入手机号"></el-input>
                   </el-form-item>
                   <el-form-item label="密码" prop="passWord">
-                    <el-input type="password" v-model="regForm.passWord" auto-complete="off" placeholder="请设置8-20位密码" style="width:200px" maxlength="20"></el-input>
+                    <el-input type="password" v-model="regForm.passWord" auto-complete="off" placeholder="请设置8-20位密码" maxlength="20"></el-input>
                   </el-form-item>
                   <el-form-item label="确认密码" prop="checkPassword">
-                    <el-input type="password" v-model="regForm.checkPassword" auto-complete="off" style="width:200px"></el-input>
+                    <el-input type="password" v-model="regForm.checkPassword" auto-complete="off"></el-input>
                   </el-form-item>
                   <el-form-item label="邮箱" prop="email">
-                    <el-input v-model="regForm.email" placeholder="请输入邮箱" style="width:200px"></el-input>
+                    <el-input v-model="regForm.email" placeholder="请输入邮箱"></el-input>
                     <br/>
                   </el-form-item>
                 <el-form-item>

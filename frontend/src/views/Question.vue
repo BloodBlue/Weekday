@@ -22,7 +22,7 @@
                 <el-radio v-model="basisForm.sex" label="女">女</el-radio>
               </el-form-item>
               <el-form-item label="出生日期" prop="birthday">
-                <el-date-picker v-model="basisForm.birthday" placeholder="选择出生日期"></el-date-picker>
+                <el-date-picker v-model="basisForm.birthday" value-format="yyyy-MM-dd" type="date" placeholder="选择出生日期"></el-date-picker>
               </el-form-item>
               <el-form-item label="民族" prop="nationality">
                 <el-input v-model="basisForm.nationality" placeholder="请输入民族"></el-input>
