@@ -486,42 +486,6 @@ export default {
       this.isSchool = false
       this.isOthers = true
     },
-    // 提交表单信息(index+value)
-    // submit () {
-    //   var data = []
-    //   Object.keys(this.basisForm).forEach((el, index) => {
-    //     data.push({
-    //       index: index + 1,
-    //       value: this.basisForm[el]
-    //     })
-    //   })
-    //   this.healthForm.questionlist.forEach((element, index) => {
-    //     data.push({
-    //       index: element.name,
-    //       value: element.value
-    //     })
-    //   })
-    //   this.emotionForm.questionlist.forEach((element, index) => {
-    //     data.push({
-    //       index: element.name,
-    //       value: element.value
-    //     })
-    //   })
-    //   this.otherForm.questionlist.forEach((element, index) => {
-    //     data.push({
-    //       index: element.name,
-    //       value: element.value
-    //     })
-    //   })
-    //   this.schoolForm.questionlist.forEach((element, index) => {
-    //     data.push({
-    //       index: element.name,
-    //       value: element.value
-    //     })
-    //   })
-    //   console.log(data)
-    // },
-    // 提交表单(value)
     submit () {
       var flag = true
       this.schoolForm.questionlist.forEach(element => {

@@ -88,16 +88,9 @@ export default {
     this.getProcess()
     this.getStatus()
     document.body.setAttribute('class', 'bodyhome')
-    if (localStorage.flag === 1) {
-      console.log(localStorage.flag)
-      this.reloadpage()
-    }
   },
   methods: {
     // 从后端获取信息，day表示已回答的题目；date表示日期和礼拜
-    reloadpage () {
-      window.location.reload()
-    },
     getProcess () {
       this.$ajax({
         url: '/questionnaires/7d',
@@ -257,10 +250,9 @@ f > :first-child{
   font-weight: bold
   color: orange
 }
-
 .bodyhome{
 }
-
-.close
+.close{
   margin-right 10px
+}
 </style>
