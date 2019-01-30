@@ -16,7 +16,8 @@
                   <el-row>
                   <el-form-item label="验证码" prop="mailpassword" >
                       <el-input placeholder="请输入验证码" v-model="loginForm.mailpassword" ></el-input>
-                      <el-button type="warning" @click="getsecode()">获取验证码</el-button>
+                      <el-button v-show="show" type="warning" @click="getsecode()">获取验证码</el-button>
+                      <span v-show="!show" class="count">{{count}} s</span>
                   </el-form-item>
                   </el-row>
                   <el-form-item label="重置密码" prop="resetpsw">
@@ -78,6 +79,9 @@ export default {
       }
     }
     return {
+      show: true,
+      count: '',
+      timer: null,
       loginForm: {
         mailname: '',
         mailpassword: '',
@@ -111,6 +115,20 @@ export default {
       }
     },
     getsecode () {
+      const TIME_COUNT = 60
+      if (!this.timer) {
+        this.count = TIME_COUNT
+        this.show = false
+        this.timer = setInterval(() => {
+          if (this.count > 0 && this.count <= TIME_COUNT) {
+            this.count--
+          } else {
+            this.show = true
+            clearInterval(this.timer)
+            this.timer = null
+          }
+        }, 1000)
+      }
       var params = new URLSearchParams()
       params.append('email', this.loginForm.mailname)
       console.log(this.loginForm.mailname)

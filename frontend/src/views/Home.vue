@@ -1,5 +1,12 @@
 <template>
-  <div v-if="isWap">
+<div>
+  <div class="title1">
+    <span class="firsttitle" style="font-size: 15px">问卷须知</span>
+    <p>请尽可能诚实和完整地回答本平台问卷内容，并在题目中写出你的真实情况或感受。问卷回答没有对错之分，您的个人信息将会得到妥善保护，并仅用作学校管理工作和学术研究。 </p>
+    <p>本问卷共分为三个板块：7天活动日记、调查问卷、活动频率。其中，<i class="el-icon-info" color="red"><span id="t1" style="color=blue;">7天活动日记需连续7天记录每日的体力活动日记</span></i>，<i class="el-icon-info" color="red">调查问卷为独立板块，注册后即可填写</i>，<i class="el-icon-info" color="red">活动频率板块需在7天活动日记完成后填写</i>。感谢您的配合！</p>
+  </div>
+  <div v-if="isWap" class="title1">
+    <span class="firsttitle" style="font-size: 15px">问卷进度</span>
     <el-button @click="getStatus()">查看最新状态</el-button>
     <div v-for="item of statuslist" :key="item.index">
       <div class="title">
@@ -9,7 +16,7 @@
       <div class="progress">
         <el-progress :text-inside="true" :stroke-width="25" :percentage="item.percentage" :color="item.color" class="percent"></el-progress>
         <el-popover placement="left-start" width="320" v-show="item.isGet && item.isShow" trigger="click" >
-          <el-table :data="gridData">
+          <el-table :data="gridData" >
             <el-table-column property="event" label="事件" width="220"></el-table-column>
             <el-table-column property="time" label="时间(分钟)" width="100"></el-table-column>
           </el-table>
@@ -37,6 +44,7 @@
       <el-button type="primary" @click="submitform">提交</el-button>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -290,5 +298,24 @@ f > :first-child{
 
 .close{
   margin-right 10px
+}
+.title1{
+  width:80%;
+  padding: 5px 40px;
+  margin: 20px 0px;
+  border: 4px solid #ebcbbe
+
+}
+.firsttitle{
+  display:block;
+  width:80px;
+  height:30%;
+  position:relative;
+  top:-15px;
+  text-align: center;
+  background: white;
+}
+.t1 > :first-child{
+  color:blue
 }
 </style>
