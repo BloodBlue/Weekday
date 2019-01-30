@@ -1,14 +1,15 @@
 <template>
-  <div>
+  <div class="backgrounddiv">
     <el-row type="flex" justify="center">
-      <el-col :span="18">
+      <el-col :span="16">
+        <h2 style="text-align: center; font-size: 0.7rem; color: #F45B4B">大学生体力活动调研平台</h2>
         <el-card id="login-card">
           <div slot="header" class="clearfix">
             <span>登录</span>
           </div>
           <div>
             <el-row type="flex" justify="center">
-              <el-col :span="18">
+              <el-col :span="20">
                 <el-form label-position="left" :model="loginForm" :rules="rules" ref="loginForm">
                   <el-form-item label="用户名" prop="username">
                     <el-input placeholder="请输入邮箱" v-model="loginForm.username" ></el-input>
@@ -61,6 +62,9 @@ export default {
       }
     }
   },
+  mounted () {
+    document.body.setAttribute('class', 'bodylogin')
+  },
   methods: {
     to (url) {
       this.$router.push(url)
@@ -89,7 +93,9 @@ export default {
           this.$store.commit('setToken', response.data.data)
           console.log('token is set to:', this.$store.state.token)
           localStorage.setItem('userName', this.loginForm.username)
+          localStorage.username = response.data.data.username
           localStorage.token = response.data.data.token
+          sessionStorage.setItem('Login', true)
           console.log(localStorage.token)
           this.$emit('usersignin', this.loginForm.username)
           this.$message({
@@ -117,8 +123,13 @@ export default {
 }
 </script>
 
-<style lang="stylus">
+<style>
 #login-card {
-  margin-top: 50px
+  margin-top: 30px;
+}
+.bodylogin{
+  background: url('../assets/img/banner.jpg')repeat;
+  padding:10px 0px 30px 0px;
+  color: #F45B4B
 }
 </style>

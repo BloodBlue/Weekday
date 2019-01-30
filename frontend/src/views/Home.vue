@@ -20,7 +20,7 @@
     </div>
   </div>
   <div v-else>
-    <el-button type="danger" icon="el-icon-back" circle @click="Back()" class="close"></el-button>
+    <el-button type="danger" icon="el-icon-close" circle @click="Back()" class="close"></el-button>
     <p id="monp">{{title}}</p>
       <div style="text-align:center;">
         <el-form ref="monForm" v-for="item in monForm" :key="item.index">
@@ -91,6 +91,7 @@ export default {
   mounted () {
     this.getProcess()
     this.getStatus()
+    document.body.setAttribute('class', 'bodyhome')
   },
   methods: {
     // 从后端获取信息，day表示已回答的题目；date表示日期和礼拜
@@ -284,5 +285,9 @@ f > :first-child{
   font-weight: bold
   color: orange
 }
-
+.bodyhome{
+}
+.close{
+  margin-right 10px
+}
 </style>
