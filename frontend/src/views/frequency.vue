@@ -339,14 +339,15 @@ export default {
 }
 #info{
   font-size: 30px
-  color: purple
+  color: #FF6A6A
 }
 .shut{
   position: relative
   text-align: center
   vertical-align: middle
   font-size: 20px
-  color: purple
+  color: #FF6A6A
+  font-family: "PingFang SC"
 
 }
 </style>

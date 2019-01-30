@@ -310,5 +310,4 @@ export default {
   align:center;
   margin-left:240px;
 }
-
 </style>

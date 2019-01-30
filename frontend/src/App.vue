@@ -1,11 +1,11 @@
 <template>
-  <div id="app">
-    <el-container style="border: 1px solid #eee">
+  <div id="app" @click="clicked">
+    <el-container class="firstpage">
       <el-header style="font-size: 15px; font-family: 微软雅黑;" height="0.8rem" v-if="show">
         <div>
           <i class="el-icon-menu" @click="collapse"><span> 我的菜单</span></i>
           <i class="el-icon-menu" @click="exit" style="float: right text-align: right"><span> 退出</span></i>
-          <span style="float: right"> 欢迎你!</span>
+          <span style="float: right"> {{msg}}欢迎你!</span>
         </div>
       </el-header>
       <el-container>
@@ -37,7 +37,7 @@
           </el-menu>
         </el-aside>
       <el-main>
-        <router-view/>
+        <router-view></router-view>
       </el-main>
       </el-container>
       <el-footer>
@@ -55,8 +55,15 @@ export default {
     return {
       isCollapse: false,
       show: true,
-      collapseBtnClick: false
+      collapseBtnClick: false,
+      msg: localStorage.username + '，',
+      ltime: new Date().getTime(), // 最后一次点击时间
+      ctime: new Date().getTime(), // 当前时间
+      tout: 60 * 60 * 1000
     }
+  },
+  mounted () {
+    window.setInterval(this.ttime, 300000)
   },
   watch: {
     '$route' () {
@@ -67,6 +74,20 @@ export default {
     }
   },
   methods: {
+    clicked () {
+      this.ltime = new Date().getTime() // 当界面被点击更新时间
+    },
+    ttime () {
+      this.ctime = new Date().getTime()
+      // console.log(sessionStorage.getItem('Login'))
+      if (this.ctime - this.ltime > this.tout) {
+        if (JSON.parse(sessionStorage.getItem('Login')) === true) {
+          sessionStorage.removeItem('Login')
+          this.$router.push('/login')
+          alert('登陆超时，请重新登陆')
+        }
+      }
+    },
     handleSelect (key, keyPath) {
       console.log(key)
       console.log(keyPath)
@@ -97,5 +118,5 @@ export default {
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 2.8rem;
-  }
+}
 </style>
