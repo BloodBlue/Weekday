@@ -2,7 +2,8 @@
     <div>
       <el-row type="flex" justify="center">
       <el-col :span="22">
-        <p id="monp">体力活动日记</p>
+        <p id="monp">每日体力活动日记</p>
+        <p>Tips：当天只需填写当天的数据记录，漏填的数据需在首页找到相应进度栏的补填按钮进行填写。</p>
         <div style="text-align:center;">
           <el-form ref="monForm" v-for="item in monForm" :key="item.index">
             <el-form-item :label="item.label" prop="item.name" class="f">
@@ -15,7 +16,6 @@
           </el-form>
           <div style="text-align:center">
             <el-button type="primary" @click="submitform" >提交</el-button>
-            <el-button type="info" @click="submitform">保存</el-button>
           </div>
           </div>
       </el-col>
@@ -72,6 +72,14 @@ export default {
               message: '恭喜你，提交成功',
               type: 'success'
             })
+            if (response.data.data.completed === false) {
+              alert('明天记得再来填写哦')
+              this.$router.push('/home')
+            }
+            if (response.data.data.completed === true) {
+              alert('恭喜你完成7天活动日记，接下来还差最后一部分啦！')
+              this.$router.push('/frequency')
+            }
           } else {
             this.$message({
               message: '今天已提交，请勿重复提交！',

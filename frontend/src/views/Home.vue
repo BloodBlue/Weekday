@@ -1,12 +1,13 @@
 <template>
 <div>
+  <div>
+  <el-scrollbar style="height:450px">
   <div class="title1">
-    <span class="firsttitle" style="font-size: 15px">问卷须知</span>
-    <p>请尽可能诚实和完整地回答本平台问卷内容，并在题目中写出你的真实情况或感受。问卷回答没有对错之分，您的个人信息将会得到妥善保护，并仅用作学校管理工作和学术研究。 </p>
-    <p>本问卷共分为三个板块：7天活动日记、调查问卷、活动频率。其中，<i class="el-icon-info" color="red"><span id="t1" style="color=blue;">7天活动日记需连续7天记录每日的体力活动日记</span></i>，<i class="el-icon-info" color="red">调查问卷为独立板块，注册后即可填写</i>，<i class="el-icon-info" color="red">活动频率板块需在7天活动日记完成后填写</i>。感谢您的配合！</p>
+    <span class="firsttitle" style="font-size: 12px">问卷须知</span>
+    <p id="detail">请尽可能诚实和完整地回答本平台问卷内容，并在题目中写出你的真实情况或感受。问卷回答在第一次提交之后，均不可修改，您的个人信息将会得到妥善保护，并仅用作学校管理工作和学术研究。本问卷共分为三个板块：7天活动日记、调查问卷、活动频率。其中，<i class="el-icon-info" id="lan" ><span>7天活动日记需连续7天记录每日的体力活动日记</span></i><i class="el-icon-info" id="lan" >调查问卷为独立板块，注册后即可填写</i><i class="el-icon-info" id="lan" >活动频率板块需在7天活动日记完成后填写</i>感谢您的配合！</p>
   </div>
   <div v-if="isWap" class="title1">
-    <span class="firsttitle" style="font-size: 15px">问卷进度</span>
+    <span class="firsttitle" style="font-size: 12px">问卷进度</span>
     <el-button @click="getStatus()">查看最新状态</el-button>
     <div v-for="item of statuslist" :key="item.index">
       <div class="title">
@@ -43,6 +44,8 @@
     <div style="text-align:center">
       <el-button type="primary" @click="submitform">提交</el-button>
     </div>
+  </div>
+  </el-scrollbar>
   </div>
 </div>
 </template>
@@ -96,56 +99,42 @@ export default {
       ]
     }
   },
-  mounted () {
-    this.getProcess()
+  mounted: function () {
     this.getStatus()
     document.body.setAttribute('class', 'bodyhome')
+    console.log('渲染完成')
   },
   methods: {
     // 从后端获取信息，day表示已回答的题目；date表示日期和礼拜
     getProcess () {
-      this.$ajax({
-        url: '/questionnaires/7d',
-        method: 'GET',
-        headers: {
-          'Authorization': localStorage.token
-        },
-        withCredentials: true
-      })
-        .then(val => {
-          if (val.data.status === 200) { // 有数据
-            this.day = val.data.data.sevendays
-            this.date = val.data.data.date
-            for (var num in this.statuslist) {
-              var data = this.statuslist[num]
-              data.isGet = true
-              this.statuslist.splice(num, 1, data)
-            }
+      this.$ajax.get('/questionnaires/7d', {headers: {'Authorization': localStorage.token}, withCredentials: true}
+      ).then((val) => {
+        if (val.data.status === 200) { // 有数据
+          this.day = val.data.data.sevendays
+          this.date = val.data.data.date
+          for (var num in this.statuslist) {
+            var data = this.statuslist[num]
+            data.isGet = true
+            this.statuslist.splice(num, 1, data)
           }
-        })
+        }
+      })
       // 获取普通问卷和活动频率的信息
-      this.$ajax({
-        url: '/questionnaires/status',
-        method: 'GET',
-        headers: {
-          'Authorization': localStorage.token
-        },
-        withCredentials: true
-      })
-        .then(val => {
-          var questionSet = val.data.data
-          var index1 = 0
-          for (var key4 in questionSet) {
-            if (index1 === 0) {
-              this.num = questionSet[key4]
-            } else if (index1 === 1) {
-              this.question = questionSet[key4]
-            } else {
-              this.frequency = questionSet[key4]
-            }
-            index1 = index1 + 1
+      this.$ajax.get('/questionnaires/status', {headers: {'Authorization': localStorage.token}, withCredentials: true}
+      ).then((val) => {
+        var questionSet = val.data.data
+        var index1 = 0
+        for (var key4 in questionSet) {
+          if (index1 === 0) {
+            this.num = questionSet[key4]
+          } else if (index1 === 1) {
+            this.question = questionSet[key4]
+          } else {
+            this.frequency = questionSet[key4]
           }
-        })
+          index1 = index1 + 1
+        }
+      })
     },
     // 获取题目对应title
     get_title (num) {
@@ -246,6 +235,14 @@ export default {
               message: '恭喜你，提交成功',
               type: 'success'
             })
+            if (response.data.data.completed === false) {
+              alert('下次不要忘记啦')
+              this.isWap = true
+            }
+            if (response.data.data.completed === true) {
+              alert('恭喜你完成7天活动日记，接下来还差最后一部分啦！')
+              this.$router.push('/frequency')
+            }
           } else {
             this.$message({
               message: '今天已提交，请勿重复提交！',
@@ -300,10 +297,10 @@ f > :first-child{
   margin-right 10px
 }
 .title1{
-  width:80%;
-  padding: 5px 40px;
+  width:83%;
+  padding: 3px 15px;
   margin: 20px 0px;
-  border: 4px solid #ebcbbe
+  border: 2px solid grey
 
 }
 .firsttitle{
@@ -315,7 +312,16 @@ f > :first-child{
   text-align: center;
   background: white;
 }
-.t1 > :first-child{
-  color:blue
+#detail{
+  font-family:"宋体"
+  font-size: 15px
+}
+#lan{
+  color: #F45B4B !important;
+  font-family:"宋体";
+  font-size: 15px
+}
+.el-scrollbar_wrap{
+  overflow-x: hidden;
 }
 </style>

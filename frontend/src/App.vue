@@ -3,7 +3,9 @@
     <el-container class="firstpage">
       <el-header style="font-size: 15px; font-family: 微软雅黑;" height="0.8rem" v-if="show">
         <div>
-          <i class="el-icon-menu" @click="collapse"><span> 我的菜单</span></i>
+          <i class="el-icon-menu" @click="collapse"><span v-show="menushow"> 收缩菜单</span>
+          <span v-show="!menushow"> 展开菜单</span>
+          </i>
           <i class="el-icon-menu" @click="exit" style="float: right text-align: right"><span> 退出</span></i>
           <span style="float: right"> {{msg}}欢迎你!</span>
         </div>
@@ -15,18 +17,10 @@
           <i class="el-icon-view"></i>
           <span slot="title">首页</span>
           </el-menu-item>
-          <el-submenu index="2"><template slot="title">
-            <i class="el-icon-tickets"></i>
-            <span slot="title">我的7天活动表</span>
-            </template>
-          <el-menu-item index="2-1" route="/monday">周一</el-menu-item>
-          <el-menu-item index="2-2" route="/tuesday">周二</el-menu-item>
-          <el-menu-item index="2-3" route="/wednesday">周三</el-menu-item>
-          <el-menu-item index="2-4" route="/thursday">周四</el-menu-item>
-          <el-menu-item index="2-5" route="/friday">周五</el-menu-item>
-          <el-menu-item index="2-6" route="/saturday">周六</el-menu-item>
-          <el-menu-item index="2-7" route="/sunday">周日</el-menu-item>
-          </el-submenu>
+          <el-menu-item index="2" route="/monday">
+          <i class="el-icon-tickets"></i>
+          <span slot="title">我的7天活动表</span>
+          </el-menu-item>
           <el-menu-item index="/question" route="/question">
           <i class="el-icon-star-off"></i>
           <span slot="title">调查问卷</span>
@@ -55,15 +49,16 @@ export default {
     return {
       isCollapse: false,
       show: true,
+      menushow: true,
       collapseBtnClick: false,
       msg: localStorage.username + '，',
       ltime: new Date().getTime(), // 最后一次点击时间
       ctime: new Date().getTime(), // 当前时间
-      tout: 60 * 60 * 1000
+      tout: 50 * 60 * 1000
     }
   },
   mounted () {
-    window.setInterval(this.ttime, 300000)
+    window.setInterval(this.ttime, 60000)
   },
   watch: {
     '$route' () {
@@ -94,6 +89,7 @@ export default {
     },
     collapse: function () {
       this.isCollapse = !this.isCollapse
+      this.menushow = !this.menushow
       var uiwidth = document.getElementById('lastclass')
       if (uiwidth.offsetWidth === 0) {
         uiwidth.style.width = '2.8rem'

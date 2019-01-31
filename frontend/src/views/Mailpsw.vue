@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="bodymailpsw">
     <el-row type="flex" justify="center">
       <el-col :span="20">
         <el-card id="login-card">
@@ -105,6 +105,9 @@ export default {
       }
     }
   },
+  mounted () {
+    document.body.setAttribute('class', 'bodymailpsw')
+  },
   methods: {
     to (url) {
       this.$router.push(url)
@@ -180,5 +183,10 @@ export default {
   margin-top: 50px
   margin-left: 50px
   magrin-right: 200px
+}
+.bodymailpsw{
+  background: url('../assets/img/banner.png')repeat;
+  padding:10px 0px 30px 0px;
+  color: white
 }
 </style>

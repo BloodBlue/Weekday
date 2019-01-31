@@ -213,6 +213,9 @@ export default {
   },
   watch: {
   },
+  mounted () {
+    document.body.setAttribute('class', 'bodylogin')
+  },
   methods: {
     // 提交表单数据
     to (url) {
@@ -308,5 +311,11 @@ export default {
   font-weight:bold;
   align:center;
   margin-left:240px;
+}
+
+.bodylogin{
+  background: url('../assets/img/banner.png')repeat;
+  padding:10px 0px 30px 0px;
+  color: azure
 }
 </style>

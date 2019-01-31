@@ -1,8 +1,8 @@
 <template>
   <div class="backgrounddiv">
     <el-row type="flex" justify="center">
-      <el-col :span="20">
-        <h2 style="text-align: center; font-size: 0.7rem; color: #F45B4B">大学生体力活动调研平台</h2>
+      <el-col :span="21">
+        <h2 style="text-align: center; font-size: 0.65rem; color: white">大学生体力活动调研平台</h2>
         <el-card id="login-card">
           <div slot="header" class="clearfix">
             <span>登录</span>
@@ -128,8 +128,8 @@ export default {
   margin-top: 30px;
 }
 .bodylogin{
-  background: url('../assets/img/banner.jpg')repeat;
+  background: url('../assets/img/banner.png')repeat;
   padding:10px 0px 30px 0px;
-  color: #F45B4B
+  color: azure
 }
 </style>
