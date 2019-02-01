@@ -96,6 +96,7 @@ export default {
           localStorage.username = response.data.data.username
           localStorage.token = response.data.data.token
           sessionStorage.setItem('Login', true)
+          console.log(localStorage.username)
           console.log(localStorage.token)
           this.$emit('usersignin', this.loginForm.username)
           this.$message({
@@ -103,7 +104,7 @@ export default {
             message: '恭喜你，登录成功',
             type: 'success'
           })
-          // this.$emit('isShow', false);
+          // this.$emit('isAdmin', true)
           this.$router.push('/home')
           // this.methods.to('/')// 需要商量一下跳转到那一个页面
         }

@@ -49,6 +49,12 @@ export default new Router({
       name: 'Home',
       component: () => import('@/views/Home'),
       meta: { requireAuth: true }
+    },
+    {
+      path: '/admin',
+      name: 'Admin',
+      component: () => import('@/views/Admin'),
+      meta: { requireAuth: true }
     }
   ]
 })
