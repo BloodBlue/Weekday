@@ -14,20 +14,25 @@
       <el-aside width="auto" style="background-color: rgb(238, 241, 246)" v-if="show">
         <el-menu :default-active="$route.path" mode="vertical" id="lastclass" :collapse="isCollapse" class="el-menu-vertical-demo"  router>
           <el-menu-item index="1" route="/home">
-          <i class="el-icon-view"></i>
-          <span slot="title">首页</span>
+            <i class="el-icon-view"></i>
+            <span slot="title">首页</span>
           </el-menu-item>
-          <el-menu-item index="2" route="/monday">
-          <i class="el-icon-tickets"></i>
-          <span slot="title">我的7天活动表</span>
+          <el-menu-item index="2" route="/seven">
+            <i class="el-icon-tickets"></i>
+            <span slot="title">我的7天活动表</span>
           </el-menu-item>
           <el-menu-item index="/question" route="/question">
-          <i class="el-icon-star-off"></i>
-          <span slot="title">调查问卷</span>
+            <i class="el-icon-star-off"></i>
+            <span slot="title">调查问卷</span>
           </el-menu-item>
           <el-menu-item index="/frequency" route="/frequency">
-          <i class="el-icon-news"></i>
-          <span slot="title">活动频率</span></el-menu-item>
+            <i class="el-icon-news"></i>
+            <span slot="title">活动频率</span>
+          </el-menu-item>
+          <el-menu-item index="/admin" route="/Admin" v-show="isAdmin">
+            <i class="el-icon-service"></i>
+            <span slot="title">管理员</span>
+          </el-menu-item>
           </el-menu>
         </el-aside>
       <el-main>
@@ -42,11 +47,11 @@
 </template>
 
 <script>
-import './assets/iconfont/iconfont.css'
 export default {
   name: 'App',
   data () {
     return {
+      isAdmin: false,
       isCollapse: false,
       show: true,
       menushow: true,
@@ -63,9 +68,12 @@ export default {
   watch: {
     '$route' () {
       console.log(this.$route.name)
+      // 判断是否为管理员
+      if (localStorage.isAdmin === 'true') { this.isAdmin = true }
+      if (localStorage.isAdmin === 'false') { this.isAdmin = false }
       // 不等于登录页面的时候为true
       if (this.$route.name === 'Login' || this.$route.name === 'Register' || this.$route.name === 'Mailpsw') { this.show = false }
-      if (this.$route.name === 'frequency' || this.$route.name === 'Question' || this.$route.name === 'Monday' || this.$route.name === 'Home') { this.show = true }
+      if (this.$route.name === 'frequency' || this.$route.name === 'Question' || this.$route.name === 'Seven' || this.$route.name === 'Home') { this.show = true }
     }
   },
   methods: {

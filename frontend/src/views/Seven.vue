@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  name: 'Monday',
+  name: 'Seven',
   data () {
     return {
       day: '',

@@ -97,21 +97,24 @@ export default {
           localStorage.setItem('userName', this.loginForm.username)
           localStorage.username = response.data.data.username
           localStorage.token = response.data.data.token
+          localStorage.isAdmin = response.data.data.isAdmin
           sessionStorage.setItem('Login', true)
+          console.log(localStorage.username)
           console.log(localStorage.token)
+          console.log(localStorage.isAdmin)
           this.$emit('usersignin', this.loginForm.username)
           this.$message({
             title: '提示信息',
             message: '恭喜你，登录成功',
             type: 'success'
           })
-          // this.$emit('isShow', false);
+          // this.$emit('isAdmin', true)
           this.$router.push('/home')
           // this.methods.to('/')// 需要商量一下跳转到那一个页面
         }
         if (response.data.status === 400) {
           this.$message({
-            message: '用户名或密码错误，请重新输入！',
+            message: response.data.msg,
             type: 'warning'
           })
           this.loginForm.password = ''
