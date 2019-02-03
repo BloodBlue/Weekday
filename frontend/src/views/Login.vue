@@ -95,9 +95,11 @@ export default {
           localStorage.setItem('userName', this.loginForm.username)
           localStorage.username = response.data.data.username
           localStorage.token = response.data.data.token
+          localStorage.isAdmin = response.data.data.isAdmin
           sessionStorage.setItem('Login', true)
           console.log(localStorage.username)
           console.log(localStorage.token)
+          console.log(localStorage.isAdmin)
           this.$emit('usersignin', this.loginForm.username)
           this.$message({
             title: '提示信息',

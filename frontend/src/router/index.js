@@ -21,9 +21,9 @@ export default new Router({
       component: () => import('@/views/Mailpsw')
     },
     {
-      path: '/monday',
-      name: 'Monday',
-      component: () => import('@/views/Monday'),
+      path: '/seven',
+      name: 'Seven',
+      component: () => import('@/views/Seven'),
       meta: { requireAuth: true }
     },
     {

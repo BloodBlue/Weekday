@@ -17,7 +17,7 @@
             <i class="el-icon-view"></i>
             <span slot="title">首页</span>
           </el-menu-item>
-          <el-menu-item index="2" route="/monday">
+          <el-menu-item index="2" route="/seven">
             <i class="el-icon-tickets"></i>
             <span slot="title">我的7天活动表</span>
           </el-menu-item>
@@ -30,7 +30,7 @@
             <span slot="title">活动频率</span>
           </el-menu-item>
           <el-menu-item index="/admin" route="/Admin" v-show="isAdmin">
-            <i class="el-icon-news"></i>
+            <i class="el-icon-service"></i>
             <span slot="title">管理员</span>
           </el-menu-item>
           </el-menu>
@@ -68,10 +68,12 @@ export default {
   watch: {
     '$route' () {
       console.log(this.$route.name)
-      if (localStorage.username === '许尉') { this.isAdmin = true }
+      // 判断是否为管理员
+      if (localStorage.isAdmin === 'true') { this.isAdmin = true }
+      if (localStorage.isAdmin === 'false') { this.isAdmin = false }
       // 不等于登录页面的时候为true
       if (this.$route.name === 'Login' || this.$route.name === 'Register' || this.$route.name === 'Mailpsw') { this.show = false }
-      if (this.$route.name === 'frequency' || this.$route.name === 'Question' || this.$route.name === 'Monday' || this.$route.name === 'Home') { this.show = true }
+      if (this.$route.name === 'frequency' || this.$route.name === 'Question' || this.$route.name === 'Seven' || this.$route.name === 'Home') { this.show = true }
     }
   },
   methods: {

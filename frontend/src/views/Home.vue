@@ -1,7 +1,7 @@
 <template>
 <div>
   <div>
-  <el-scrollbar style="height:450px">
+  <el-scrollbar style="height:700">
   <div class="title1">
     <span class="firsttitle" style="font-size: 12px">问卷须知</span>
     <p id="detail">请尽可能诚实和完整地回答本平台问卷内容，并在题目中写出你的真实情况或感受。问卷回答在第一次提交之后，均不可修改，您的个人信息将会得到妥善保护，并仅用作学校管理工作和学术研究。本问卷共分为三个板块：7天活动日记、调查问卷、活动频率。其中，<i class="el-icon-info" id="lan" ><span>7天活动日记需连续7天记录每日的体力活动日记</span></i><i class="el-icon-info" id="lan" >调查问卷为独立板块，注册后即可填写</i><i class="el-icon-info" id="lan" >活动频率板块需在7天活动日记完成后填写</i>感谢您的配合！</p>
@@ -24,11 +24,12 @@
           <el-button slot="reference" @click="see(item.index)" size="mini" type="info" round>查看</el-button>
         </el-popover>
         <el-button @click="wad(item.index)" v-show="item.isGet && item.isOver && item.isOk" size="mini" type="warning" round>补填</el-button>
+        <el-button @click="to('/seven')" v-show="item.isGet && item.isNow && item.isOk" size="mini" type="success" round>进行中</el-button>
       </div>
     </div>
   </div>
   <div v-else>
-    <el-button type="danger" icon="el-icon-close" circle @click="Back()" class="close"></el-button>
+    <el-button type="danger" icon="el-icon-back" circle @click="Back()" class="close"></el-button>
     <p id="monp">{{title}}</p>
       <div style="text-align:center;">
         <el-form ref="monForm" v-for="item in monForm" :key="item.index">
@@ -87,15 +88,15 @@ export default {
         {event: '其他久坐行为', time: 0}
       ],
       statuslist: [
-        {index: -1, title: '', date: '', percentage: 0, color: '#9966CC', isGet: false, isShow: false, isOk: true, isOver: false},
-        {index: -2, title: '', date: '', percentage: 0, color: '#9966CC', isGet: false, isShow: false, isOk: true, isOver: false},
-        {index: -3, title: '', date: '', percentage: 0, color: '#9966CC', isGet: false, isShow: false, isOk: true, isOver: false},
-        {index: -4, title: '', date: '', percentage: 0, color: '#9966CC', isGet: false, isShow: false, isOk: true, isOver: false},
-        {index: -5, title: '', date: '', percentage: 0, color: '#9966CC', isGet: false, isShow: false, isOk: true, isOver: false},
-        {index: -6, title: '', date: '', percentage: 0, color: '#9966CC', isGet: false, isShow: false, isOk: true, isOver: false},
-        {index: -7, title: '', date: '', percentage: 0, color: '#9966CC', isGet: false, isShow: false, isOk: true, isOver: false},
-        {index: -8, title: '', date: '', percentage: 0, color: '#9966CC', isGet: false, isShow: false, isOk: true, isOver: false},
-        {index: -9, title: '隐藏任务！', date: '', percentage: 0, color: '#9966CC', isGet: false, isShow: false, isOk: true, isOver: false}
+        {index: -1, title: '', date: '', percentage: 0, color: '#9966CC', isGet: false, isShow: false, isOk: true, isOver: false, isNow: false},
+        {index: -2, title: '', date: '', percentage: 0, color: '#9966CC', isGet: false, isShow: false, isOk: true, isOver: false, isNow: false},
+        {index: -3, title: '', date: '', percentage: 0, color: '#9966CC', isGet: false, isShow: false, isOk: true, isOver: false, isNow: false},
+        {index: -4, title: '', date: '', percentage: 0, color: '#9966CC', isGet: false, isShow: false, isOk: true, isOver: false, isNow: false},
+        {index: -5, title: '', date: '', percentage: 0, color: '#9966CC', isGet: false, isShow: false, isOk: true, isOver: false, isNow: false},
+        {index: -6, title: '', date: '', percentage: 0, color: '#9966CC', isGet: false, isShow: false, isOk: true, isOver: false, isNow: false},
+        {index: -7, title: '', date: '', percentage: 0, color: '#9966CC', isGet: false, isShow: false, isOk: true, isOver: false, isNow: false},
+        {index: -8, title: '', date: '', percentage: 0, color: '#9966CC', isGet: false, isShow: false, isOk: true, isOver: false, isNow: false},
+        {index: -9, title: '隐藏任务！', date: '', percentage: 0, color: '#9966CC', isGet: false, isShow: false, isOk: true, isOver: false, isNow: false}
       ]
     }
   },
@@ -194,8 +195,16 @@ export default {
       for (var key in this.statuslist) {
         var sdate = new Date(Date.parse(this.statuslist[key].date.replace(/-/g, '/')))
         var Today = new Date()
-        if (sdate.getTime() < Today.getTime()) {
-          this.statuslist[key].isOver = true
+        var TodayTime = Today.getTime() - 60 * 60 * 1000 * Today.getHours() - 60 * 1000 * Today.getMinutes() - 1000 * Today.getSeconds() - Today.getMilliseconds()
+        var Tomorrow = TodayTime + 86400000
+        if (sdate.getTime() < TodayTime) {
+          var dataList = this.statuslist[key]
+          dataList.isOver = true
+          this.statuslist.splice(key, 1, dataList)
+        } else if (sdate.getTime() >= TodayTime && sdate.getTime() < Tomorrow) {
+          var dataS = this.statuslist[key]
+          dataS.isNow = true
+          this.statuslist.splice(key, 1, dataS)
         }
       }
     },
@@ -204,6 +213,10 @@ export default {
       this.isWap = false
       this.title = this.get_title(number)
       this.id = number
+    },
+    // 跳转
+    to (url) {
+      this.$router.push(url)
     },
     // 提交补填的信息
     submitform () {
