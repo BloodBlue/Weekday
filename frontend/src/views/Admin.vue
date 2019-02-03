@@ -12,7 +12,7 @@
       <el-table-column fixed prop="submit_phase2" label="活动频率"></el-table-column>
     </el-table>
     <div style="text-align:center" @click="download()">
-      <a href="javascript:;" class="down">下载</a>
+      <a href="javascript:;" class="down">下载Excel</a>
     </div>
   </div>
 </template>
@@ -31,7 +31,7 @@ export default {
         {headers: {'Authorization': localStorage.token}, responseType: 'arraybuffer'}
       ).then((val) => {
         console.log(val)
-        let blob = new Blob([val.data.data], {type: 'application/vnd.ms-excel'})
+        let blob = new Blob([val.data], {type: 'application/vnd.ms-excel'})
         let objectUrl = URL.createObjectURL(blob)
         console.log(objectUrl)
         // window.open(objectUrl)
@@ -60,5 +60,5 @@ export default {
 <style lang="stylus">
 .down
   color green
-  font-size 16px
+  font-size 20px
 </style>
