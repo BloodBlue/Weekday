@@ -31,7 +31,7 @@ export default {
         {headers: {'Authorization': localStorage.token}, responseType: 'arraybuffer'}
       ).then((val) => {
         console.log(val)
-        let blob = new Blob([val.data], {type: 'application/vnd.ms-excel'})
+        let blob = new Blob([val.data.data], {type: 'application/vnd.ms-excel'})
         let objectUrl = URL.createObjectURL(blob)
         console.log(objectUrl)
         // window.open(objectUrl)

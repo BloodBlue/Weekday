@@ -17,7 +17,7 @@ Vue.use(Vuex)
 Vue.use(ElementUI)
 Vue.use(VueAxios, axios)
 
-axios.defaults.baseURL = 'http://106.14.140.30:5000'
+axios.defaults.baseURL = 'http://47.102.120.249:5000'
 
 Vue.config.productionTip = false
 Vue.prototype.$ajax = axios

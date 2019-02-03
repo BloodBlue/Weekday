@@ -112,7 +112,7 @@ export default {
         }
         if (response.data.status === 400) {
           this.$message({
-            message: '用户名或密码错误，请重新输入！',
+            message: response.data.msg,
             type: 'warning'
           })
           this.loginForm.password = ''

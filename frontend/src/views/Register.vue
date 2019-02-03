@@ -258,22 +258,6 @@ export default {
           })
         }
       })
-        .then((response) => {
-          if (response.data.status === 200) { // 登录成功的页面
-            this.$message({
-              title: '提示信息',
-              message: '恭喜你，注册成功',
-              type: 'success'
-            })
-            this.$router.push('/login')
-          } else {
-            this.$message({
-              message: '注册有误，请重试！',
-              type: 'warning'
-            })
-          }
-        })
-      console.log(formdata)
     },
     // 清空注册信息
     reset (formName) {
