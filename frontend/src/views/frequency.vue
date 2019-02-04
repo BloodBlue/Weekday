@@ -248,7 +248,6 @@ export default {
   mounted: function () {
     this.$ajax.get('/questionnaires/submit_phase2', {headers: {'Authorization': localStorage.token}})
       .then((response) => {
-        console.log(response.data)
         this.freForm.status = response.data.status
         console.log(this.freForm.status)
         if (this.freForm.status === 400) {
@@ -291,7 +290,6 @@ export default {
           this.$ajax.post('/questionnaires/submit_phase2', freformdata, {
             headers: {'Authorization': localStorage.token, 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'}}
           ).then((response) => {
-            console.log(response.data)
             if (response.data.status === 200) {
               this.$message({
                 title: '提示信息',

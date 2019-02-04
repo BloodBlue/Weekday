@@ -144,9 +144,6 @@ export default {
     // 获取状态
     getStatus () {
       this.getProcess()
-      console.log('day:', this.day)
-      console.log('date:', this.date)
-      console.log('question:', this.question)
       var index = 0
       for (var key in this.date) {
         var data = this.statuslist[index]
