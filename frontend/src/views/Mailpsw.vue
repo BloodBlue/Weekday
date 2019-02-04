@@ -119,19 +119,6 @@ export default {
     },
     getsecode () {
       const TIME_COUNT = 60
-      if (!this.timer) {
-        this.count = TIME_COUNT
-        this.show = false
-        this.timer = setInterval(() => {
-          if (this.count > 0 && this.count <= TIME_COUNT) {
-            this.count--
-          } else {
-            this.show = true
-            clearInterval(this.timer)
-            this.timer = null
-          }
-        }, 1000)
-      }
       var params = new URLSearchParams()
       params.append('email', this.loginForm.mailname)
       console.log(this.loginForm.mailname)
@@ -140,6 +127,19 @@ export default {
         if (response.data.status === 200) {
           console.log(response.data.msg)
           alert('验证码发送成功！')
+          if (!this.timer) {
+            this.count = TIME_COUNT
+            this.show = false
+            this.timer = setInterval(() => {
+              if (this.count > 0 && this.count <= TIME_COUNT) {
+                this.count--
+              } else {
+                this.show = true
+                clearInterval(this.timer)
+                this.timer = null
+              }
+            }, 1000)
+          }
         }
       })
     },
