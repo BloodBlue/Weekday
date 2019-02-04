@@ -87,9 +87,6 @@ export default {
       this.$ajax.post('/users/login', params, {
         headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'}}
       ).then((response) => {
-        console.log(response)
-        console.log(response.data)
-        console.log(response.data.data)
         console.log(response.data.msg)
         if (response.data.status === 200) { // 登录成功的页面
           this.$store.commit('setToken', response.data.data)
@@ -100,7 +97,6 @@ export default {
           localStorage.isAdmin = response.data.data.isAdmin
           sessionStorage.setItem('Login', true)
           console.log(localStorage.username)
-          console.log(localStorage.token)
           console.log(localStorage.isAdmin)
           this.$emit('usersignin', this.loginForm.username)
           this.$message({
