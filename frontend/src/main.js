@@ -10,8 +10,6 @@ import md5 from 'js-md5'
 import Vuex from 'vuex'
 import VueAxios from 'vue-axios'
 import 'lib-flexible/flexible.js'
-import './assets/img/background.jpg'
-import './assets/img/banner.png'
 
 Vue.use(Vuex)
 Vue.use(ElementUI)

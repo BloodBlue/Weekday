@@ -185,7 +185,7 @@ export default {
   magrin-right: 200px
 }
 .bodymailpsw{
-  background: url('../assets/img/banner.png')repeat;
+  background-color: grey
   padding:10px 0px 30px 0px;
   color: white
 }
