@@ -1,9 +1,10 @@
 <template>
-  <div class="backgrounddiv">
+  <div class="backgrounddiv" >
     <el-row type="flex" justify="center">
       <el-col :span="21">
+        <div>
         <h2 style="text-align: center; font-size: 0.65rem; color: white">大学生体力活动调研平台</h2>
-        <el-card id="login-card">
+        <el-card id="login-card" body-style="opacity:0.8 width:60% padding:350px 300px">
           <div slot="header" class="clearfix">
             <span>登录</span>
           </div>
@@ -27,6 +28,7 @@
             </el-row>
           </div>
         </el-card>
+        </div>
       </el-col>
     </el-row>
   </div>
