@@ -133,7 +133,7 @@ export default {
   margin-top: 30px;
 }
 .bodylogin{
-  background: url('../assets/img/banner.png')repeat;
+  background-color: gray;
   padding:10px 0px 30px 0px;
   color: azure
 }
