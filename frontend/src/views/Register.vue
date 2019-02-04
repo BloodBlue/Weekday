@@ -1,14 +1,12 @@
 <template>
 <div>
   <el-row type="flex" justify="center">
-    <el-col :span="20">
-      <el-card id="login-card">
-        <div slot="header" class="clearfix">
-          <span>新用户注册</span>
-        </div>
+    <el-col :span="21">
+        <div class="divregister">
           <div>
             <el-row type="flex" justify="center">
-              <el-col :span="16">
+              <el-col :span="21">
+                <h4 style="text-align: center; font-size: 0.5rem; color: grey">新用户注册</h4>
                 <el-form label-position="left" status-icon :model="regForm" :rules="rules" ref="regForm">
                   <el-form-item label="学校" prop="schoolName">
                     <el-select
@@ -64,15 +62,15 @@
                     <br/>
                   </el-form-item>
                 <el-form-item>
-                  <el-button type="primary" @click="submitform" >注册</el-button>
-                  <el-button type="password" @click="to('/login')" >返回</el-button>
-                  <el-button @click="reset('regForm')">重置</el-button>
+                  <el-button size="small" type="primary" @click="submitform" >注册</el-button>
+                  <el-button size="small" type="password" @click="to('/login')" >返回</el-button>
+                  <el-button size="small"  @click="reset('regForm')">重置</el-button>
                 </el-form-item>
               </el-form>
             </el-col>
           </el-row>
         </div>
-      </el-card>
+        </div>
     </el-col>
   </el-row>
 </div>
@@ -301,5 +299,9 @@ export default {
   background-color: grey;
   padding:10px 0px 30px 0px;
   color: azure
+}
+.divregister{
+  background-color:#CDCDC1;
+  opacity: 0.9;
 }
 </style>
