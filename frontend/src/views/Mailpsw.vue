@@ -2,13 +2,11 @@
   <div class="bodymailpsw">
     <el-row type="flex" justify="center">
       <el-col :span="20">
-        <el-card id="login-card">
-          <div slot="header" class="clearfix">
-            <span>忘记密码</span>
-          </div>
+        <div class="divmailpsw">
           <div>
             <el-row type="flex" justify="center">
               <el-col :span="20">
+                <h4 style="text-align: center; font-size: 0.5rem; color: grey">忘记密码</h4>
                 <el-form label-position="left" :model="loginForm" :rules="rules" ref="loginForm">
                   <el-form-item label="邮箱" prop="mailname">
                     <el-input placeholder="请输入邮箱" v-model="loginForm.mailname" ></el-input>
@@ -34,7 +32,7 @@
               </el-col>
             </el-row>
           </div>
-        </el-card>
+        </div>
       </el-col>
     </el-row>
   </div>
@@ -188,5 +186,9 @@ export default {
   background-color: grey
   padding:10px 0px 30px 0px;
   color: white
+}
+.divmailpsw{
+  background-color:#CDCDC1;
+  opacity: 0.9;
 }
 </style>
