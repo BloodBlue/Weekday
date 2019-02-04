@@ -96,7 +96,7 @@ export default {
         {index: -6, title: '', date: '', percentage: 0, color: '#9966CC', isGet: false, isShow: false, isOk: true, isOver: false, isNow: false},
         {index: -7, title: '', date: '', percentage: 0, color: '#9966CC', isGet: false, isShow: false, isOk: true, isOver: false, isNow: false},
         {index: -8, title: '', date: '', percentage: 0, color: '#9966CC', isGet: false, isShow: false, isOk: true, isOver: false, isNow: false},
-        {index: -9, title: '隐藏任务！', date: '', percentage: 0, color: '#9966CC', isGet: false, isShow: false, isOk: true, isOver: false, isNow: false}
+        {index: -9, title: '活动频率！', date: '', percentage: 0, color: '#9966CC', isGet: false, isShow: false, isOk: true, isOver: false, isNow: false}
       ]
     }
   },
