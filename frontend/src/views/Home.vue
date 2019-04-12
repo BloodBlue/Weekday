@@ -4,7 +4,11 @@
   <el-scrollbar style="height:700">
   <div class="title1">
     <span class="firsttitle" style="font-size: 12px">问卷须知</span>
-    <p id="detail">请尽可能诚实和完整地回答本平台问卷内容，并在题目中写出你的真实情况或感受。问卷回答在第一次提交之后，均不可修改，您的个人信息将会得到妥善保护，并仅用作学校管理工作和学术研究。本问卷共分为三个板块：7天活动日记、调查问卷、活动频率。其中，<i class="el-icon-info" id="lan" ><span>7天活动日记需连续7天记录每日的体力活动日记</span></i><i class="el-icon-info" id="lan" >调查问卷为独立板块，注册后即可填写</i><i class="el-icon-info" id="lan" >活动频率板块需在7天活动日记完成后填写</i>感谢您的配合！</p>
+    <p id="detail">请尽可能诚实和完整地回答本平台问卷内容，并在题目中写出你的真实情况或感受。问卷回答在提交之后，均不可修改，您的个人信息将会得到妥善保护，并仅用作学校管理工作和学术研究。本问卷共分为三个板块：7天活动日记、调查问卷、活动频率。其中:</p>
+    <p id="detail"><i class="el-icon-info" id="lan" >调查问卷为独立板块，注册后即可填写</i></p>
+    <p id="detail"><i class="el-icon-info" id="lan" ><span>7天活动日记需连续7天记录每日的体力活动</span></i></p>
+    <p id="detail"><i class="el-icon-info" id="lan" >活动频率板块需在7天活动日记完成后填写</i></p>
+    <p id="detail">感谢您的填写！</p>
   </div>
   <div v-if="isWap" class="title1">
     <span class="firsttitle" style="font-size: 12px">问卷进度</span>
@@ -57,6 +61,7 @@ export default {
   data () {
     return {
       isWap: true,
+      isRank: false,
       title: '',
       id: -1,
       day: '',
@@ -72,9 +77,8 @@ export default {
         {index: 3, label: '看闲书', name: 'read', hour: '0', minute: '0'},
         {index: 4, label: '上课', name: 'classroom', hour: '0', minute: '0'},
         {index: 5, label: '(坐着)出行(私家车/公交车/地铁/火车)', name: 'out', hour: '0', minute: '0'},
-        {index: 6, label: '做手工或练习乐器', name: 'music', hour: '0', minute: '0'},
-        {index: 7, label: '跟朋友聊天或打电话 ', name: 'chat', hour: '0', minute: '0'},
-        {index: 8, label: '其他', name: 'other', hour: '0', minute: '0'}
+        {index: 6, label: '跟朋友聊天或打电话 ', name: 'chat', hour: '0', minute: '0'},
+        {index: 7, label: '其他', name: 'other', hour: '0', minute: '0'}
       ],
       gridData: [
         {event: '使用电子设备用于娱乐(看手机/视频/打游戏)', time: 0},
@@ -83,7 +87,6 @@ export default {
         {event: '看闲书', time: 0},
         {event: '上课', time: 0},
         {event: '(坐着)出行(私家车/公交车/地铁/火车)', time: 0},
-        {event: '做手工或练习乐器', time: 0},
         {event: '跟朋友聊天或打电话', time: 0},
         {event: '其他久坐行为', time: 0}
       ],
@@ -118,6 +121,12 @@ export default {
             data.isGet = true
             this.statuslist.splice(num, 1, data)
           }
+        } else if (val.data.status === 400) { // 无数据
+          this.$message({
+            title: '提示信息',
+            message: '你还没填写完呢！',
+            type: 'error'
+          })
         }
       })
       // 获取普通问卷和活动频率的信息
@@ -134,6 +143,9 @@ export default {
             this.frequency = questionSet[key4]
           }
           index1 = index1 + 1
+        }
+        if (questionSet.submit_phase2 === true) {
+          this.isRank = true
         }
       })
     },
@@ -181,7 +193,6 @@ export default {
     },
     // 根据所点击的事件显示相应用户所填数据
     see (number) {
-      console.log(number)
       var data = this.day[number]
       for (var order in this.gridData) {
         this.gridData[order].time = data[order]
@@ -226,9 +237,7 @@ export default {
         data = Number(this.monForm[key].minute) + 60 * Number(this.monForm[key].hour)
         answer.push(data)
       }
-      console.log(answer)
       formdata.append('answer', answer)
-      console.log(formdata)
       this.$ajax({
         method: 'PUT',
         url: '/questionnaires/7d',
@@ -238,7 +247,6 @@ export default {
         }
       })
         .then(response => {
-          console.log(response.data)
           if (response.data.status === 200) { // 登录成功的页面
             this.$message({
               title: '提示信息',
@@ -333,5 +341,8 @@ f > :first-child{
 }
 .el-scrollbar_wrap{
   overflow-x: hidden;
+}
+.Rank{
+  float: right;
 }
 </style>

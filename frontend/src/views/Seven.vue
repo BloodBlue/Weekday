@@ -3,7 +3,7 @@
       <el-row type="flex" justify="center">
       <el-col :span="22">
         <p id="monp">每日体力活动日记</p>
-        <p>Tips：当天只需填写当天的数据记录，漏填的数据需在首页找到相应进度栏的补填按钮进行填写。</p>
+        <p style="color: red">Tips：当天只需填写当天的数据记录，漏填的数据需在首页找到相应进度栏的补填按钮进行填写。</p>
         <div style="text-align:center;">
           <el-form ref="monForm" v-for="item in monForm" :key="item.index">
             <el-form-item :label="item.label" prop="item.name" class="f">
@@ -35,10 +35,9 @@ export default {
         {index: 2, label: '做作业(不包含用电脑的时间)', name: 'homework', hour: '0', minute: '0'},
         {index: 3, label: '看闲书', name: 'read', hour: '0', minute: '0'},
         {index: 4, label: '上课', name: 'classroom', hour: '0', minute: '0'},
-        {index: 5, label: '(坐着)出行(私家车/公交车/地铁/火车)', name: 'out', hour: '0', minute: '0'},
-        {index: 6, label: '做手工或练习乐器', name: 'music', hour: '0', minute: '0'},
-        {index: 7, label: '跟朋友聊天或打电话 ', name: 'chat', hour: '0', minute: '0'},
-        {index: 8, label: '其他', name: 'other', hour: '0', minute: '0'}
+        {index: 5, label: '坐着出行(私家车/公交车/地铁/火车)', name: 'out', hour: '0', minute: '0'},
+        {index: 6, label: '跟朋友聊天或打电话 ', name: 'chat', hour: '0', minute: '0'},
+        {index: 7, label: '其他久坐行为', name: 'other', hour: '0', minute: '0'}
       ]
     }
   },
@@ -53,9 +52,7 @@ export default {
         data = Number(this.monForm[key].minute) + 60 * Number(this.monForm[key].hour)
         answer.push(data)
       }
-      console.log(answer)
       formdata.append('answer', answer)
-      console.log(formdata)
       this.$ajax({
         method: 'POST',
         url: '/questionnaires/7d',
@@ -65,7 +62,6 @@ export default {
         }
       })
         .then(response => {
-          console.log(response.data)
           if (response.data.status === 200) { // 提交成功的页面
             this.$message({
               title: '提示信息',

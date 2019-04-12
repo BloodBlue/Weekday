@@ -1,6 +1,7 @@
 <template>
   <div>
     <div v-if="isBasis">
+      <p class="pclass1"><strong>Tip:此调查问卷只能提交一次！！！</strong></p>
       <el-row type="flex" justify="center">
         <div>
           <el-row type="flex" justify="center">
@@ -8,9 +9,7 @@
               <p class="pclass">人口统计学的基本情况 </p>
               <el-form label-position="left" :model="basisForm" :rules="rules" ref="basisForm"  class="label">
                 <el-form-item label="学校" prop="school">
-                  <el-select v-model="basisForm.school" clearable placehold="--请选择--">
-                    <el-option v-for="item in schoollist" :key="item.value" :label="item.label" :value="item.value"></el-option>
-                  </el-select>
+                  <el-input v-model="basisForm.school" placeholder="请输入学校"></el-input>
                 </el-form-item>
                 <el-form-item label="年级" prop="grade">
                   <el-select v-model="basisForm.grade" clearable placehold="--请选择--">
@@ -24,11 +23,15 @@
               <el-form-item label="出生日期" prop="birthday">
                 <el-date-picker v-model="basisForm.birthday" value-format="yyyy-MM-dd" type="date" placeholder="选择出生日期"></el-date-picker>
               </el-form-item>
-              <el-form-item label="民族" prop="nationality">
-                <el-input v-model="basisForm.nationality" placeholder="请输入民族"></el-input>
-              </el-form-item>
               <el-form-item label="专业类别" prop="major">
-                <el-input v-model="basisForm.major" placeholder="请输入专业"></el-input>
+                <el-select v-model="basisForm.major" placeholder="请选择">
+                  <el-option
+                    v-for="item in majorOptions"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
               </el-form-item>
                 <p class="pclass">请填写你最近一次体质测试的成绩</p>
                 <el-form-item label="身高(厘米/cm)" prop="height">
@@ -50,7 +53,6 @@
                   <el-input v-model="basisForm.enduranceRun" placeholder="请输入800米/1000米成绩"></el-input>
                   <br>
                   <p><span style="color:red"><i class="el-icon-info"></i>友情提示：</span>如果记不起来准确时间，请勾选成绩的范围区间 (单位分/秒)</p>
-                  <br>
                   <div v-if="isBoy">
                     <span>男生: </span>
                   <el-radio-group v-model="basisForm.enduranceRun" class="radio-group">
@@ -90,7 +92,7 @@
       <el-col :span="20">
         <el-card id="login-card">
           <div slot="header" class="clearfix">
-            <span>健康关联</span>
+            <span>健康相关的生活质量(体能层面)</span>
           </div>
           <div>
             <el-row type="flex" justify="center">
@@ -118,7 +120,7 @@
       <el-col :span="20">
         <el-card id="login-card">
           <div slot="header" class="clearfix">
-            <span>情感关联</span>
+            <span>健康相关的生活质量(情绪状态)</span>
           </div>
           <div>
             <el-row type="flex" justify="center">
@@ -146,7 +148,7 @@
       <el-col :span="20">
         <el-card id="login-card">
           <div slot="header" class="clearfix">
-            <span>同伴关联</span>
+            <span>健康相关的生活质量(与人相处)</span>
           </div>
           <div>
             <el-row type="flex" justify="center">
@@ -174,7 +176,7 @@
       <el-col :span="20">
         <el-card id="login-card">
           <div slot="header" class="clearfix">
-            <span>学校里的问题</span>
+            <span>健康相关的生活质量(学习生活)</span>
           </div>
           <div>
             <el-row type="flex" justify="center">
@@ -221,12 +223,18 @@ export default {
       g3: '4-4.44',
       g4: '4.45-5.24',
       g5: '>5.24',
+      majorOptions: [
+        {value: '理工类', label: '理工类'},
+        {value: '人工类', label: '人工类'},
+        {value: '经管类', label: '经管类'},
+        {value: '艺术类', label: '艺术类'}
+      ],
       basisForm: {
         school: '',
         grade: '',
         sex: '男',
         birthday: '',
-        nationality: '',
+        nationality: 'null',
         major: '',
         height: '',
         weight: '',
@@ -236,12 +244,6 @@ export default {
         enduranceRun: '',
         upNumber: ''
       },
-      schoollist: [
-        {value: '上海大学', label: '上海大学'},
-        {value: '同济大学', label: '同济大学'},
-        {value: '对外经贸大学', label: '对外经贸大学'},
-        {value: '上海健康医学院', label: '上海健康医学院'}
-      ],
       gradelist: [
         {value: '大一', label: '大一'},
         {value: '大二', label: '大二'},
@@ -264,7 +266,7 @@ export default {
           {label: '对我来说,提重物很困难', name: 'rise', value: ''},
           {label: '对我来说,自己洗澡和淋浴很困难', name: 'bathe', value: ''},
           {label: '对我来说,做家务很困难', name: 'housework', value: ''},
-          {label: '我受伤或者是有疼痛', name: 'hurt', value: ''},
+          {label: '我因身体不适,感到疼痛或受伤而不能运动', name: 'hurt', value: ''},
           {label: '我精神萎靡不振', name: 'spirit', value: ''}
         ]
       },
@@ -279,11 +281,11 @@ export default {
       },
       otherForm: {
         questionlist: [
-          {label: '我同其他小朋友相处有困难', name: 'getAlong', value: ''},
-          {label: '其他小朋友不想和我交朋友', name: 'makeFriend', value: ''},
-          {label: '其他小朋友取笑(戏弄)我', name: 'jest', value: ''},
-          {label: '我不能完成同龄小朋友完成的事情', name: 'failToFinish', value: ''},
-          {label: '和其他小朋友一起玩耍(运动)时,我感到很困难', name: 'hardToPlay', value: ''}
+          {label: '我同其他人相处有困难', name: 'getAlong', value: ''},
+          {label: '其他人不想和我交朋友', name: 'makeFriend', value: ''},
+          {label: '其他人取笑(戏弄)我', name: 'jest', value: ''},
+          {label: '我不能完成同龄人完成的事情', name: 'failToFinish', value: ''},
+          {label: '和其他人一起玩耍(运动)时,我感到很困难', name: 'hardToPlay', value: ''}
         ]
       },
       schoolForm: {
@@ -307,9 +309,6 @@ export default {
         ],
         birthday: [
           { required: true, message: '请选择出生日期', trigger: 'blur' }
-        ],
-        nationality: [
-          { required: true, message: '请输入民族', trigger: 'blur' }
         ],
         major: [
           { required: true, message: '请输入专业类别', trigger: 'blur' }
@@ -521,14 +520,12 @@ export default {
             element.value
           )
         })
-        console.log(answer)
         var formdata = new FormData()
         formdata.append('qnId', '1')
         formdata.append('answer', answer)
         this.$ajax.post('/questionnaires/submit_phase1', formdata, {
           headers: {'Authorization': localStorage.token}}
         ).then((response) => {
-          console.log(response.data.status)
           if (response.data.status === 200) {
             this.$message({
               title: '提示信息',
@@ -539,7 +536,6 @@ export default {
           }
           if (response.data.status === 400) {
             let that = response.data.msg
-            console.log(response.data.status)
             this.$message({
               title: '提示信息',
               message: '提交失败 ' + that,
@@ -558,6 +554,12 @@ export default {
 .pclass
   color orange
   font-size 20px
+  font-weight blod
+  font-family "宋体"
+
+.pclass1
+  color red
+  font-size 15px
   font-weight blod
   font-family "宋体"
 

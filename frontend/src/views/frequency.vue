@@ -21,7 +21,7 @@
                      <hr color=grey size=2>
                     <el-form-item :label="freForm.f2" prop="heavy" class="heavy">
                       <br/>
-                      <p><span style="color:red"><i class="el-icon-info"></i>友情提示：</span>所谓剧烈的体力活动是指每次至少10分钟、需要大力气完成、感到呼吸急促或较安静状态明显增强、以及心跳明显加快的活动。</p>
+                      <p style="color:red"><span><i class="el-icon-info"></i>友情提示：</span>所谓剧烈的体力活动是指每次至少10分钟、需要大力气完成、感到呼吸急促或较安静状态明显增强、以及心跳明显加快的活动。</p>
                       <el-input-number size="small" v-model="freForm.heavy" :min="0"></el-input-number>
                       <span>次/周</span>
                      </el-form-item>
@@ -35,7 +35,7 @@
                     <hr color=grey size=2>
                     <el-form-item :label="freForm.f4" prop="medheavy" class="heavy">
                       <br/>
-                      <p><span style="color:red"><i class="el-icon-info"></i>友情提示：</span>所谓中等强度的体力活动是指每次至少 10 分钟、需要中等力气完成、呼吸较安静时稍微增强，以及心跳 稍微加快的活动；某项活动，比如打篮球有可能是中等强度，也有可能是大强度；比如太极拳推手和对抗 练习，也可能是中等强度运动或大强度运动，请根据你的主观感受填写。</p>
+                      <p style="color:red"><span><i class="el-icon-info"></i>友情提示：</span>所谓中等强度的体力活动是指每次至少 10 分钟、需要中等力气完成、呼吸较安静时稍微增强，以及心跳 稍微加快的活动；某项活动，比如打篮球有可能是中等强度，也有可能是大强度；比如太极拳推手和对抗 练习，也可能是中等强度运动或大强度运动，请根据你的主观感受填写。</p>
                       <el-input-number size="small" v-model="freForm.medheavy" @change="handleChange" :min="0"></el-input-number>
                       <span>次/周</span>
                      </el-form-item>
@@ -49,7 +49,7 @@
                     <hr color=grey size=2>
                     <el-form-item :label="freForm.f6" prop="walk" class="heavy">
                       <br/>
-                      <p><span style="color:red"><i class="el-icon-info"></i>提示：</span>包括在家或工作场所、外出步行以及闲暇时间的散步、娱乐、锻炼等等各种生活状态下的步行活动。</p>
+                      <p style="color:red"><span><i class="el-icon-info"></i>提示：</span>包括在家或工作场所、外出步行以及闲暇时间的散步、娱乐、锻炼等等各种生活状态下的步行活动。</p>
                       <el-input-number size="small" v-model="freForm.walk" @change="handleChange" :min="0"></el-input-number>
                       <span>次/天</span>
                      </el-form-item>
@@ -63,7 +63,7 @@
                     <hr color=grey size=2>
                     <el-form-item :label="freForm.f8" prop="oxytime" class="heavy">
                       <br/>
-                      <p><span style="color:red"><i class="el-icon-info"></i>友情提示：</span>有氧运动指需要中等力气完成、呼吸较安静时稍微增强，以及心跳稍微加快的活动…….. </p>
+                      <p style="color:red"><span><i class="el-icon-info"></i>友情提示：</span>有氧运动指需要中等力气完成、呼吸较安静时稍微增强，以及心跳稍微加快的活动…….. </p>
                       <el-input-number size="small" v-model="freForm.oxytimehour" @change="handleChange" :min="0" :max="12"></el-input-number>
                       <span>小时</span>
                       <el-input-number size="small" v-model="freForm.oxytimemin" @change="handleChange" :min="0" :max="59"></el-input-number>
@@ -71,6 +71,8 @@
                      </el-form-item>
                     <hr color=grey size=2>
                     <el-form-item :label="freForm.f9" prop="fittime">
+                      <br/>
+                      <p style="color:red"><span><i class="el-icon-info"></i>友情提示：</span>一天参与15分钟及以上(含练习过程中的休息时间)才能算一天！！ </p>
                       <el-radio-group v-model="freForm.fittime">
                         <el-radio v-for="time in freForm.fittimelist" :key="time.name" :label="time.label" name="fittime">{{time.name}}</el-radio>
                       </el-radio-group>
@@ -249,7 +251,6 @@ export default {
     this.$ajax.get('/questionnaires/submit_phase2', {headers: {'Authorization': localStorage.token}})
       .then((response) => {
         this.freForm.status = response.data.status
-        console.log(this.freForm.status)
         if (this.freForm.status === 400) {
           this.freForm.isshow = false
           this.freForm.show = true
@@ -297,10 +298,21 @@ export default {
                 type: 'success'
               })
               this.$router.push('/home')
+              this.$ajax.get('/questionnaires/MET', {headers: {'Authorization': localStorage.token}})
+                .then((response) => {
+                  console.log(response.data)
+                  let score = response.data.MET
+                  let rank = response.data.rank
+                  let sum = response.data.sum
+                  this.$message({
+                    title: '体力得分排行榜',
+                    message: '你的体力得分为' + score + '在当前' + sum + '人中排名第' + rank + '位！',
+                    type: 'success'
+                  })
+                })
             }
             if (response.data.status === 400) {
               let that = response.data.msg
-              console.log(response.data.status)
               this.$message({
                 title: '提示信息',
                 message: '提交失败 ' + that,
@@ -308,8 +320,6 @@ export default {
               })
             }
           })
-          console.log(answer)
-          // alert('submit!')
         } else {
           console.log('error submit!')
           return false

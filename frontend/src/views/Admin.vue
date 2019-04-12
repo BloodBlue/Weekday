@@ -30,21 +30,16 @@ export default {
       this.$ajax.get('/questionnaires/result',
         {headers: {'Authorization': localStorage.token}, responseType: 'arraybuffer'}
       ).then((val) => {
-        console.log(val)
         let blob = new Blob([val.data], {type: 'application/vnd.ms-excel'})
         let objectUrl = URL.createObjectURL(blob)
-        console.log(objectUrl)
-        // window.open(objectUrl)
         window.location.href = objectUrl
       })
     },
     getGrid () {
-      console.log(localStorage.token)
       this.$ajax.get('/users/information?page=1',
         {headers: {'Authorization': localStorage.token}, withCredentials: true}
       ).then((val) => {
         var data = val.data.data.data
-        console.log(data)
         for (var index in data) {
           this.tableData.push(data[index])
         }

@@ -3,13 +3,13 @@
     <el-row type="flex" justify="center">
       <el-col :span="21">
         <div>
-        <h2 style="text-align: center; font-size: 0.65rem; color: white">大学生体力活动调研平台</h2>
+        <h2 style="text-align: center; font-size: 0.65rem; color: white">大学生体力活动水平与健康促进调研平台</h2>
           <div class="divlogin">
             <el-row type="flex" justify="center">
               <el-col :span="21">
                 <h4 style="text-align: center; font-size: 0.5rem; color: grey">登录</h4>
                 <el-form label-position="left" :model="loginForm" :rules="rules" ref="loginForm">
-                  <el-form-item label="用户名" prop="username">
+                  <el-form-item label="邮箱" prop="username">
                     <el-input placeholder="请输入邮箱" v-model="loginForm.username" ></el-input>
                   </el-form-item>
                   <el-form-item label="密码" prop="password" >
@@ -52,7 +52,7 @@ export default {
       },
       rules: {
         username: [
-          { required: true, message: '请输入用户名' }
+          { required: true, message: '请输入邮箱' }
         ],
         password: [
           { required: true, validator: passCheck }
@@ -83,17 +83,14 @@ export default {
       this.$ajax.post('/users/login', params, {
         headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'}}
       ).then((response) => {
-        console.log(response.data.msg)
         if (response.data.status === 200) { // 登录成功的页面
           this.$store.commit('setToken', response.data.data)
-          console.log('token is set to:', this.$store.state.token)
           localStorage.setItem('userName', this.loginForm.username)
           localStorage.username = response.data.data.username
           localStorage.token = response.data.data.token
           localStorage.isAdmin = response.data.data.isAdmin
           sessionStorage.setItem('Login', true)
           console.log(localStorage.username)
-          console.log(localStorage.isAdmin)
           this.$emit('usersignin', this.loginForm.username)
           this.$message({
             title: '提示信息',
@@ -130,7 +127,7 @@ export default {
   color: azure
 }
 .divlogin{
-  background-color:#CDCDC1;
+  background-color: white;
   opacity: 0.8;
 }
 </style>

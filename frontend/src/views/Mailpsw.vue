@@ -119,11 +119,9 @@ export default {
       const TIME_COUNT = 60
       var params = new URLSearchParams()
       params.append('email', this.loginForm.mailname)
-      console.log(this.loginForm.mailname)
       this.$ajax.post('users/reset', params, {headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json'}}
       ).then((response) => {
         if (response.data.status === 200) {
-          console.log(response.data.msg)
           alert('验证码发送成功！')
           if (!this.timer) {
             this.count = TIME_COUNT
@@ -157,8 +155,6 @@ export default {
         }
       })
         .then(function (response) {
-          console.log(response)
-          console.log(response.data.msg)
           if (response.data.status === 200) { // 登录成功的页面
             alert('恭喜你，密码修改成功')
             this.$router.push('/login')// 需要商量一下跳转到那一个页面
@@ -188,7 +184,7 @@ export default {
   color: white
 }
 .divmailpsw{
-  background-color:#CDCDC1;
+  background-color: white;
   opacity: 0.9;
 }
 </style>

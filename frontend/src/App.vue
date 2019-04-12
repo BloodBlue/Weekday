@@ -7,7 +7,7 @@
           <span v-show="!menushow"> 展开菜单</span>
           </i>
           <i class="el-icon-menu" @click="exit" style="float: right text-align: right"><span> 退出</span></i>
-          <span style="float: right"> {{msg}}欢迎你!</span>
+          <span style="float: right"> {{msg}},欢迎你!</span>
         </div>
       </el-header>
       <el-container>
@@ -33,6 +33,10 @@
             <i class="el-icon-service"></i>
             <span slot="title">管理员</span>
           </el-menu-item>
+          <el-menu-item index="rank" @click="Rank()">
+            <i class="el-icon-view"></i>
+            <span slot="title">点下看看</span>
+          </el-menu-item>
           </el-menu>
         </el-aside>
       <el-main>
@@ -40,7 +44,7 @@
       </el-main>
       </el-container>
       <el-footer>
-        <p style="text-align: center;"> 问卷系统 2019</p>
+        <p style="text-align: center;"> Copyright © 上海大学 体力活动与健康促进定量研究课题组. All rights reserved.</p>
       </el-footer>
     </el-container>
   </div>
@@ -55,8 +59,8 @@ export default {
       isCollapse: false,
       show: true,
       menushow: true,
+      msg: '',
       collapseBtnClick: false,
-      msg: localStorage.username + '，',
       ltime: new Date().getTime(), // 最后一次点击时间
       ctime: new Date().getTime(), // 当前时间
       tout: 50 * 60 * 1000
@@ -64,10 +68,10 @@ export default {
   },
   mounted () {
     window.setInterval(this.ttime, 60000)
+    this.clicked()
   },
   watch: {
     '$route' () {
-      console.log(this.$route.name)
       // 判断是否为管理员
       if (localStorage.isAdmin === 'true') { this.isAdmin = true }
       if (localStorage.isAdmin === 'false') { this.isAdmin = false }
@@ -77,12 +81,34 @@ export default {
     }
   },
   methods: {
+    Rank () {
+      this.$ajax.get('/questionnaires/MET', {headers: {'Authorization': localStorage.token}})
+        .then((response) => {
+          if (response.data.status === 200) {
+            let score = response.data.data.MET
+            let rank = response.data.data.rank
+            let sum = response.data.data.sum
+            this.$message({
+              dangerouslyUseHTMLString: true,
+              title: '体力得分排行榜',
+              message: '您的体力得分为' + '<strong>' + score + '</strong>' + '分' + '<br/>' + '在当前完成测试的' + '<strong>' + sum + '</strong>' + '人中' + '<br/>' + '排名第' + '<strong>' + rank + '</strong>' + '位！',
+              type: 'success'
+            })
+          } else if (response.data.status === 400) {
+            this.$message({
+              title: '提示',
+              message: '加油,快去完成这些调研吧！之后有惊喜！！',
+              type: 'warning'
+            })
+          }
+        })
+    },
     clicked () {
       this.ltime = new Date().getTime() // 当界面被点击更新时间
+      this.msg = localStorage.username
     },
     ttime () {
       this.ctime = new Date().getTime()
-      // console.log(sessionStorage.getItem('Login'))
       if (this.ctime - this.ltime > this.tout) {
         if (JSON.parse(sessionStorage.getItem('Login')) === true) {
           sessionStorage.removeItem('Login')
